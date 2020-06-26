@@ -1,0 +1,256 @@
+asyncapi: 2.0.0
+
+info:
+  title: Schema
+  version: 1.0.0
+
+channels:
+
+  dummy:
+    subscribe:
+      description: dummy
+      message:
+        oneOf:
+          - $ref: "#/components/messages/Numeric"
+          - $ref: "#/components/messages/String"
+          - $ref: "#/components/messages/Array"
+          - $ref: "#/components/messages/Object"
+          - $ref: "#/components/messages/Items"
+          - $ref: "#/components/messages/Properties"
+          - $ref: "#/components/messages/Combinations"
+          - $ref: "#/components/messages/Conditionals"
+
+components:
+
+  messages:
+
+    "Numeric":
+      payload:
+        type: object
+        properties:
+          range:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 10
+          exclusive:
+            type: integer
+            format: int32
+            exclusiveMinimum: 50
+            exclusiveMaximum: 100
+          multiple:
+            type: number
+            format: double
+            multipleOf: 7
+
+    "String":
+      payload:
+        type: object
+        properties:
+          length:
+            type: string
+            minLength: 1
+            maxLength: 15
+          format:
+            type: string
+            format: date-time
+          pattern:
+            type: string
+            pattern: ^[\w\d\-\_]+$
+
+    "Array":
+      payload:
+        type: array
+        minItems: 1
+        maxItems: 5
+        uniqueItems: true
+
+    "Object":
+      payload:
+        type: object
+        properties:
+          protocol:
+            title: Protocol.
+            description: Name of the protocol to be used.
+            type: string
+            enum:
+              - HTTP
+              - HTTPS
+            default: HTTPS
+            deprecated: true
+          port:
+            title:  Port number.
+            type: integer
+            format: int32
+          url:
+            title: URL.
+            type: string
+            examples:
+              - dev.example.com
+              - pro.example.com
+          user:
+            title: User.
+            type: object
+            properties:
+              name:
+                type: string
+                title: Name.
+              surname:
+                type: string
+                title: Surname.
+              token:
+                type: string
+                writeOnly: true
+          region:
+            title: Region.
+            type: string
+            const: EU
+            readOnly: true
+        required:
+          - port
+          - url
+
+    "Items":
+      payload:
+        type: object
+        properties:
+          simple:
+            title: Array of strings.
+            type: array
+            items:
+              type: string
+          tuple:
+            title: Array of tuples.
+            type: array
+            items:
+              - type: string
+              - type: integer
+              - type: string
+          extra:
+            title: Array of strings with additional numeric items.
+            type: array
+            items:
+              type: string
+            additionalItems:
+              type: integer
+          contains:
+            title: Array with one or more elements matching some schema.
+            type: array
+            contains:
+              type: string
+              format: date
+
+    "Properties":
+      payload:
+        type: object
+        properties:
+          sized:
+            type: object
+            minProperties: 1
+            maxProperties: 5
+          additional:
+            title: Object with additional properties.
+            type: object
+            properties:
+              name:
+                type: string
+              surname:
+                type: string
+            additionalProperties:
+              type: object
+              properties:
+                age:
+                  type: integer
+          blocked:
+            title: Object with fixed properties.
+            type: object
+            properties:
+              name:
+                type: string
+              surname:
+                type: string
+            additionalProperties: false
+          named:
+            type: object
+            title: Object with property names matching some pattern.
+            propertyNames:
+              type: object
+              properties:
+                pattern:
+                  const: ^[\w\d\-\_]+$
+          properties:
+            type: object
+            title: Object with properties matching some patterns.
+            patternProperties:
+              "^S+$":
+                type: string
+              "^I+$":
+                type: integer
+
+    "Combinations":
+      payload:
+        type: object
+        properties:
+          allOf:
+            title: Matches all the given schemas.
+            type:
+              integer
+            allOf:
+              - type: integer
+                format: int32
+              - type: integer
+                format: int64
+          oneOf:
+            title: Matches exactly one schema.
+            oneOf:
+              - type: string
+              - type: integer
+          anyOf:
+            title: Matches one or more schemas.
+            type:
+              - object
+              - string
+            anyOf:
+              - type: object
+                properties:
+                  name:
+                    type: string
+                  surname:
+                    type: string
+              - type: string
+          not:
+            title: Doesn't match the given schema.
+            not:
+              type: string
+
+    "Conditionals":
+      payload:
+        type: object
+        properties:
+          address:
+            title: Address object with a conditional postal code property.
+            type: object
+            properties:
+              street:
+                type: string
+              country:
+                type: string
+            if:
+              type: object
+              properties:
+                country:
+                  type: string
+                  const: USA
+            then:
+              type: object
+              properties:
+                postalCode:
+                  type: string
+                  pattern: ^[0-9]{5}(-[0-9]{4})?$
+            else:
+              type: object
+              properties:
+                postalCode:
+                  type: string
+                  pattern: ^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$
+

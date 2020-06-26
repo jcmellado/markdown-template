@@ -1,0 +1,158 @@
+asyncapi: 2.0.0
+
+info:
+  title: Bindings
+  version: 1.0.0
+
+servers:
+
+  "MQTT-Server":
+    url: dummy
+    protocol: mqtt
+    bindings:
+      mqtt:
+        clientId: guest
+        cleanSession: true
+        lastWill:
+          topic: /last-wills
+          qos: 2
+          retain: false
+        keepAlive: 60
+        bindingVersion: 0.1.0
+
+channels:
+
+  "WebSockets-Channel":
+    bindings:
+      ws:
+        method: GET
+        query:
+          type: object
+          properties:
+            userId:
+              type: string
+              description: User Id
+        headers:
+          type: object
+          properties:
+            x-apikey:
+              type: string
+              description: API Key
+        bindingVersion: 0.1.0
+
+  "AMQP-Channel-RoutingKey":
+    bindings:
+      amqp:
+        is: routingKey
+        exchange:
+          name: events
+          type: topic
+          durable: true
+          autoDelete: false
+          vhost: /
+        bindingVersion: 0.1.0
+
+  "AMQP-Channel-Queue":
+    bindings:
+      amqp:
+        is: queue
+        queue:
+          name: events
+          durable: true
+          exclusive: false
+          autoDelete: false
+          vhost: /
+        bindingVersion: 0.1.0
+
+  "HTTP-Channel-Operation":
+    subscribe:
+      message:
+        $ref: "#/components/messages/HTTP-Message"
+      bindings:
+        http:
+          type: request
+          method: GET
+          query:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: User Id
+          bindingVersion: 0.1.0
+
+  "Kafka-Channel-Operation":
+    subscribe:
+      message:
+        $ref: "#/components/messages/Kafka-Message"
+      bindings:
+        kafka:
+          groupId:
+            type: string
+            enum: ["users"]
+          clientId:
+            type: string
+            enum: ["guest"]
+          bindingVersion: 0.1.0
+
+  "AMQP-Channel-Operation":
+    subscribe:
+      message:
+        $ref: "#/components/messages/AMQP-Message"
+      bindings:
+        amqp:
+          expiration: 60
+          userId: guest
+          cc: ["user.log", "support.log"]
+          priority: 10
+          deliveryMode: 2
+          mandatory: false
+          bcc: ["external.audit"]
+          replyTo: user.reply
+          timestamp: true
+          ack: true
+          bindingVersion: 0.1.0
+
+  "MQTT-Channel-Operation":
+    subscribe:
+      message:
+        $ref: "#/components/messages/MQTT-Message"
+      bindings:
+        mqtt:
+          qos: 1
+          retain: true
+          bindingVersion: 0.1.0
+
+components:
+
+  messages:
+
+    "HTTP-Message":
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              x-apikey:
+                type: string
+                description: API Key
+          bindingVersion: 0.1.0
+
+    "Kafka-Message":
+      bindings:
+        kafka:
+          key:
+            type: string
+            enum: ["key"]
+          bindingVersion: 0.1.0
+
+    "AMQP-Message":
+      bindings:
+        amqp:
+          contentEncoding: gzip
+          messageType: user.register
+          bindingVersion: 0.1.0
+
+    "MQTT-Message":
+      bindings:
+        mqtt:
+          bindingVersion: 0.1.0

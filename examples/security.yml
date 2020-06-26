@@ -1,0 +1,108 @@
+asyncapi: 2.0.0
+
+info:
+  title: Security
+  version: 1.0.0
+
+servers:
+
+  dummy:
+    url: dummy
+    protocol: dummy
+    security:
+      - "User/Password": []
+      - "API Key": []
+      - "X.509 Certificate": []
+      - "Symmetric Encryption": []
+      - "Asymmetric Encryption": []
+      - "HTTP API Key": []
+      - "HTTP": []
+      - "HTTP (Bearer)": []
+      - "OAuth 2.0":
+        - read:user
+        - write:user
+      - "OpenID":
+        - read:user
+        - write:user
+
+channels:
+
+  dummy:
+    description: dummy
+
+components:
+
+  securitySchemes:
+
+    "User/Password":
+      type: userPassword
+      description: Provide your user and password.
+
+    "API Key":
+      type: apiKey
+      description: Provide your API key as the user and leave the password empty.
+      in: user
+
+    "X.509 Certificate":
+      type: X509
+      description: Provide your X.509 Certificate.
+
+    "Symmetric Encryption":
+      type: symmetricEncryption
+      description: End-to-end symmetric encryption.
+
+    "Asymmetric Encryption":
+      type: asymmetricEncryption
+      description: End-to-end asymmetric encryption.
+
+    "HTTP API Key":
+      type: httpApiKey
+      description: Provide your API key in the HTTP header.
+      name: x-api-key
+      in: header
+
+    "HTTP":
+      type: http
+      description: Provide your API key in the Authorization HTTP header.
+      scheme: basic
+
+    "HTTP (Bearer)":
+      type: http
+      description: Provide your JWT token in the Authorization HTTP header.
+      scheme: bearer
+      bearerFormat: JWT
+
+    "OAuth 2.0":
+      type: oauth2
+      description: OAuth 2.0.
+      flows:
+        implicit:
+          authorizationUrl: https://auth.example.com/oauth
+          refreshUrl: https://auth.example.com/oauth/refresh
+          scopes:
+            read:job: Read users.
+            write:job: Write users.
+        password:
+          tokenUrl: https://auth.example.com/oauth/token
+          refreshUrl: https://auth.example.com/oauth/refresh
+          scopes:
+            read:user: Read users.
+            write:user: Write users.
+        clientCredentials:
+          tokenUrl: https://auth.example.com/oauth/token
+          refreshUrl: https://auth.example.com/oauth/refresh
+          scopes:
+            read:user: Read users.
+            write:user: Write users.
+        authorizationCode:
+          authorizationUrl: https://auth.example.com/oauth
+          tokenUrl: https://auth.example.com/oauth/token
+          refreshUrl: https://auth.example.com/oauth/refresh
+          scopes:
+            read:user: Read users.
+            write:user: Write users.
+
+    "OpenID":
+      type: openIdConnect
+      description: The OpenId Connect URL provides OAuth2 configuration values.
+      openIdConnectUrl: https://oauth.example.com/.well-known

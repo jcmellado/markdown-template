@@ -1,0 +1,76 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% from "./bindings.njk" import protocolNameTemplate, serverBindingsTemplate -%}
+{% from "./commons.njk" import multilineTemplate -%}
+{% from "./external-docs.njk" import externalDocsTemplate -%}
+
+{# Server #}
+
+{% macro serversTemplate(servers) -%}
+{% for serverName, server in servers -%}
+{{ serverTemplate(serverName, server) -}}
+{% endfor -%}
+{% endmacro -%}
+
+{% macro serverTemplate(serverName, server) -%}
+## {{ serverName }}
+
+{% if server.description() -%}
+{{ server.description() | safe }}
+
+{% endif -%}
+Parameter|Value
+---------|------
+URL|{{ server.url() | link }}
+Protocol|{{ protocolNameTemplate(server.protocol()) }} {% if server.protocolVersion() -%} {{ server.protocolVersion() }} {%- endif %}
+
+{% if server.hasVariables() -%}
+### Variables
+
+{{ variablesTemplate(server.variables()) -}}
+{% endif -%}
+{% if server.security() -%}
+### Security
+
+{{ securityTemplate(server.security()) -}}
+{% endif -%}
+{% if server.bindings() -%}
+### Server Bindings
+
+{{ serverBindingsTemplate(server.bindings()) -}}
+{% endif -%}
+{% endmacro -%}
+
+{# Variables #}
+
+{% macro variablesTemplate(variables) -%}
+Variable|Allowed|Default|Description
+--------|-------|-------|-----------
+{% for variableName, variable in variables -%}
+{{ variableName -}}
+|{% if variable.hasAllowedValues() -%} {{ multilineTemplate(variable.allowedValues()) }} {%- endif -%}
+|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() }} {%- endif -%}
+|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesTemplate(variable.examples()) }} {%- endif %}
+{% endfor %}
+{% endmacro -%}
+
+{% macro examplesTemplate(examples) -%}
+{{- "" | br | safe -}} Examples: {{- "" | br | safe -}}
+{% set linefeed = joiner("" | br | safe) -%}
+{% for example in examples -%}
+{{- linefeed() -}} - {{ example -}}
+{% endfor -%}
+{% endmacro -%}
+
+{# Security #}
+
+{% macro securityTemplate(security) -%}
+Scheme|Scopes
+------|------
+{% for scheme in security -%}
+{% set schemeName = scheme.json() | keys | first -%}
+{% set scopes = scheme.json()[schemeName] -%}
+{{ schemeName | reference }}|{% if scopes -%} {{ multilineTemplate(scopes) }} {%- endif %}
+{% endfor %}
+{% endmacro -%}

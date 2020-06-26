@@ -1,0 +1,66 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% from "./asyncapi/channel.njk" import channelsTemplate -%}
+{% from "./asyncapi/info.njk" import contactTemplate, licenseTemplate, termsOfServiceTemplate -%}
+{% from "./asyncapi/message.njk" import messagesTemplate -%}
+{% from "./asyncapi/security.njk" import securitySchemesTemplate -%}
+{% from "./asyncapi/server.njk" import serversTemplate -%}
+{% from "./asyncapi/tag.njk" import tagTemplate -%}
+
+# {{ asyncapi.info().title() }} {{ asyncapi.info().version() }}
+
+{% if asyncapi.info().description() -%}
+{{ asyncapi.info().description() | safe }}
+
+{% endif -%}
+{% set sections = params["sections"] | chunks -%}
+{% for section in sections -%}
+{% if section === "servers" and asyncapi.hasServers() -%}
+# Servers
+
+{{ serversTemplate(asyncapi.servers()) -}}
+{% elif section === "channels" and asyncapi.hasChannels() -%}
+# Channels
+
+{{ channelsTemplate(asyncapi.channels()) -}}
+{% elif section === "messages" and asyncapi.allMessages() | length -%}
+# Messages
+
+{{ messagesTemplate(asyncapi.allMessages(), asyncapi.defaultContentType(), params) -}}
+{% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() -%}
+{% if asyncapi.components().securitySchemes() | length -%}
+# Security
+
+{{ securitySchemesTemplate(asyncapi.components().securitySchemes()) -}}
+{% endif -%}
+{% elif section === "tags" and asyncapi.hasTags() -%}
+# Tags
+
+{% for tag in asyncapi.tags() -%}
+## {{ tag.name() }}
+
+{{ tagTemplate(tag) -}}
+{% endfor -%}
+{% elif section === "license" and asyncapi.info().license() -%}
+# License
+
+{{ licenseTemplate(asyncapi.info().license()) -}}
+{% elif section === "termsOfService" and asyncapi.info().termsOfService() -%}
+# Terms Of Service
+
+{{ termsOfServiceTemplate(asyncapi.info().termsOfService()) -}}
+{% elif section === "contact" and asyncapi.info().contact() -%}
+# Contact
+
+{{ contactTemplate(asyncapi.info().contact()) -}}
+{% endif -%}
+{% endfor -%}
+
+---
+
+{% if asyncapi.id() -%}
+{{ "Schema Id:" | bold }} {{ asyncapi.id() | italic }}
+
+{% endif -%}
+{{ "AsyncAPI" | italic }} {{ asyncapi.version() | italic }}

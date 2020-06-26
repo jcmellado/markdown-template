@@ -1,0 +1,9 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% macro multilineTemplate(lines) -%}
+{% set linefeed = joiner("" | br | safe) -%}
+{% for line in lines -%}
+{{- linefeed() -}} {{- line -}}
+{% endfor -%}
+{% endmacro -%}

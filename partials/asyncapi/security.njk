@@ -1,0 +1,107 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{# Security #}
+
+{% macro securitySchemesTemplate(schemes) -%}
+{% for schemeName, scheme in schemes -%}
+{{ securitySchemeTemplate(schemeName, scheme) -}}
+{% endfor -%}
+{% endmacro -%}
+
+{% macro securitySchemeTemplate(schemeName, scheme) -%}
+## {{ schemeName }}
+
+{% if scheme.description() -%}
+{{ scheme.description() | safe }}
+
+{% endif -%}
+Parameter|Value
+---------|-----
+Security scheme|{{ schemeNameTemplate(scheme.type()) }}
+{% if scheme.in() -%}
+Location of the API key|{{ scheme.in() }}
+{% endif -%}
+{% if scheme.name() -%}
+Header, query or cookie parameter name|{{ scheme.name() }}
+{% endif -%}
+{% if scheme.scheme() -%}
+HTTP Authorization scheme|{{ scheme.scheme() }}
+{% endif -%}
+{% if scheme.bearerFormat() -%}
+Bearer token format|{{ scheme.bearerFormat() }}
+{% endif -%}
+{% if scheme.openIdConnectUrl() -%}
+OpenId Connect URL|{{ scheme.openIdConnectUrl() | link }}
+{% endif -%}
+{% if scheme.flows() -%}
+{{ oauthFlowsTemplate(scheme.flows()) -}}
+{% endif %}
+{% endmacro -%}
+
+{# OAuth Flows #}
+
+{% macro oauthFlowsTemplate(flows) -%}
+{% for flowName, flow in flows -%}
+{{ oauthFlowTemplate(flowName,flow) -}}
+{% endfor -%}
+{% endmacro -%}
+
+{% macro oauthFlowTemplate(flowName, flow) %}
+{% if flowName === "implicit" -%}
+### OAuth Implicit Flow
+
+{% endif -%}
+{% if flowName === "password" -%}
+### OAuth Resource Owner Protected Credentials Flow
+
+{% endif -%}
+{% if flowName === "clientCredentials" -%}
+### OAuth Client Credentials Flow
+
+{% endif -%}
+{% if flowName === "authorizationCode" -%}
+### OAuth Authorization Code Flow
+
+{% endif -%}
+Parameter|Value
+---------|-----
+{% if flow.authorizationUrl() -%}
+Authorization URL|{{ flow.authorizationUrl() | link }}
+{% endif -%}
+{% if flow.tokenUrl() -%}
+Token URL|{{ flow.tokenUrl() | link }}
+{% endif -%}
+{% if flow.refreshUrl() -%}
+Refresh URL|{{ flow.refreshUrl() | link }}
+{% endif %}
+{{ oauthScopesTemplate(flow.scopes()) -}}
+{% endmacro -%}
+
+{# OAuth Scopes #}
+
+{% macro oauthScopesTemplate(scopes) -%}
+#### Scopes
+
+Scope|Description
+-----|-----------
+{% for scopeName, description in scopes -%}
+{{ scopeName }}|{{ description }}
+{% endfor -%}
+{% endmacro -%}
+
+{# Scheme Name #}
+
+{% macro schemeNameTemplate(scheme) -%}
+{% if scheme === "userPassword" -%} {{- "User/Password" -}}
+{% elif scheme === "apiKey" -%} {{- "API Key" -}}
+{% elif scheme === "X509" -%} {{- "X.509 Certificate" -}}
+{% elif scheme === "symmetricEncryption" -%} {{- "Symmetric Encryption" -}}
+{% elif scheme === "asymmetricEncryption" -%} {{- "Asymmetric Encryption	" -}}
+{% elif scheme === "httpApiKey" -%} {{- "HTTP API Key" -}}
+{% elif scheme === "http" -%} {{- "HTTP" -}}
+{% elif scheme === "oauth2" -%} {{- "OAuth 2.0" -}}
+{% elif scheme === "openIdConnect" -%} {{- "OpenID" -}}
+{% else -%}{{- scheme -}}
+{% endif -%}
+{% endmacro -%}

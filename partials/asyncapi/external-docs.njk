@@ -1,0 +1,13 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{# External Documentation #}
+
+{% macro externalDocsTemplate(externalDocs) -%}
+{% if externalDocs.description() -%}
+{{ externalDocs.description() | safe | lf }}
+{% endif -%}
+{% if externalDocs.url() -%}
+{{ externalDocs.url() | link }}
+{% endif %}
+{% endmacro -%}
