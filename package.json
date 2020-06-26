@@ -1,0 +1,78 @@
+{
+  "name": "@jcmellado/markdown-template",
+  "version": "0.1.0",
+  "description": "Markdown template for the AsyncAPI Generator",
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "markdown",
+    "template",
+    "slate",
+    "shins"
+  ],
+  "author": "Juan Mellado",
+  "license": "MIT",
+  "homepage": "https://github.com/jcmellado/markdown-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcmellado/markdown-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jcmellado/markdown-template/issues"
+  },
+  "scripts": {
+    "lint": "eslint --config .eslintrc.json .",
+    "test": "ava",
+    "dev": "ag examples/asyncapi.yml ./ -o output --force-write --watch-template"
+  },
+  "devDependencies": {
+    "ava": "^3.9.0",
+    "eslint": "^7.3.1",
+    "eslint-config-google": "^0.14.0"
+  },
+  "generator": {
+    "generator": ">=0.53.1 <2.0.0",
+    "parameters": {
+      "sections": {
+        "description": "Comma-separated list of sections to include in the Markdown document.",
+        "default": "servers,channels,messages,security,tags,license,termsOfService,contact",
+        "required": false
+      },
+      "slate.enabled": {
+        "description": "Enables the output of the Slate header in the Markdown document.",
+        "default": "false",
+        "required": false
+      },
+      "slate.theme": {
+        "description": "Name of the syntax-highlighter theme to use.",
+        "default": "darkula",
+        "required": false
+      },
+      "slate.searchEnabled": {
+        "description": "Enables the search option in the table of contents.",
+        "default": "true",
+        "required": false
+      },
+      "slate.headingLevel": {
+        "description": "Number of heading levels to show in the table of contents.",
+        "default": "2",
+        "required": false
+      },
+      "slate.languages": {
+        "description": "Comma-separated list of languages to add as tabs.",
+        "default": null,
+        "required": false
+      },
+      "slate.includes": {
+        "description": "Comma-separated list of files to include at the bottom of the content.",
+        "default": null,
+        "required": false
+      },
+      "slate.footers": {
+        "description": "Comma-separated list of texts to add at the bottom of the table of contents.",
+        "default": null,
+        "required": false
+      }
+    }
+  }
+}

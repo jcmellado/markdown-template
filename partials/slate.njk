@@ -1,0 +1,31 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% if params["slate.enabled"] === "true" -%}
+---
+title: {{ asyncapi.info().title() }} {{ asyncapi.info().version() }}
+{% if params["slate.theme"] -%}
+highlight_theme: {{ params["slate.theme"] }}
+{% endif -%}
+search: {{ params["slate.searchEnabled"] }}
+headingLevel: {{ params["slate.headingLevel"] }}
+{% if params["slate.languages"] -%}
+language_tabs:
+{% for language in params["slate.languages"] | chunks -%}
+{{ "  -" }} {{ language }}
+{% endfor -%}
+{% endif -%}
+{% if params["slate.includes"] -%}
+includes:
+{% for file in params["slate.includes"] | chunks -%}
+{{ "  -" }} {{ file | safe }}
+{% endfor -%}
+{% endif -%}
+{% if params["slate.footers"] -%}
+toc_footers:
+{% for footer in params["slate.footers"] | chunks -%}
+{{ "  -" }} {{ footer | safe }}
+{% endfor -%}
+{% endif -%}
+---
+{% endif -%}

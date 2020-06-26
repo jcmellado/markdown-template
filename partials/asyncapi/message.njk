@@ -1,0 +1,108 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% from "./bindings.njk" import messageBindingsTemplate -%}
+{% from "./external-docs.njk" import externalDocsTemplate -%}
+{% from "./schema.njk" import schemaTemplate -%}
+{% from "./tag.njk" import tagTemplate -%}
+
+{# Message #}
+
+{% macro messagesTemplate(messages, defaultContentType, params) -%}
+{% for messageName, message in messages -%}
+{{ messageTemplate(message, defaultContentType, params) -}}
+{% endfor -%}
+{% endmacro -%}
+
+{% macro messageTemplate(message, defaultContentType, params) -%}
+## {% if message.name() -%} {{ message.name() }} {%- else -%} {{ message.uid() }} {%- endif %}
+
+{% if message.title() -%}
+{{ message.title() }}
+
+{% endif -%}
+{% if message.summary() -%}
+{{ message.summary() }}
+
+{% endif -%}
+{% if message.description() -%}
+{{ message.description() | safe }}
+
+{% endif -%}
+{% if message.externalDocs() -%}
+{{ externalDocsTemplate(message.externalDocs()) -}}
+{% endif -%}
+{% if message.payload() -%}
+### Payload
+
+{{ payloadMessageTemplate(message, defaultContentType, params) -}}
+{% endif -%}
+{% if message.headers() -%}
+### Headers
+
+{{ schemaTemplate(message.headers()) -}}
+{% endif -%}
+{% if message.correlationId() -%}
+### Correlation ID
+
+{{ correlationIdMessageTemplate(message.correlationId()) -}}
+{% endif -%}
+{% if message.bindings() -%}
+### Message Bindings
+
+{{ messageBindingsTemplate(message.bindings()) -}}
+{% endif -%}
+{% if message.hasTags() -%}
+### Message Tags
+
+{% for tag in message.tags() -%}
+#### {{ tag.name() }}
+
+{{ tagTemplate(tag) -}}
+{% endfor -%}
+{% endif -%}
+{% endmacro -%}
+
+{# Payload #}
+
+{% macro payloadMessageTemplate(message, defaultContentType, params) -%}
+{% if message.contentType() or defaultContentType -%}
+{{ "Content Type:" | bold }} {% if message.contentType() -%} {{ message.contentType() | italic }} {%- else -%} {{ defaultContentType | italic }} {% endif %}
+
+{% endif -%}
+{% if message.schemaFormat() and message.schemaFormat() !== "application/schema+json;version=draft-07" -%}
+{{ "Schema Format:" | bold }} {{ message.schemaFormat() | italic }}
+
+{% endif -%}
+{% if message.examples() and params["slate.enabled"] === "true" -%}
+{{ examplesMessageTemplate(message.examples()) -}}
+{% endif -%}
+{{ schemaTemplate(message.payload()) -}}
+{% if message.examples() and params["slate.enabled"] === "false" -%}
+#### Examples
+
+{{ examplesMessageTemplate(message.examples()) -}}
+{% endif -%}
+{% endmacro -%}
+
+{# Examples #}
+
+{% macro examplesMessageTemplate(examples) -%}
+{% for example in examples -%}
+{% set language = example | keys | first -%}
+```{{ language }}
+{{ example[language] | safe }}
+```
+
+{% endfor -%}
+{% endmacro -%}
+
+{# Correlation ID #}
+
+{% macro correlationIdMessageTemplate(correlationId) -%}
+Location|Description
+--------|------------
+{{ correlationId.location() | italic -}}
+|{% if correlationId.description() -%} {{ correlationId.description() | safe }} {%- endif %}
+
+{% endmacro -%}

@@ -1,0 +1,194 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% from "./commons.njk" import multilineTemplate -%}
+
+{# Schema #}
+
+{% macro schemaTemplate(schema) -%}
+Name|Type|Format|Allowed|Default|Description
+----|----|------|-------|-------|-----------
+{{ rootSchemaTemplate("", schema, false) }}
+{% endmacro -%}
+
+{% macro rootSchemaTemplate(root, schema, required) -%}
+{{ fieldSchemaTemplate(root, schema, required) -}}
+{% if schema.type() === "array" -%}
+{{ arraySchemaTemplate(root, schema) -}}
+{% elif schema.type() === "object" -%}
+{{ objectSchemaTemplate(root, schema) -}}
+{% endif -%}
+{% if schema.allOf() -%}
+{{ subSchemaTemplate("All Of", schema.allOf()) -}}
+{% endif -%}
+{% if schema.anyOf() -%}
+{{ subSchemaTemplate("Any Of", schema.anyOf()) -}}
+{% endif -%}
+{% if schema.oneOf() -%}
+{{ subSchemaTemplate("One Of", schema.oneOf()) -}}
+{% endif -%}
+{% if schema.not() -%}
+{{ subSchemaTemplate("Not", schema.not()) -}}
+{% endif -%}
+{% if schema.if() -%}
+{{ subSchemaTemplate("If", schema.if()) -}}
+{% endif -%}
+{% if schema.then() -%}
+{{ subSchemaTemplate("Then", schema.then()) -}}
+{% endif -%}
+{% if schema.else() -%}
+{{ subSchemaTemplate("Else", schema.else()) -}}
+{% endif -%}
+{% endmacro -%}
+
+{% macro subSchemaTemplate(root, schema) -%}
+{% if schema -%}
+{% if schema | isArray -%}
+{% for subSchema in schema -%}
+{% set path -%} {{- root | italic }} [ {{- loop.index -}} ] {%- endset -%}
+{{ rootSchemaTemplate(path, subSchema) -}}
+{% endfor -%}
+{% else -%}
+{{ rootSchemaTemplate(root | italic, schema) -}}
+{% endif -%}
+{% endif -%}
+{% endmacro -%}
+
+{# Field #}
+
+{% macro fieldSchemaTemplate(fieldName, field, required) -%}
+{% set name = nameFieldSchemaTemplate(fieldName) -%}
+{% set type = typeFieldSchemaTemplate(field) -%}
+{% set format = formatFieldSchemaTemplate(field) -%}
+{% set allowed = allowedFieldSchemaTemplate(field) -%}
+{% set default = defaultFieldSchemaTemplate(field) -%}
+{% set description = descriptionFieldSchemaTemplate(field, required) -%}
+{% if fieldName or (not fieldName and ((type != "" and type != "object") or format != "" or allowed != "" or default != "" or description != "")) -%}
+{{ name -}}
+|{{ type -}}
+|{{ format -}}
+|{{ allowed -}}
+|{{ default -}}
+|{{ description }}
+{% endif -%}
+{% endmacro -%}
+
+{% macro nameFieldSchemaTemplate(fieldName) -%}
+{% if fieldName -%} {{ fieldName }} {%- else -%} {{ "-" | italic }} {%- endif -%}
+{% endmacro -%}
+
+{% macro typeFieldSchemaTemplate(field) -%}
+{% set linefeed = joiner("" | br | safe) -%}
+{% set types -%}
+{%- if field.type() -%}
+{% if field.type() | isArray -%} {{ multilineTemplate(field.type()) }} {%- else -%} {{ field.type() }} {%- endif -%}
+{% endif -%}
+{% endset -%}
+{% set schemas -%}
+{%- if field.allOf() -%} {{- linefeed() -}} {{ "All of" | italic }} ( {{- field.allOf() | length -}} ) {%- endif -%}
+{% if field.anyOf() -%} {{- linefeed() -}} {{ "Any of" | italic }} ( {{- field.anyOf() | length -}} ) {%- endif -%}
+{% if field.oneOf() -%} {{- linefeed() -}} {{ "One of" | italic }} ( {{- field.oneOf() | length -}} ) {%- endif -%}
+{% if field.not() -%} {{- linefeed() -}} {{ "Not" | italic }} {%- endif -%}
+{% if field.if() -%} {{- linefeed() -}} {{ "If" | italic }} {%- endif -%}
+{% if field.then() -%} {{- linefeed() -}} {{ "Then" | italic }} {%- endif -%}
+{% if field.else() -%} {{- linefeed() -}} {{ "Else" | italic }} {%- endif -%}
+{% endset -%}
+{% if types -%} {{ types | safe }} {%- endif -%}
+{% if types and schemas -%} {{- linefeed() -}} {{- linefeed() -}} {%- endif -%}
+{% if schemas -%} {{ schemas | safe }} {%- endif -%}
+{% endmacro -%}
+
+{% macro formatFieldSchemaTemplate(field) -%}
+{% if field.format() | isDefined -%} {{ field.format() }} {%- endif -%}
+{% endmacro -%}
+
+{% macro allowedFieldSchemaTemplate(field) -%}
+{% if field.const() | isDefined -%} {{ field.const() }} {%- elif field.enum() -%} {{ multilineTemplate(field.enum()) }} {%- endif -%}
+{% endmacro -%}
+
+{% macro defaultFieldSchemaTemplate(field) -%}
+{% if field.default() | isDefined -%} {{ field.default() }} {%- endif -%}
+{% endmacro -%}
+
+{% macro descriptionFieldSchemaTemplate(field, required) -%}
+{% set linefeed = joiner("" | br | safe) -%}
+{% if field.title() -%} {{- linefeed() -}} {{ field.title() | safe }} {%- endif -%}
+{% if field.description() -%} {{- linefeed() -}} {{ field.description() | safe }} {%- endif -%}
+{% if field.examples() -%} {{- linefeed() -}} Examples: {{- linefeed() -}} {{ examplesTemplate(field.examples()) }} {%- endif -%}
+{% if field.pattern() | isDefined -%} {{- linefeed() -}} Pattern: {{ field.pattern() }} {%- endif -%}
+{% if field.contentEncoding() -%} {{- linefeed() -}} Content Encoding: {{ field.contentEncoding() }} {%- endif -%}
+{% if field.contentMediaType() -%} {{- linefeed() -}} Content Media Type: {{ field.contentMediaType() }} {%- endif -%}
+{% if field.minimum() | isDefined-%} {{- linefeed() -}} Minimum: {{ field.minimum() }} {%- endif -%}
+{% if field.maximum() | isDefined -%} {{- linefeed() -}} Maximum: {{ field.maximum() }} {%- endif -%}
+{% if field.exclusiveMinimum() | isDefined -%} {{- linefeed() -}} Exclusive minimum: {{ field.exclusiveMinimum() }} {%- endif -%}
+{% if field.exclusiveMaximum() | isDefined -%} {{- linefeed() -}} Exclusive maximum: {{ field.exclusiveMaximum() }} {%- endif -%}
+{% if field.multipleOf() | isDefined -%} {{- linefeed() -}} Multiple of: {{ field.multipleOf() }} {%- endif -%}
+{% if field.minLength() | isDefined -%} {{- linefeed() -}} Minimum length: {{ field.minLength() }} {%- endif -%}
+{% if field.maxLength() | isDefined -%} {{- linefeed() -}} Maximum length: {{ field.maxLength() }} {%- endif -%}
+{% if field.minItems() | isDefined -%} {{- linefeed() -}} Minimum items: {{ field.minItems() }} {%- endif -%}
+{% if field.maxItems() | isDefined-%} {{- linefeed() -}} Maximum items: {{ field.maxItems() }} {%- endif -%}
+{% if field.uniqueItems() === true -%} {{ linefeed() -}} Unique items: {{ field.uniqueItems() }} {%- endif -%}
+{% if field.minProperties() | isDefined -%} {{- linefeed() -}} Minimum properties: {{ field.minProperties() }} {%- endif -%}
+{% if field.maxProperties() | isDefined -%} {{- linefeed() -}} Maximum properties: {{ field.maxProperties() }} {%- endif -%}
+{% if field.additionalProperties() | isBoolean -%} {{- linefeed() -}} Additional properties: {{ field.additionalProperties() }} {%- endif -%}
+{% if field.propertyNames() and field.propertyNames().properties and field.propertyNames().properties().pattern | isDefined -%} {{- linefeed() -}} Property names pattern: {{ field.propertyNames().properties().pattern.const() }} {%- endif -%}
+{% if field.readOnly() === true -%} {{- linefeed() -}} Read only: {{ field.readOnly() }} {%- endif -%}
+{% if field.writeOnly() === true -%} {{- linefeed() -}} Write only: {{ field.writeOnly() }} {%- endif -%}
+{% if required -%} {{- linefeed() -}} {{ "required" | bold }} {%- endif -%}
+{% if field.deprecated() -%} {{- linefeed() -}} {{ "deprecated" | bold }} {%- endif -%}
+{% endmacro -%}
+
+{% macro examplesTemplate(examples) -%}
+{% set linefeed = joiner("" | br | safe) -%}
+{% for example in examples -%}
+{{- linefeed() -}} - {{ example | safe -}}
+{% endfor -%}
+{% endmacro -%}
+
+{# Array #}
+
+{% macro arraySchemaTemplate(root, schema) -%}
+{% if schema.items() -%}
+{% if schema.items() | isArray -%}
+{% for item in schema.items() -%}
+{% set path -%} {{- root -}} [ {{- loop.index - 1 -}} ] {%- endset -%}
+{{ rootSchemaTemplate(path, item) -}}
+{% endfor -%}
+{% else -%}
+{% set path -%} {{- root -}} [] {%- endset -%}
+{{ rootSchemaTemplate(path, schema.items()) -}}
+{% endif -%}
+{% endif -%}
+{% if schema.additionalItems() -%}
+{% set path -%} {{- root -}} [...] {%- endset -%}
+{{ rootSchemaTemplate(path, schema.additionalItems()) -}}
+{% endif -%}
+{% if schema.contains() -%}
+{% set path -%} {{- root -}} [*] {%- endset -%}
+{{ rootSchemaTemplate(path, schema.contains()) -}}
+{% endif -%}
+{% endmacro -%}
+
+{# Object #}
+
+{% macro objectSchemaTemplate(root, schema) -%}
+{% if schema.properties() -%}
+{{ objectPropertiesSchemaTemplate(root, schema, schema.properties()) -}}
+{% endif -%}
+{% if not schema.additionalProperties() | isBoolean -%}
+{% if schema.additionalProperties().properties -%}
+{{ objectPropertiesSchemaTemplate(root, schema, schema.additionalProperties().properties()) -}}
+{% endif -%}
+{% endif -%}
+{% if schema.patternProperties() -%}
+{{ objectPropertiesSchemaTemplate(root, schema, schema.patternProperties()) -}}
+{% endif -%}
+{% endmacro -%}
+
+{% macro objectPropertiesSchemaTemplate(root, schema, properties) -%}
+{% for propertyName, property in properties -%}
+{% set path -%} {%- if root -%} {{- root -}} . {%- endif -%} {{- propertyName -}} {%- endset -%}
+{% set required = schema.required() and schema.required().includes(propertyName) -%}
+{{ rootSchemaTemplate(path, property, required) -}}
+{% endfor -%}
+{% endmacro -%}
