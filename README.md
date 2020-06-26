@@ -17,7 +17,7 @@ npm install -g @asyncapi/generator
 Run the generator on your `asyncapi.yml` with the template:
 
 ```shell
-ag asyncapi.yml @jcmellado/markdown-template
+ag ./asyncapi.yml @jcmellado/markdown-template -o ./docs
 ```
 
 Check the [AsyncAPI Generator Documentation](https://github.com/asyncapi/generator/blob/master/README.md) to learn more about the available options.
@@ -51,7 +51,7 @@ The AsyncAPI Generator allows to pass additional parameters to the template with
 Example:
 
 ```shell
-ag asyncapi.yml @jcmellado/markdown-template -p slate.enabled=true -p slate.languages="json: JSON,Rust"
+ag ./asyncapi.yml @jcmellado/markdown-template -o ./docs -p slate.enabled=true -p slate.languages="json: JSON,Rust"
 ```
 
 The following sections describe the available parameters.
@@ -72,4 +72,4 @@ slate.searchEnabled | Enables the search option in the table of contents.<br /><
 slate.headingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `2`<br /><br />Currently only supported by shins.<br /><br />**Example:** `-p slate.headingLevel=3`
 slate.languages | Comma-separated list of languages to add as tabs.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.languages="json: JSON"`
 slate.includes | Comma-separated list of files to include at the bottom of the content.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.includes=./extra/info.html`
-slate.footers | Comma-separated list of texts to add at the bottom of the table of contents.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.footers=Copyright (c) 2020 www.example.com`
+slate.footers | Comma-separated list of texts to add at the bottom of the table of contents.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.footers="Copyright (c) 2020 www.example.com"`
