@@ -54,13 +54,13 @@ Example:
 ag ./asyncapi.yml @jcmellado/markdown-template -o ./docs -p slate.enabled=true -p slate.languages="json: JSON,Rust"
 ```
 
-The following sections describe the available parameters.
+The following sections describe the available template parameters.
 
 ## Markdown
 
 Parameter | Description
 ----------|------------
-sections | comma-separated list of sections to include in the Markdown document.<br /><br />**Default**: `servers,channels,messages,security,tags,license,termsOfService,contact`<br /><br />Sections are included in the Markdown document in the same order that they appear in the list. Only the listed sections will be included.<br /><br />**Example:** ```-p sections=channels,messages,servers,license```
+sections | Comma-separated list of sections to be included in the Markdown document.<br /><br />**Default**: `servers,channels,messages,security,tags,license,termsOfService,contact`<br /><br />Sections are included in the Markdown document in the same order that they appear in the list. Only the listed sections will be included.<br /><br />**Example:** ```-p sections=channels,messages,servers,license```
 
 ## Slate/shins
 
@@ -71,5 +71,5 @@ slate.theme | Name of the syntax-highlighter theme to use.<br /><br />**Default*
 slate.searchEnabled | Enables the search option in the table of contents.<br /><br />**Default**: `true`<br /><br />**Example:** `-p slate.searchEnabled=false`
 slate.headingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `2`<br /><br />Currently only supported by shins.<br /><br />**Example:** `-p slate.headingLevel=3`
 slate.languages | Comma-separated list of languages to add as tabs.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.languages="json: JSON"`
-slate.includes | Comma-separated list of files to include at the bottom of the content.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.includes=./extra/info.html`
+slate.includes | Comma-separated list of files to include at the bottom of the content.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.includes=/extra/info`
 slate.footers | Comma-separated list of texts to add at the bottom of the table of contents.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.footers="Copyright (c) 2020 www.example.com"`

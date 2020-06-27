@@ -4,8 +4,7 @@ on:
   pull_request
 
 jobs:
-  build:
-    name: Run linter and tests
+  check:
 
     runs-on: ubuntu-latest
 
