@@ -81,15 +81,15 @@ Operation|Name|Description
 {% endif -%}
 {% if channel.hasPublish() and channel.publish().messages() -%}
 {{ messageChannelTemplate(channel.publish()) -}}
-{% endif -%}
+{% endif %}
 {% endmacro -%}
 
 {% macro messageChannelTemplate(operation) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
 |{% if message.name() -%} {{ message.name() | reference }} {%- else -%} {{ message.uid() | reference }} {%- endif -%}
-|{{ message.title()}}
-{% endfor %}
+|{{ message.title() }}
+{% endfor -%}
 {% endmacro -%}
 
 {# Operation #}
