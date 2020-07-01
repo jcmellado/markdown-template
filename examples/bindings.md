@@ -13,15 +13,15 @@ Protocol|MQTT
 
 MQTT
 
-Parameter|Value
----------|-----
-Client Id|guest
-Persistent connection|true
-Last Will and Testament topic|/last-wills
-Last Will and Testament QoS|2
-Retain Last Will and Testament messages|false
-Keep-Alive Interval in seconds|60
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Client Id|`guest`|The client identifier.
+Clean session|`true`|Whether to create a persistent connection or not.
+Last Will and Testament topic|`/last-wills`|The topic where the Last Will and Testament message will be sent.
+Last Will and Testament QoS|`2`|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
+Retain Last Will and Testament messages|`false`|Whether the broker should retain the Last Will and Testament message or not.
+Keep-Alive|`60`|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
+Binding Version|`0.1.0`|The version of this binding.
 
 # Channels
 
@@ -31,10 +31,10 @@ Binding Version|0.1.0
 
 WebSockets
 
-Parameter|Value
----------|-----
-HTTP method|GET
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+HTTP method|`GET`|The HTTP method to use when establishing the connection.
+Binding Version|`0.1.0`|The version of this binding.
 
 HTTP Query Parameters
 
@@ -56,14 +56,14 @@ AMQP
 
 Exchange
 
-Parameter|Value
----------|-----
-Name|events
-Type|topic
-Durable|true
-AutoDelete|false
-Virtual Host|/
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Name|`events`|The name of the exchange.
+Type|`topic`|The type of the exchange.
+Durable|`true`|Whether the exchange should survive broker restarts or not.
+AutoDelete|`false`|Whether the exchange should be deleted when the last queue is unbound from it.
+Virtual Host|`/`|The virtual host of the exchange.
+Binding Version|`0.1.0`|The version of this binding.
 
 ## AMQP-Channel-Queue
 
@@ -73,14 +73,14 @@ AMQP
 
 Queue
 
-Parameter|Value
----------|-----
-Name|events
-Durable|true
-Exclusive|false
-AutoDelete|false
-Virtual Host|/
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Name|`events`|The name of the queue.
+Durable|`true`|Whether the queue should survive broker restarts or not.
+Exclusive|`false`|Whether the queue should be used only by one connection or not.
+AutoDelete|`false`|Whether the queue should be deleted when the last consumer unsubscribes.
+Virtual Host|`/`|The virtual host of the queue.
+Binding Version|`0.1.0`|The version of this binding.
 
 ## HTTP-Channel-Operation
 
@@ -96,11 +96,11 @@ Operation|Name|Description
 
 HTTP
 
-Parameter|Value
----------|-----
-Operation type|request
-HTTP method|GET
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Operation type|`request`|Type of operation.
+HTTP method|`GET`|HTTP method.
+Binding Version|`0.1.0`|The version of this binding.
 
 HTTP Query Parameters
 
@@ -122,9 +122,9 @@ Operation|Name|Description
 
 Kafka
 
-Parameter|Value
----------|-----
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|`0.1.0`|The version of this binding.
 
 Consumer Group  Id
 
@@ -152,19 +152,19 @@ Operation|Name|Description
 
 AMQP
 
-Parameter|Value
----------|-----
-TTL|60
-User Id|guest
-CC|user.log,support.log
-Priority|10
-Delivery mode|2
-Mandatory|false
-BCC|external.audit
-Reply To|user.reply
-Timestamp|true
-ACK|true
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+TTL|`60`|TTL (Time-To-Live) for the message.
+User Id|`guest`|Identifies the user who has sent the message.
+CC|`user.log,support.log`|The routing keys the message should be routed to at the time of publishing.
+Priority|`10`|A priority for the message.
+Delivery mode|`2`|Delivery mode of the message.
+Mandatory|`false`|Whether the message is mandatory or not.
+BCC|`external.audit`|Like CC but consumers will not receive this information.
+Reply To|`user.reply`|Name of the queue where the consumer should send the response.
+Timestamp|`true`|Whether the message should include a timestamp or not.
+ACK|`true`|Whether the consumer should ack the message or not.
+Binding Version|`0.1.0`|The version of this binding.
 
 ## MQTT-Channel-Operation
 
@@ -180,11 +180,11 @@ Operation|Name|Description
 
 MQTT
 
-Parameter|Value
----------|-----
-QoS|1
-Retain|true
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+QoS|`1`|Defines how hard the broker/client will try to ensure that a message is received.
+Retain|`true`|Whether the broker should retain the message or not.
+Binding Version|`0.1.0`|The version of this binding.
 
 # Messages
 
@@ -194,9 +194,9 @@ Binding Version|0.1.0
 
 HTTP
 
-Parameter|Value
----------|-----
-Binding Version | 0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|`0.1.0`|The version of this binding.
 
 HTTP Headers
 
@@ -210,9 +210,9 @@ x-apikey|string||||API Key
 
 Kafka
 
-Parameter|Value
----------|-----
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|`0.1.0`|The version of this binding.
 
 Message Key
 
@@ -226,11 +226,11 @@ Name|Type|Format|Allowed|Default|Description
 
 AMQP
 
-Parameter|Value
----------|-----
-Content Encoding|gzip
-Message Type|user.register
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Content Encoding|`gzip`|A MIME encoding for the message content.
+Message Type|`user.register`|Application-specific message type.
+Binding Version|`0.1.0`|The version of this binding.
 
 ## MQTT-Message
 
@@ -238,9 +238,9 @@ Binding Version|0.1.0
 
 MQTT
 
-Parameter|Value
----------|-----
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|`0.1.0`|The version of this binding.
 
 ---
 
