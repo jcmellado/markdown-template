@@ -46,15 +46,15 @@ Scheme|Scopes
 
 MQTT
 
-Parameter|Value
----------|-----
-Client Id|guest
-Persistent connection|false
-Last Will and Testament topic|/last-wills
-Last Will and Testament QoS|2
-Retain Last Will and Testament messages|false
-Keep-Alive Interval in seconds|60
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Client Id|`guest`|The client identifier.
+Clean session|`false`|Whether to create a persistent connection or not.
+Last Will and Testament topic|`/last-wills`|The topic where the Last Will and Testament message will be sent.
+Last Will and Testament QoS|`2`|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
+Retain Last Will and Testament messages|`false`|Whether the broker should retain the Last Will and Testament message or not.
+Keep-Alive|`60`|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
+Binding Version|`0.1.0`|The version of this binding.
 
 # Channels
 
@@ -112,14 +112,14 @@ AMQP
 
 Queue
 
-Parameter|Value
----------|-----
-Name|events/jobs
-Durable|true
-Exclusive|false
-AutoDelete|false
-Virtual Host|/
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Name|`events/jobs`|The name of the queue.
+Durable|`true`|Whether the queue should survive broker restarts or not.
+Exclusive|`false`|Whether the queue should be used only by one connection or not.
+AutoDelete|`false`|Whether the queue should be deleted when the last consumer unsubscribes.
+Virtual Host|`/`|The virtual host of the queue.
+Binding Version|`0.1.0`|The version of this binding.
 
 ### Messages
 
@@ -146,19 +146,19 @@ Print Job Events Documentation.
 
 AMQP
 
-Parameter|Value
----------|-----
-TTL|60
-User Id|guest
-CC|user.log,support.log
-Priority|10
-Delivery mode|2
-Mandatory|false
-BCC|external.audit
-Reply To|user.reply
-Timestamp|true
-ACK|true
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+TTL|`60`|TTL (Time-To-Live) for the message.
+User Id|`guest`|Identifies the user who has sent the message.
+CC|`user.log,support.log`|The routing keys the message should be routed to at the time of publishing.
+Priority|`10`|A priority for the message.
+Delivery mode|`2`|Delivery mode of the message.
+Mandatory|`false`|Whether the message is mandatory or not.
+BCC|`external.audit`|Like CC but consumers will not receive this information.
+Reply To|`user.reply`|Name of the queue where the consumer should send the response.
+Timestamp|`true`|Whether the message should include a timestamp or not.
+ACK|`true`|Whether the consumer should ack the message or not.
+Binding Version|`0.1.0`|The version of this binding.
 
 #### Operation Tags
 
@@ -259,11 +259,11 @@ Location|Description
 
 AMQP
 
-Parameter|Value
----------|-----
-Content Encoding|gzip
-Message Type|job.create
-Binding Version|0.1.0
+Parameter|Value|Description
+---------|-----|-----------
+Content Encoding|`gzip`|A MIME encoding for the message content.
+Message Type|`job.create`|Application-specific message type.
+Binding Version|`0.1.0`|The version of this binding.
 
 ### Message Tags
 
