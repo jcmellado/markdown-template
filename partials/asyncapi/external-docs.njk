@@ -4,10 +4,10 @@
 {# External Documentation #}
 
 {% macro externalDocsTemplate(externalDocs) -%}
-{% if externalDocs.description() -%}
+{% if externalDocs.description() | isDefined -%}
 {{ externalDocs.description() | safe | lf }}
 {% endif -%}
-{% if externalDocs.url() -%}
+{% if externalDocs.url() | isDefined -%}
 {{ externalDocs.url() | link }}
 {% endif %}
 {% endmacro -%}

@@ -16,14 +16,14 @@
 {% macro serverTemplate(serverName, server) -%}
 ## {{ serverName }}
 
-{% if server.description() -%}
+{% if server.description() | isDefined -%}
 {{ server.description() | safe }}
 
 {% endif -%}
 Parameter|Value
 ---------|------
 URL|{{ server.url() | link }}
-Protocol|{{ protocolNameTemplate(server.protocol()) }} {% if server.protocolVersion() -%} {{ server.protocolVersion() }} {%- endif %}
+Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
 
 {% if server.hasVariables() -%}
 ### Variables
@@ -48,9 +48,9 @@ Protocol|{{ protocolNameTemplate(server.protocol()) }} {% if server.protocolVers
 Variable|Allowed|Default|Description
 --------|-------|-------|-----------
 {% for variableName, variable in variables -%}
-{{ variableName -}}
+{{ variableName | code -}}
 |{% if variable.hasAllowedValues() -%} {{ multilineTemplate(variable.allowedValues()) }} {%- endif -%}
-|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() }} {%- endif -%}
+|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() | code }} {%- endif -%}
 |{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesTemplate(variable.examples()) }} {%- endif %}
 {% endfor %}
 {% endmacro -%}
