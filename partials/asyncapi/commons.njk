@@ -4,6 +4,6 @@
 {% macro multilineTemplate(lines) -%}
 {% set linefeed = joiner("" | br | safe) -%}
 {% for line in lines -%}
-{{- linefeed() -}} {{- line -}}
+{{- linefeed() -}} {{- line | code -}}
 {% endfor -%}
 {% endmacro -%}

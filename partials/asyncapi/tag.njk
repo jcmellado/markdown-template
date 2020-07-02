@@ -6,7 +6,7 @@
 {# Tag #}
 
 {% macro tagTemplate(tag) -%}
-{% if tag.description() -%}
+{% if tag.description() | isDefined -%}
 {{ tag.description() | safe }}
 
 {% endif -%}

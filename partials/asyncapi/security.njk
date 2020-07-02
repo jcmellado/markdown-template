@@ -12,26 +12,26 @@
 {% macro securitySchemeTemplate(schemeName, scheme) -%}
 ## {{ schemeName }}
 
-{% if scheme.description() -%}
+{% if scheme.description() | isDefined -%}
 {{ scheme.description() | safe }}
 
 {% endif -%}
 Parameter|Value
 ---------|-----
-Security scheme|{{ schemeNameTemplate(scheme.type()) }}
-{% if scheme.in() -%}
-Location of the API key|{{ scheme.in() }}
+Security scheme|{{ schemeNameTemplate(scheme.type()) | code }}
+{% if scheme.in() | isDefined -%}
+Location of the API key|{{ scheme.in() | code }}
 {% endif -%}
-{% if scheme.name() -%}
-Header, query or cookie parameter name|{{ scheme.name() }}
+{% if scheme.name() | isDefined -%}
+Header, query or cookie parameter name|{{ scheme.name() | code }}
 {% endif -%}
-{% if scheme.scheme() -%}
-HTTP Authorization scheme|{{ scheme.scheme() }}
+{% if scheme.scheme() | isDefined -%}
+HTTP Authorization scheme|{{ scheme.scheme() | code }}
 {% endif -%}
-{% if scheme.bearerFormat() -%}
-Bearer token format|{{ scheme.bearerFormat() }}
+{% if scheme.bearerFormat() | isDefined -%}
+Bearer token format|{{ scheme.bearerFormat() | code }}
 {% endif -%}
-{% if scheme.openIdConnectUrl() -%}
+{% if scheme.openIdConnectUrl() | isDefined -%}
 OpenId Connect URL|{{ scheme.openIdConnectUrl() | link }}
 {% endif -%}
 {% if scheme.flows() -%}
@@ -66,13 +66,13 @@ OpenId Connect URL|{{ scheme.openIdConnectUrl() | link }}
 {% endif -%}
 Parameter|Value
 ---------|-----
-{% if flow.authorizationUrl() -%}
+{% if flow.authorizationUrl() | isDefined -%}
 Authorization URL|{{ flow.authorizationUrl() | link }}
 {% endif -%}
-{% if flow.tokenUrl() -%}
+{% if flow.tokenUrl() | isDefined -%}
 Token URL|{{ flow.tokenUrl() | link }}
 {% endif -%}
-{% if flow.refreshUrl() -%}
+{% if flow.refreshUrl() | isDefined -%}
 Refresh URL|{{ flow.refreshUrl() | link }}
 {% endif %}
 {{ oauthScopesTemplate(flow.scopes()) -}}
@@ -86,7 +86,7 @@ Refresh URL|{{ flow.refreshUrl() | link }}
 Scope|Description
 -----|-----------
 {% for scopeName, description in scopes -%}
-{{ scopeName }}|{{ description }}
+{{ scopeName | code }}|{{ description }}
 {% endfor -%}
 {% endmacro -%}
 
@@ -97,7 +97,7 @@ Scope|Description
 {% elif scheme === "apiKey" -%} {{- "API Key" -}}
 {% elif scheme === "X509" -%} {{- "X.509 Certificate" -}}
 {% elif scheme === "symmetricEncryption" -%} {{- "Symmetric Encryption" -}}
-{% elif scheme === "asymmetricEncryption" -%} {{- "Asymmetric Encryption	" -}}
+{% elif scheme === "asymmetricEncryption" -%} {{- "Asymmetric Encryption" -}}
 {% elif scheme === "httpApiKey" -%} {{- "HTTP API Key" -}}
 {% elif scheme === "http" -%} {{- "HTTP" -}}
 {% elif scheme === "oauth2" -%} {{- "OAuth 2.0" -}}

@@ -5,7 +5,7 @@
 
 {% macro licenseTemplate(license) -%}
 {{ license.name() | lf }}
-{% if license.url() -%}
+{% if license.url() | isDefined -%}
 {{ license.url() | link }}
 {% endif %}
 {% endmacro -%}
@@ -20,13 +20,13 @@
 {# Contact #}
 
 {% macro contactTemplate(contact) -%}
-{% if contact.name() -%}
+{% if contact.name() | isDefined -%}
 {{ contact.name() | lf }}
 {% endif -%}
-{% if contact.url() -%}
+{% if contact.url() | isDefined -%}
 {{ contact.url() | link | lf }}
 {% endif -%}
-{% if contact.email() -%}
+{% if contact.email() | isDefined -%}
 {{ contact.email() | email | lf }}
 {% endif %}
 {% endmacro -%}

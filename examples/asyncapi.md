@@ -13,13 +13,13 @@ Production server.
 Parameter|Value
 ---------|------
 URL|[https://api.print.example.com](https://api.print.example.com)
-Protocol|AMQP 0-9-1
+Protocol|`AMQP` `0-9-1`
 
 ### Security
 
 Scheme|Scopes
 ------|------
-[OAuth 2](#oauth-2)|read:user<br />write:user
+[OAuth 2](#oauth-2)|`read:user`<br />`write:user`
 
 ## Staging
 
@@ -28,13 +28,13 @@ Staging server.
 Parameter|Value
 ---------|------
 URL|[mqtt://staging.api.print.example.com:{port}](mqtt://staging.api.print.example.com:{port})
-Protocol|MQTT v3.1.1
+Protocol|`MQTT` `v3.1.1`
 
 ### Variables
 
 Variable|Allowed|Default|Description
 --------|-------|-------|-----------
-port|1883<br />8883|1883|Secure connection (TLS) is available through port 8883.<br />Examples:<br />- mqtt://staging.api.print.example.com<br />- mqtt://staging.api.print.example.com:1883<br />- mqtt://staging.api.print.example.com:8883
+`port`|`1883`<br />`8883`|`1883`|Secure connection (TLS) is available through port 8883.<br />Examples:<br />- mqtt://staging.api.print.example.com<br />- mqtt://staging.api.print.example.com:1883<br />- mqtt://staging.api.print.example.com:8883
 
 ### Security
 
@@ -64,13 +64,13 @@ The topic on which commands can be sent to a print queue.
 
 Parameter|Location|Description
 ---------|--------|-----------
-queueId||The identifier of the print queue.
+`queueId`||The identifier of the print queue.
 
 ***queueId***
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-*-*|string||||
+*-*|`string`||||
 
 ### Messages
 
@@ -98,13 +98,13 @@ The queue on which print job events can be consumed.
 
 Parameter|Location|Description
 ---------|--------|-----------
-jobId||The identifier of the print job.
+`jobId`||The identifier of the print job.
 
 ***jobId***
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-*-*|string||||
+*-*|`string`||||
 
 ### Channel Bindings
 
@@ -187,14 +187,14 @@ Print Jobs Documentation.
 
 ### Payload
 
-**Content Type:** *application/json* 
+Content Type: `application/json` 
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-jobId|string||||Job Id.
-userId|string||||User Id.
-documentName|string||||Document name.<br />**deprecated**
-priority|string||low<br />medium<br />high||Priority.
+`jobId`|`string`||||Job Id.
+`userId`|`string`||||User Id.
+`documentName`|`string`||||Document name.<br />**deprecated**
+`priority`|`string`||`low`<br />`medium`<br />`high`||Priority.
 
 #### Examples
 
@@ -211,14 +211,14 @@ priority|string||low<br />medium<br />high||Priority.
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-x-api-key|string||||API Key.
-x-correlation-id|string||||Correlation ID.
+`x-api-key`|`string`||||API Key.
+`x-correlation-id`|`string`||||Correlation ID.
 
 ### Correlation ID
 
 Location|Description
 --------|------------
-*$message.header#/x-correlation-id*|Identifier used for message tracing and correlation.
+`$message.header#/x-correlation-id`|Identifier used for message tracing and correlation.
 
 ## cancelPrintJob
 
@@ -226,12 +226,12 @@ Cancels a print job.
 
 ### Payload
 
-**Content Type:** *application/json* 
+Content Type: `application/json` 
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-jobId|string||||Job Id.<br />**required**
-force|boolean|||false|Force cancellation.
+`jobId`|`string`||||Job Id.<br />**required**
+`force`|`boolean`|||`false`|Force cancellation.
 
 #### Examples
 
@@ -246,14 +246,14 @@ force|boolean|||false|Force cancellation.
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-x-api-key|string||||API Key.
-x-correlation-id|string||||Correlation ID.
+`x-api-key`|`string`||||API Key.
+`x-correlation-id`|`string`||||Correlation ID.
 
 ### Correlation ID
 
 Location|Description
 --------|------------
-*$message.header#/x-correlation-id*|Identifier used for message tracing and correlation.
+`$message.header#/x-correlation-id`|Identifier used for message tracing and correlation.
 
 ### Message Bindings
 
@@ -278,12 +278,12 @@ Print job event.
 
 ### Payload
 
-**Content Type:** *application/json* 
+Content Type: `application/json` 
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-jobId|string||||Job Id.
-status|string||created<br />started<br />finished<br />canceled||Status.
+`jobId`|`string`||||Job Id.
+`status`|`string`||`created`<br />`started`<br />`finished`<br />`canceled`||Status.
 
 #### Examples
 
@@ -302,8 +302,8 @@ Provide your API key as the user and leave the password empty.
 
 Parameter|Value
 ---------|-----
-Security scheme|API Key
-Location of the API key|user
+Security scheme|`API Key`
+Location of the API key|`user`
 
 ## OAuth 2
 
@@ -311,7 +311,7 @@ OAuth 2.0.
 
 Parameter|Value
 ---------|-----
-Security scheme|OAuth 2.0
+Security scheme|`OAuth 2.0`
 
 ### OAuth Implicit Flow
 
@@ -324,8 +324,8 @@ Refresh URL|[https://auth.example.com/oauth/refresh](https://auth.example.com/oa
 
 Scope|Description
 -----|-----------
-read:job|Read print jobs.
-write:job|Write print jobs.
+`read:job`|Read print jobs.
+`write:job`|Write print jobs.
 
 # Tags
 
@@ -353,6 +353,6 @@ API Support
 
 ---
 
-**Schema Id:** *urn:com:example:print:api*
+**Schema Id:** `urn:com:example:print:api`
 
 *AsyncAPI* *2.0.0*

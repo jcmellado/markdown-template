@@ -7,7 +7,7 @@
 Parameter|Value
 ---------|------
 URL|[dummy](dummy)
-Protocol|MQTT 
+Protocol|`MQTT` 
 
 ### Server Bindings
 
@@ -40,13 +40,13 @@ HTTP Query Parameters
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-userId|string||||User Id
+`userId`|`string`||||User Id
 
 HTTP Headers
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-x-apikey|string||||API Key
+`x-apikey`|`string`||||API Key
 
 ## AMQP-Channel-RoutingKey
 
@@ -106,7 +106,7 @@ HTTP Query Parameters
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-userId|string||||User Id
+`userId`|`string`||||User Id
 
 ## Kafka-Channel-Operation
 
@@ -130,13 +130,13 @@ Consumer Group  Id
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-*-*|string||users||
+*-*|`string`||`users`||
 
 Consumer Id
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-*-*|string||guest||
+*-*|`string`||`guest`||
 
 ## AMQP-Channel-Operation
 
@@ -202,7 +202,7 @@ HTTP Headers
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-x-apikey|string||||API Key
+`x-apikey`|`string`||||API Key
 
 ## Kafka-Message
 
@@ -218,7 +218,7 @@ Message Key
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
-*-*|string||key||
+*-*|`string`||`key`||
 
 ## AMQP-Message
 

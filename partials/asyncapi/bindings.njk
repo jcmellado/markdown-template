@@ -97,12 +97,12 @@ HTTP
 
 Parameter|Value|Description
 ---------|-----|-----------
-Operation type|`{{ binding.type }}`|Type of operation.
+Operation type|{{ binding.type | code }}|Type of operation.
 {% if binding.method | isDefined -%}
-HTTP method|`{{ binding.method }}`|HTTP method.
+HTTP method|{{ binding.method | code }}|HTTP method.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% if binding.query -%}
 HTTP Query Parameters
@@ -117,7 +117,7 @@ HTTP
 {% if binding.bindingVersion | isDefined -%}
 Parameter|Value|Description
 ---------|-----|-----------
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 
 {% endif -%}
 {% if binding.headers -%}
@@ -136,10 +136,10 @@ WebSockets
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.method | isDefined -%}
-HTTP method|`{{ binding.method }}`|The HTTP method to use when establishing the connection.
+HTTP method|{{ binding.method | code }}|The HTTP method to use when establishing the connection.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endif -%}
 {% if binding.query -%}
@@ -162,7 +162,7 @@ Kafka
 {% if binding.bindingVersion | isDefined -%}
 Parameter|Value|Description
 ---------|-----|-----------
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 
 {% endif -%}
 {% if binding.groupId -%}
@@ -183,7 +183,7 @@ Kafka
 {% if binding.bindingVersion | isDefined -%}
 Parameter|Value|Description
 ---------|-----|-----------
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 
 {% endif -%}
 {% if binding.key -%}
@@ -204,22 +204,22 @@ Exchange
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.exchange.name | isDefined -%}
-Name|`{{ binding.exchange.name }}`|The name of the exchange.
+Name|{{ binding.exchange.name | code }}|The name of the exchange.
 {% endif -%}
 {% if binding.exchange.type | isDefined -%}
-Type|`{{ binding.exchange.type }}`|The type of the exchange.
+Type|{{ binding.exchange.type | code }}|The type of the exchange.
 {% endif -%}
 {% if binding.exchange.durable | isDefined -%}
-Durable|`{{ binding.exchange.durable }}`|Whether the exchange should survive broker restarts or not.
+Durable|{{ binding.exchange.durable | code }}|Whether the exchange should survive broker restarts or not.
 {% endif -%}
 {% if binding.exchange.autoDelete | isDefined -%}
-AutoDelete|`{{ binding.exchange.autoDelete }}`|Whether the exchange should be deleted when the last queue is unbound from it.
+AutoDelete|{{ binding.exchange.autoDelete | code }}|Whether the exchange should be deleted when the last queue is unbound from it.
 {% endif -%}
 {% if binding.exchange.vhost | isDefined -%}
-Virtual Host|`{{ binding.exchange.vhost }}`|The virtual host of the exchange.
+Virtual Host|{{ binding.exchange.vhost | code }}|The virtual host of the exchange.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endif -%}
 {% if binding.is === "queue" and binding.queue -%}
@@ -228,22 +228,22 @@ Queue
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.queue.name | isDefined -%}
-Name|`{{ binding.queue.name }}`|The name of the queue.
+Name|{{ binding.queue.name | code }}|The name of the queue.
 {% endif -%}
 {% if binding.queue.durable | isDefined -%}
-Durable|`{{ binding.queue.durable }}`|Whether the queue should survive broker restarts or not.
+Durable|{{ binding.queue.durable | code }}|Whether the queue should survive broker restarts or not.
 {% endif -%}
 {% if binding.queue.exclusive | isDefined -%}
-Exclusive|`{{ binding.queue.exclusive }}`|Whether the queue should be used only by one connection or not.
+Exclusive|{{ binding.queue.exclusive | code }}|Whether the queue should be used only by one connection or not.
 {% endif -%}
 {% if binding.queue.autoDelete | isDefined -%}
-AutoDelete|`{{ binding.queue.autoDelete }}`|Whether the queue should be deleted when the last consumer unsubscribes.
+AutoDelete|{{ binding.queue.autoDelete | code }}|Whether the queue should be deleted when the last consumer unsubscribes.
 {% endif -%}
 {% if binding.queue.vhost | isDefined -%}
-Virtual Host|`{{ binding.queue.vhost }}`|The virtual host of the queue.
+Virtual Host|{{ binding.queue.vhost | code }}|The virtual host of the queue.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endif -%}
 {% endmacro -%}
@@ -254,37 +254,37 @@ AMQP
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.expiration | isDefined -%}
-TTL|`{{ binding.expiration }}`|TTL (Time-To-Live) for the message.
+TTL|{{ binding.expiration | code }}|TTL (Time-To-Live) for the message.
 {% endif -%}
 {% if binding.userId | isDefined -%}
-User Id|`{{ binding.userId }}`|Identifies the user who has sent the message.
+User Id|{{ binding.userId | code }}|Identifies the user who has sent the message.
 {% endif -%}
 {% if binding.cc -%}
-CC|`{{ binding.cc }}`|The routing keys the message should be routed to at the time of publishing.
+CC|{{ binding.cc | code }}|The routing keys the message should be routed to at the time of publishing.
 {% endif -%}
 {% if binding.priority | isDefined -%}
-Priority|`{{ binding.priority }}`|A priority for the message.
+Priority|{{ binding.priority | code }}|A priority for the message.
 {% endif -%}
 {% if binding.deliveryMode | isDefined -%}
-Delivery mode|`{{ binding.deliveryMode }}`|Delivery mode of the message.
+Delivery mode|{{ binding.deliveryMode | code }}|Delivery mode of the message.
 {% endif -%}
 {% if binding.mandatory | isDefined -%}
-Mandatory|`{{ binding.mandatory }}`|Whether the message is mandatory or not.
+Mandatory|{{ binding.mandatory | code }}|Whether the message is mandatory or not.
 {% endif -%}
 {% if binding.bcc -%}
-BCC|`{{ binding.bcc }}`|Like CC but consumers will not receive this information.
+BCC|{{ binding.bcc | code }}|Like CC but consumers will not receive this information.
 {% endif -%}
 {% if binding.replyTo | isDefined -%}
-Reply To|`{{ binding.replyTo }}`|Name of the queue where the consumer should send the response.
+Reply To|{{ binding.replyTo | code }}|Name of the queue where the consumer should send the response.
 {% endif -%}
 {% if binding.timestamp | isDefined -%}
-Timestamp|`{{ binding.timestamp }}`|Whether the message should include a timestamp or not.
+Timestamp|{{ binding.timestamp | code }}|Whether the message should include a timestamp or not.
 {% endif -%}
 {% if binding.ack | isDefined -%}
-ACK|`{{ binding.ack }}`|Whether the consumer should ack the message or not.
+ACK|{{ binding.ack | code }}|Whether the consumer should ack the message or not.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endmacro -%}
 
@@ -294,13 +294,13 @@ AMQP
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.contentEncoding | isDefined -%}
-Content Encoding|`{{ binding.contentEncoding }}`|A MIME encoding for the message content.
+Content Encoding|{{ binding.contentEncoding | code }}|A MIME encoding for the message content.
 {% endif -%}
 {% if binding.messageType | isDefined -%}
-Message Type|`{{ binding.messageType }}`|Application-specific message type.
+Message Type|{{ binding.messageType | code }}|Application-specific message type.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endmacro -%}
 
@@ -312,27 +312,27 @@ MQTT
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.clientId | isDefined -%}
-Client Id|`{{ binding.clientId }}`|The client identifier.
+Client Id|{{ binding.clientId | code }}|The client identifier.
 {% endif -%}
 {% if binding.cleanSession | isDefined -%}
-Clean session|`{{ binding.cleanSession }}`|Whether to create a persistent connection or not.
+Clean session|{{ binding.cleanSession | code }}|Whether to create a persistent connection or not.
 {% endif -%}
 {% if binding.lastWill -%}
 {% if binding.lastWill.topic | isDefined -%}
-Last Will and Testament topic|`{{ binding.lastWill.topic }}`|The topic where the Last Will and Testament message will be sent.
+Last Will and Testament topic|{{ binding.lastWill.topic | code }}|The topic where the Last Will and Testament message will be sent.
 {% endif -%}
 {% if binding.lastWill.qos | isDefined -%}
-Last Will and Testament QoS|`{{ binding.lastWill.qos }}`|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
+Last Will and Testament QoS|{{ binding.lastWill.qos | code }}|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
 {% endif -%}
 {% if binding.lastWill.retain | isDefined -%}
-Retain Last Will and Testament messages|`{{ binding.lastWill.retain }}`|Whether the broker should retain the Last Will and Testament message or not.
+Retain Last Will and Testament messages|{{ binding.lastWill.retain | code }}|Whether the broker should retain the Last Will and Testament message or not.
 {% endif -%}
 {% endif -%}
 {% if binding.keepAlive | isDefined -%}
-Keep-Alive|`{{ binding.keepAlive }}`|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
+Keep-Alive|{{ binding.keepAlive | code }}|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endmacro -%}
 
@@ -342,13 +342,13 @@ MQTT
 Parameter|Value|Description
 ---------|-----|-----------
 {% if binding.qos | isDefined -%}
-QoS|`{{ binding.qos }}`|Defines how hard the broker/client will try to ensure that a message is received.
+QoS|{{ binding.qos | code }}|Defines how hard the broker/client will try to ensure that a message is received.
 {% endif -%}
 {% if binding.retain | isDefined -%}
-Retain|`{{ binding.retain }}`|Whether the broker should retain the message or not.
+Retain|{{ binding.retain | code }}|Whether the broker should retain the message or not.
 {% endif -%}
 {% if binding.bindingVersion | isDefined -%}
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 {% endif %}
 {% endmacro -%}
 
@@ -358,7 +358,7 @@ MQTT
 {% if binding.bindingVersion | isDefined -%}
 Parameter|Value|Description
 ---------|-----|-----------
-Binding Version|`{{ binding.bindingVersion }}`|The version of this binding.
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
 
 {% endif -%}
 {% endmacro -%}

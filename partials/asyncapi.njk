@@ -10,7 +10,7 @@
 
 # {{ asyncapi.info().title() }} {{ asyncapi.info().version() }}
 
-{% if asyncapi.info().description() -%}
+{% if asyncapi.info().description() | isDefined -%}
 {{ asyncapi.info().description() | safe }}
 
 {% endif -%}
@@ -46,7 +46,7 @@
 # License
 
 {{ licenseTemplate(asyncapi.info().license()) -}}
-{% elif section === "termsOfService" and asyncapi.info().termsOfService() -%}
+{% elif section === "termsOfService" and asyncapi.info().termsOfService() | isDefined -%}
 # Terms Of Service
 
 {{ termsOfServiceTemplate(asyncapi.info().termsOfService()) -}}
@@ -59,8 +59,8 @@
 
 ---
 
-{% if asyncapi.id() -%}
-{{ "Schema Id:" | bold }} {{ asyncapi.id() | italic }}
+{% if asyncapi.id() | isDefined -%}
+{{ "Schema Id:" | bold }} {{ asyncapi.id() | code }}
 
 {% endif -%}
 {{ "AsyncAPI" | italic }} {{ asyncapi.version() | italic }}

@@ -18,6 +18,9 @@ filters.reference = (title, text = title) =>
 filters.email = (url, text = url) =>
   `[${text}](mailto:${url})`;
 
+filters.code = (text) =>
+  `\`${text}\``;
+
 filters.br = (text) =>
   `${text}<br />`;
 

@@ -17,7 +17,7 @@
 {% macro channelTemplate(channelName, channel) -%}
 ## {{ channelName }}
 
-{% if channel.description() -%}
+{% if channel.description() | isDefined -%}
 {{ channel.description() | safe }}
 
 {% endif -%}
@@ -53,9 +53,9 @@
 Parameter|Location|Description
 ---------|--------|-----------
 {% for parameterName, parameter in parameters -%}
-{{ parameterName -}}
-|{% if parameter.location() -%} {{ parameter.location() | italic }} {%- endif -%}
-|{% if parameter.description() -%} {{ parameter.description() | safe }} {%- endif %}
+{{ parameterName | code -}}
+|{% if parameter.location() | isDefined -%} {{ parameter.location() | code }} {%- endif -%}
+|{% if parameter.description() | isDefined -%} {{ parameter.description() | safe }} {%- endif %}
 {% if parameter.schema() -%}
 {% set hasSchemas = true -%}
 {% endif -%}
@@ -87,7 +87,7 @@ Operation|Name|Description
 {% macro messageChannelTemplate(operation) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
-|{% if message.name() -%} {{ message.name() | reference }} {%- else -%} {{ message.uid() | reference }} {%- endif -%}
+|{% if message.name() | isDefined -%} {{ message.name() | reference }} {%- else -%} {{ message.uid() | reference }} {%- endif -%}
 |{{ message.title() }}
 {% endfor -%}
 {% endmacro -%}
@@ -95,18 +95,18 @@ Operation|Name|Description
 {# Operation #}
 
 {% macro operationTemplate(operation) -%}
-{% if operation.summary() -%}
+{% if operation.summary() | isDefined -%}
 {{ operation.summary() }}
 
 {% endif -%}
-{% if operation.description() -%}
+{% if operation.description() | isDefined -%}
 {{ operation.description() | safe }}
 
 {% endif -%}
 {% if operation.externalDocs() -%}
 {{ externalDocsTemplate(operation.externalDocs()) -}}
 {% endif -%}
-{% if operation.id() -%}
+{% if operation.id() | isDefined -%}
 {{ "Operation Id:" | bold }} {{ operation.id() }}
 
 {% endif -%}

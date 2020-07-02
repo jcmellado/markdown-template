@@ -15,17 +15,17 @@
 {% endmacro -%}
 
 {% macro messageTemplate(message, defaultContentType, params) -%}
-## {% if message.name() -%} {{ message.name() }} {%- else -%} {{ message.uid() }} {%- endif %}
+## {% if message.name() | isDefined -%} {{ message.name() }} {%- else -%} {{ message.uid() }} {%- endif %}
 
-{% if message.title() -%}
+{% if message.title() | isDefined -%}
 {{ message.title() }}
 
 {% endif -%}
-{% if message.summary() -%}
+{% if message.summary() | isDefined -%}
 {{ message.summary() }}
 
 {% endif -%}
-{% if message.description() -%}
+{% if message.description() | isDefined -%}
 {{ message.description() | safe }}
 
 {% endif -%}
@@ -66,12 +66,12 @@
 {# Payload #}
 
 {% macro payloadMessageTemplate(message, defaultContentType, params) -%}
-{% if message.contentType() or defaultContentType -%}
-{{ "Content Type:" | bold }} {% if message.contentType() -%} {{ message.contentType() | italic }} {%- else -%} {{ defaultContentType | italic }} {% endif %}
+{% if message.contentType() | isDefined or defaultContentType | isDefined -%}
+{{ "Content Type:" }} {% if message.contentType() | isDefined -%} {{ message.contentType() | code }} {%- else -%} {{ defaultContentType | code }} {% endif %}
 
 {% endif -%}
-{% if message.schemaFormat() and message.schemaFormat() !== "application/schema+json;version=draft-07" -%}
-{{ "Schema Format:" | bold }} {{ message.schemaFormat() | italic }}
+{% if message.schemaFormat() | isDefined and message.schemaFormat() !== "application/schema+json;version=draft-07" -%}
+{{ "Schema Format:" }} {{ message.schemaFormat() | code }}
 
 {% endif -%}
 {% if message.examples() and params["slate.enabled"] === "true" -%}
@@ -102,7 +102,7 @@
 {% macro correlationIdMessageTemplate(correlationId) -%}
 Location|Description
 --------|------------
-{{ correlationId.location() | italic -}}
-|{% if correlationId.description() -%} {{ correlationId.description() | safe }} {%- endif %}
+{{ correlationId.location() | code -}}
+|{% if correlationId.description() | isDefined -%} {{ correlationId.description() | safe }} {%- endif %}
 
 {% endmacro -%}
