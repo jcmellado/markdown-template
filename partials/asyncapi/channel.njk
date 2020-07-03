@@ -8,13 +8,13 @@
 
 {# Channel #}
 
-{% macro channelsTemplate(channels) -%}
+{% macro channelsTemplate(channels, subsections) -%}
 {% for channelName, channel in channels -%}
-{{ channelTemplate(channelName, channel) -}}
+{{ channelTemplate(channelName, channel, subsections) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro channelTemplate(channelName, channel) -%}
+{% macro channelTemplate(channelName, channel, subsections) -%}
 ## {{ channelName }}
 
 {% if channel.description() | isDefined -%}
@@ -24,26 +24,25 @@
 {% if channel.hasParameters() -%}
 {{ parametersChannelTemplate(channel.parameters()) -}}
 {% endif -%}
-{% if channel.bindings() -%}
+{% for subsection in subsections | chunks -%}
+{% if subsection === "bindings" and channel.bindings() -%}
 ### Channel Bindings
 
 {{ channelBindingsTemplate(channel.bindings()) -}}
-{% endif -%}
-{% if (channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages()) -%}
+{% elif subsection === "messages" and ((channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages())) -%}
 ### Channel Messages
 
 {{ messagesChannelTemplate(channel) -}}
-{% endif -%}
-{% if channel.hasPublish() -%}
+{% elif subsection === "publisher" and channel.hasPublish() -%}
 ### As Publisher
 
-{{ operationTemplate(channel.publish()) -}}
-{% endif -%}
-{% if channel.hasSubscribe() -%}
+{{ operationTemplate(channel.publish(), subsections) -}}
+{% elif subsection === "subscriber" and channel.hasSubscribe() -%}
 ### As Subscriber
 
-{{ operationTemplate(channel.subscribe()) -}}
+{{ operationTemplate(channel.subscribe(), subsections) -}}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}
 
 {# Parameters #}
@@ -94,7 +93,7 @@ Operation|Name|Description
 
 {# Operation #}
 
-{% macro operationTemplate(operation) -%}
+{% macro operationTemplate(operation, subsections) -%}
 {% if operation.summary() | isDefined -%}
 {{ operation.summary() }}
 
@@ -110,12 +109,12 @@ Operation|Name|Description
 {{ "Operation Id:" | bold }} {{ operation.id() }}
 
 {% endif -%}
-{% if operation.bindings() -%}
+{% for subsection in subsections | chunks -%}
+{% if subsection === "operation.bindings" and operation.bindings() -%}
 #### Operation Bindings
 
 {{ operationBindingsTemplate(operation.bindings()) -}}
-{% endif -%}
-{% if operation.hasTags() -%}
+{% elif subsection === "operation.tags" and operation.hasTags() -%}
 #### Operation Tags
 
 {% for tag in operation.tags() -%}
@@ -124,4 +123,5 @@ Operation|Name|Description
 {{ tagTemplate(tag) -}}
 {% endfor -%}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}

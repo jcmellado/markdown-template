@@ -6,7 +6,7 @@ const fs = require('fs');
 const hooks = module.exports;
 
 hooks['generate:after'] = (generator) => {
-  const output = `${generator.templateParams.output}`;
+  const output = generator.templateParams.output;
   if (output !== 'asyncapi.md') {
     const oldPath = `${generator.targetDir}/asyncapi.md`;
     const newPath = `${generator.targetDir}/${output}`;

@@ -43,6 +43,21 @@
         "default": "servers,channels,messages,security,tags,license,termsOfService,contact",
         "required": false
       },
+      "sections.servers": {
+        "description": "Comma-separated list of subsections to be included in the servers section.",
+        "default": "variables,security,bindings",
+        "required": false
+      },
+      "sections.channels": {
+        "description": "Comma-separated list of subsections to be included in the channels section.",
+        "default": "bindings,messages,publisher,subscriber,operation.bindings,operation.tags",
+        "required": false
+      },
+      "sections.messages": {
+        "description": "Comma-separated list of subsections to be included in the messages section.",
+        "default": "payload,headers,correlationId,bindings,tags",
+        "required": false
+      },
       "tocHeadingLevel": {
         "description": "Number of heading levels to show in the table of contents.",
         "default": "0",

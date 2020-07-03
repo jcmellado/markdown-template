@@ -8,14 +8,14 @@
 
 {# Message #}
 
-{% macro messagesTemplate(messages, defaultContentType, slateEnabled) -%}
+{% macro messagesTemplate(messages, subsections, defaultContentType, slateEnabled) -%}
 {% for messageName, message in messages -%}
-{{ messageTemplate(message, defaultContentType, slateEnabled) -}}
+{{ messageTemplate(message, subsections, defaultContentType, slateEnabled) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro messageTemplate(message, defaultContentType, slateEnabled) -%}
-## {% if message.name() | isDefined -%} {{ message.name() }} {%- else -%} {{ message.uid() }} {%- endif %}
+{% macro messageTemplate(message, subsections, defaultContentType, slateEnabled) -%}
+## {{ message.name() if message.name() | isDefined else message.uid() }}
 
 {% if message.title() | isDefined -%}
 {{ message.title() }}
@@ -32,27 +32,24 @@
 {% if message.externalDocs() -%}
 {{ externalDocsTemplate(message.externalDocs()) -}}
 {% endif -%}
-{% if message.payload() -%}
+{% for subsection in subsections | chunks -%}
+{% if subsection === "payload" and message.payload() -%}
 ### Payload
 
 {{ payloadMessageTemplate(message, defaultContentType, slateEnabled) -}}
-{% endif -%}
-{% if message.headers() -%}
+{% elif subsection === "headers" and message.headers() -%}
 ### Headers
 
 {{ schemaTemplate(message.headers()) -}}
-{% endif -%}
-{% if message.correlationId() -%}
+{% elif subsection === "correlationId" and message.correlationId() -%}
 ### Correlation ID
 
 {{ correlationIdMessageTemplate(message.correlationId()) -}}
-{% endif -%}
-{% if message.bindings() -%}
+{% elif subsection === "bindings" and message.bindings() -%}
 ### Message Bindings
 
 {{ messageBindingsTemplate(message.bindings()) -}}
-{% endif -%}
-{% if message.hasTags() -%}
+{% elif subsection === "tags" and message.hasTags() -%}
 ### Message Tags
 
 {% for tag in message.tags() -%}
@@ -61,6 +58,7 @@
 {{ tagTemplate(tag) -}}
 {% endfor -%}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}
 
 {# Payload #}
