@@ -43,6 +43,11 @@
         "default": "servers,channels,messages,security,tags,license,termsOfService,contact",
         "required": false
       },
+      "tocHeadingLevel": {
+        "description": "Number of heading levels to show in the table of contents.",
+        "default": "0",
+        "required": false
+      },
       "slate.enabled": {
         "description": "Enables the output of the Slate header in the Markdown document.",
         "default": "false",

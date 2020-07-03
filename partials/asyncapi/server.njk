@@ -26,12 +26,12 @@ URL|{{ server.url() | link }}
 Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
 
 {% if server.hasVariables() -%}
-### Variables
+### Server URL Variables
 
 {{ variablesTemplate(server.variables()) -}}
 {% endif -%}
 {% if server.security() -%}
-### Security
+### Server Security
 
 {{ securityTemplate(server.security()) -}}
 {% endif -%}

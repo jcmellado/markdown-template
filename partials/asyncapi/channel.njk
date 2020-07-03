@@ -30,7 +30,7 @@
 {{ channelBindingsTemplate(channel.bindings()) -}}
 {% endif -%}
 {% if (channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages()) -%}
-### Messages
+### Channel Messages
 
 {{ messagesChannelTemplate(channel) -}}
 {% endif -%}
