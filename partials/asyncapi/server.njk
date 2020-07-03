@@ -7,13 +7,13 @@
 
 {# Server #}
 
-{% macro serversTemplate(servers) -%}
+{% macro serversTemplate(servers, subsections) -%}
 {% for serverName, server in servers -%}
-{{ serverTemplate(serverName, server) -}}
+{{ serverTemplate(serverName, server, subsections) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro serverTemplate(serverName, server) -%}
+{% macro serverTemplate(serverName, server, subsections) -%}
 ## {{ serverName }}
 
 {% if server.description() | isDefined -%}
@@ -25,37 +25,37 @@ Parameter|Value
 URL|{{ server.url() | link }}
 Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
 
-{% if server.hasVariables() -%}
+{% for subsection in subsections | chunks -%}
+{% if subsection === "variables" and server.hasVariables() -%}
 ### Server URL Variables
 
-{{ variablesTemplate(server.variables()) -}}
-{% endif -%}
-{% if server.security() -%}
+{{ variablesServerTemplate(server.variables()) -}}
+{% elif subsection === "security" and server.security() -%}
 ### Server Security
 
-{{ securityTemplate(server.security()) -}}
-{% endif -%}
-{% if server.bindings() -%}
+{{ securityServerTemplate(server.security()) -}}
+{% elif subsection === "bindings" and server.bindings() -%}
 ### Server Bindings
 
 {{ serverBindingsTemplate(server.bindings()) -}}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}
 
 {# Variables #}
 
-{% macro variablesTemplate(variables) -%}
+{% macro variablesServerTemplate(variables) -%}
 Variable|Allowed|Default|Description
 --------|-------|-------|-----------
 {% for variableName, variable in variables -%}
 {{ variableName | code -}}
 |{% if variable.hasAllowedValues() -%} {{ multilineTemplate(variable.allowedValues()) }} {%- endif -%}
 |{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() | code }} {%- endif -%}
-|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesTemplate(variable.examples()) }} {%- endif %}
+|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesServerTemplate(variable.examples()) }} {%- endif %}
 {% endfor %}
 {% endmacro -%}
 
-{% macro examplesTemplate(examples) -%}
+{% macro examplesServerTemplate(examples) -%}
 {{- "" | br | safe -}} Examples: {{- "" | br | safe -}}
 {% set linefeed = joiner("" | br | safe) -%}
 {% for example in examples -%}
@@ -65,7 +65,7 @@ Variable|Allowed|Default|Description
 
 {# Security #}
 
-{% macro securityTemplate(security) -%}
+{% macro securityServerTemplate(security) -%}
 Scheme|Scopes
 ------|------
 {% for scheme in security -%}

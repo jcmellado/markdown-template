@@ -25,15 +25,15 @@
 {% if section === "servers" and asyncapi.hasServers() -%}
 # Servers
 
-{{ serversTemplate(asyncapi.servers()) -}}
+{{ serversTemplate(asyncapi.servers(), params["sections.servers"]) -}}
 {% elif section === "channels" and asyncapi.hasChannels() -%}
 # Channels
 
-{{ channelsTemplate(asyncapi.channels()) -}}
+{{ channelsTemplate(asyncapi.channels(), params["sections.channels"]) -}}
 {% elif section === "messages" and asyncapi.allMessages() | length -%}
 # Messages
 
-{{ messagesTemplate(asyncapi.allMessages(), asyncapi.defaultContentType(), params) -}}
+{{ messagesTemplate(asyncapi.allMessages(), params["sections.messages"], asyncapi.defaultContentType(), params["slate.enabled"]) -}}
 {% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
 # Security
 
