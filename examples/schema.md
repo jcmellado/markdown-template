@@ -1,10 +1,24 @@
 # Schema 1.0.0
 
+## Table of Contents
+
+* [Channels](#channels)
+    * [dummy](#dummy)
+* [Messages](#messages)
+    * [Numeric](#numeric)
+    * [String](#string)
+    * [Array](#array)
+    * [Object](#object)
+    * [Items](#items)
+    * [Properties](#properties)
+    * [Combinations](#combinations)
+    * [Conditionals](#conditionals)
+
 # Channels
 
 ## dummy
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------

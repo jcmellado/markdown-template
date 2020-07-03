@@ -1,5 +1,23 @@
 # Bindings 1.0.0
 
+## Table of Contents
+
+* [Servers](#servers)
+    * [MQTT-Server](#mqtt-server)
+* [Channels](#channels)
+    * [WebSockets-Channel](#websockets-channel)
+    * [AMQP-Channel-RoutingKey](#amqp-channel-routingkey)
+    * [AMQP-Channel-Queue](#amqp-channel-queue)
+    * [HTTP-Channel-Operation](#http-channel-operation)
+    * [Kafka-Channel-Operation](#kafka-channel-operation)
+    * [AMQP-Channel-Operation](#amqp-channel-operation)
+    * [MQTT-Channel-Operation](#mqtt-channel-operation)
+* [Messages](#messages)
+    * [HTTP-Message](#http-message)
+    * [Kafka-Message](#kafka-message)
+    * [AMQP-Message](#amqp-message)
+    * [MQTT-Message](#mqtt-message)
+
 # Servers
 
 ## MQTT-Server
@@ -85,7 +103,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 ## HTTP-Channel-Operation
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------
@@ -111,7 +129,7 @@ Name|Type|Format|Allowed|Default|Description
 
 ## Kafka-Channel-Operation
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------
@@ -141,7 +159,7 @@ Name|Type|Format|Allowed|Default|Description
 
 ## AMQP-Channel-Operation
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------
@@ -169,7 +187,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 ## MQTT-Channel-Operation
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------

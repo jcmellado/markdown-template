@@ -1,5 +1,23 @@
 # Security 1.0.0
 
+## Table of Contents
+
+* [Servers](#servers)
+    * [dummy](#dummy)
+* [Channels](#channels)
+    * [dummy](#dummy)
+* [Security](#security)
+    * [User/Password](#user/password)
+    * [API Key](#api-key)
+    * [X.509 Certificate](#x.509-certificate)
+    * [Symmetric Encryption](#symmetric-encryption)
+    * [Asymmetric Encryption](#asymmetric-encryption)
+    * [HTTP API Key](#http-api-key)
+    * [HTTP](#http)
+    * [HTTP (Bearer)](#http-(bearer))
+    * [OAuth 2.0](#oauth-2.0)
+    * [OpenID](#openid)
+
 # Servers
 
 ## dummy
@@ -9,7 +27,7 @@ Parameter|Value
 URL|[dummy](dummy)
 Protocol|`dummy` 
 
-### Security
+### Server Security
 
 Scheme|Scopes
 ------|------

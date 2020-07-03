@@ -7,6 +7,7 @@
 {% from "./asyncapi/security.njk" import securitySchemesTemplate -%}
 {% from "./asyncapi/server.njk" import serversTemplate -%}
 {% from "./asyncapi/tag.njk" import tagTemplate -%}
+{% from "./asyncapi/toc.njk" import tocTemplate -%}
 
 # {{ asyncapi.info().title() }} {{ asyncapi.info().version() }}
 
@@ -15,6 +16,11 @@
 
 {% endif -%}
 {% set sections = params["sections"] | chunks -%}
+{% if params["tocHeadingLevel"] !== "0" -%}
+## Table of Contents
+
+{{ tocTemplate(asyncapi, sections, params["tocHeadingLevel"]) -}}
+{% endif -%}
 {% for section in sections -%}
 {% if section === "servers" and asyncapi.hasServers() -%}
 # Servers
@@ -28,12 +34,10 @@
 # Messages
 
 {{ messagesTemplate(asyncapi.allMessages(), asyncapi.defaultContentType(), params) -}}
-{% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() -%}
-{% if asyncapi.components().securitySchemes() | length -%}
+{% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
 # Security
 
 {{ securitySchemesTemplate(asyncapi.components().securitySchemes()) -}}
-{% endif -%}
 {% elif section === "tags" and asyncapi.hasTags() -%}
 # Tags
 

@@ -1,0 +1,90 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{# Table of Contents #}
+
+{% macro tocTemplate(asyncapi, sections, tocHeadingLevel) -%}
+{% if tocHeadingLevel === "1" or tocHeadingLevel === "2" -%}
+{% for section in sections -%}
+{{ sectionTocTemplate(asyncapi, section, tocHeadingLevel) -}}
+{% endfor %}
+{% endif -%}
+{% endmacro -%}
+
+{% macro sectionTocTemplate(asyncapi, section, tocHeadingLevel) -%}
+{% if section === "servers" and asyncapi.hasServers() -%}
+{{ serversTocTemplate(asyncapi.servers(), tocHeadingLevel) -}}
+{% elif section === "channels" and asyncapi.hasChannels() -%}
+{{ channelsTocTemplate(asyncapi.channels(), tocHeadingLevel) -}}
+{% elif section === "messages" and asyncapi.allMessages() | length -%}
+{{ messagesTocTemplate(asyncapi.allMessages(), tocHeadingLevel) -}}
+{% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
+{{ securityTocTemplate(asyncapi.components().securitySchemes(), tocHeadingLevel) -}}
+{% elif section === "tags" and asyncapi.hasTags() -%}
+{{ tagsTocTemplate(asyncapi.tags(), tocHeadingLevel) -}}
+{% elif section === "license" and asyncapi.info().license() -%}
+{{ licenseTocTemplate() -}}
+{% elif section === "termsOfService" and asyncapi.info().termsOfService() | isDefined -%}
+{{ termsOfServiceTocTemplate() -}}
+{% elif section === "contact" and asyncapi.info().contact() -%}
+{{ contactTocTemplate() -}}
+{% endif -%}
+{% endmacro -%}
+
+{% macro serversTocTemplate(servers, tocHeadingLevel) -%}
+{{ "Servers" | reference | listItem(1) }}
+{% if tocHeadingLevel === "2" -%}
+{% for serverName, server in servers -%}
+{{ serverName | reference | listItem(2) }}
+{% endfor -%}
+{% endif -%}
+{% endmacro -%}
+
+{% macro channelsTocTemplate(channels, tocHeadingLevel) -%}
+{{ "Channels" | reference | listItem(1) }}
+{% if tocHeadingLevel === "2" -%}
+{% for channelName, channel in channels -%}
+{{ channelName | reference | listItem(2) }}
+{% endfor -%}
+{% endif -%}
+{% endmacro -%}
+
+{% macro messagesTocTemplate(messages, tocHeadingLevel) -%}
+{{ "Messages" | reference | listItem(1) }}
+{% if tocHeadingLevel === "2" -%}
+{% for messageName, message in messages -%}
+{% set computedName -%} {{- message.name() if message.name() | isDefined else message.uid() -}} {% endset -%}
+{{ computedName | reference | listItem(2) }}
+{% endfor -%}
+{% endif -%}
+{% endmacro -%}
+
+{% macro securityTocTemplate(schemes,tocHeadingLevel) -%}
+{{ "Security" | reference | listItem(1) }}
+{% if tocHeadingLevel === "2" -%}
+{% for schemeName, scheme in schemes -%}
+{{ schemeName | reference | listItem(2) }}
+{% endfor -%}
+{% endif -%}
+{% endmacro -%}
+
+{% macro tagsTocTemplate(tags, tocHeadingLevel) -%}
+{{ "Tags" | reference | listItem(1) }}
+{% if tocHeadingLevel === "2" -%}
+{% for tag in tags -%}
+{{ tag.name() | reference | listItem(2) }}
+{% endfor -%}
+{% endif -%}
+{% endmacro -%}
+
+{% macro licenseTocTemplate() -%}
+{{ "License" | reference | listItem(1) }}
+{% endmacro -%}
+
+{% macro termsOfServiceTocTemplate() -%}
+{{ "Terms Of Service" | reference | listItem(1) }}
+{% endmacro -%}
+
+{% macro contactTocTemplate() -%}
+{{ "Contact" | reference | listItem(1) }}
+{% endmacro -%}

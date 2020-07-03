@@ -4,6 +4,27 @@ Allows you to interact with printers. Using it you can:
 * Create a print job
 * Receive events on the print job
 
+## Table of Contents
+
+* [Servers](#servers)
+    * [Production](#production)
+    * [Staging](#staging)
+* [Channels](#channels)
+    * [commands/{queueId}](#commands/{queueid})
+    * [events/{jobId}](#events/{jobid})
+* [Messages](#messages)
+    * [createPrintJob](#createprintjob)
+    * [cancelPrintJob](#cancelprintjob)
+    * [printJobEvent](#printjobevent)
+* [Security](#security)
+    * [API Key](#api-key)
+    * [OAuth 2](#oauth-2)
+* [Tags](#tags)
+    * [asyncapi](#asyncapi)
+* [License](#license)
+* [Terms Of Service](#terms-of-service)
+* [Contact](#contact)
+
 # Servers
 
 ## Production
@@ -15,7 +36,7 @@ Parameter|Value
 URL|[https://api.print.example.com](https://api.print.example.com)
 Protocol|`AMQP` `0-9-1`
 
-### Security
+### Server Security
 
 Scheme|Scopes
 ------|------
@@ -30,13 +51,13 @@ Parameter|Value
 URL|[mqtt://staging.api.print.example.com:{port}](mqtt://staging.api.print.example.com:{port})
 Protocol|`MQTT` `v3.1.1`
 
-### Variables
+### Server URL Variables
 
 Variable|Allowed|Default|Description
 --------|-------|-------|-----------
 `port`|`1883`<br />`8883`|`1883`|Secure connection (TLS) is available through port 8883.<br />Examples:<br />- mqtt://staging.api.print.example.com<br />- mqtt://staging.api.print.example.com:1883<br />- mqtt://staging.api.print.example.com:8883
 
-### Security
+### Server Security
 
 Scheme|Scopes
 ------|------
@@ -52,7 +73,7 @@ Client Id|`guest`|The client identifier.
 Clean session|`false`|Whether to create a persistent connection or not.
 Last Will and Testament topic|`/last-wills`|The topic where the Last Will and Testament message will be sent.
 Last Will and Testament QoS|`2`|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
-Retain Last Will and Testament messages|`false`|Whether the broker should retain the Last Will and Testament message or not.
+Retain Last Will and Testament message|`false`|Whether the broker should retain the Last Will and Testament message or not.
 Keep-Alive|`60`|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
 Binding Version|`0.1.0`|The version of this binding.
 
@@ -72,7 +93,7 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 *-*|`string`||||
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------
@@ -121,7 +142,7 @@ AutoDelete|`false`|Whether the queue should be deleted when the last consumer un
 Virtual Host|`/`|The virtual host of the queue.
 Binding Version|`0.1.0`|The version of this binding.
 
-### Messages
+### Channel Messages
 
 Operation|Name|Description
 ---------|----|-----------

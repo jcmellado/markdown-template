@@ -34,6 +34,11 @@ test('code', t => {
   t.is(filters.code('foo'), '`foo`');
 });
 
+test('listItem', t => {
+  t.is(filters.listItem('foo', 1), '* foo');
+  t.is(filters.listItem('foo', 2), '    * foo');
+});
+
 test('br', t => {
   t.is(filters.br('foo'), 'foo<br />');
 });

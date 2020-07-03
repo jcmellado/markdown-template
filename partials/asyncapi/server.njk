@@ -1,7 +1,7 @@
 {#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
     source is governed by a MIT-style license found in the LICENSE file. -#}
 
-{% from "./bindings.njk" import protocolNameTemplate, serverBindingsTemplate -%}
+{% from "./binding.njk" import protocolNameTemplate, serverBindingsTemplate -%}
 {% from "./commons.njk" import multilineTemplate -%}
 {% from "./external-docs.njk" import externalDocsTemplate -%}
 
@@ -26,12 +26,12 @@ URL|{{ server.url() | link }}
 Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
 
 {% if server.hasVariables() -%}
-### Variables
+### Server URL Variables
 
 {{ variablesTemplate(server.variables()) -}}
 {% endif -%}
 {% if server.security() -%}
-### Security
+### Server Security
 
 {{ securityTemplate(server.security()) -}}
 {% endif -%}
