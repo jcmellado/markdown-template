@@ -8,13 +8,13 @@
 
 {# Message #}
 
-{% macro messagesTemplate(messages, defaultContentType, params) -%}
+{% macro messagesTemplate(messages, defaultContentType, slateEnabled) -%}
 {% for messageName, message in messages -%}
-{{ messageTemplate(message, defaultContentType, params) -}}
+{{ messageTemplate(message, defaultContentType, slateEnabled) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro messageTemplate(message, defaultContentType, params) -%}
+{% macro messageTemplate(message, defaultContentType, slateEnabled) -%}
 ## {% if message.name() | isDefined -%} {{ message.name() }} {%- else -%} {{ message.uid() }} {%- endif %}
 
 {% if message.title() | isDefined -%}
@@ -35,7 +35,7 @@
 {% if message.payload() -%}
 ### Payload
 
-{{ payloadMessageTemplate(message, defaultContentType, params) -}}
+{{ payloadMessageTemplate(message, defaultContentType, slateEnabled) -}}
 {% endif -%}
 {% if message.headers() -%}
 ### Headers
@@ -65,7 +65,7 @@
 
 {# Payload #}
 
-{% macro payloadMessageTemplate(message, defaultContentType, params) -%}
+{% macro payloadMessageTemplate(message, defaultContentType, slateEnabled) -%}
 {% if message.contentType() | isDefined or defaultContentType | isDefined -%}
 {{ "Content Type:" }} {% if message.contentType() | isDefined -%} {{ message.contentType() | code }} {%- else -%} {{ defaultContentType | code }} {% endif %}
 
@@ -74,11 +74,11 @@
 {{ "Schema Format:" }} {{ message.schemaFormat() | code }}
 
 {% endif -%}
-{% if message.examples() and params["slate.enabled"] === "true" -%}
+{% if message.examples() and slateEnabled === "true" -%}
 {{ examplesMessageTemplate(message.examples()) -}}
 {% endif -%}
 {{ schemaTemplate(message.payload()) -}}
-{% if message.examples() and params["slate.enabled"] === "false" -%}
+{% if message.examples() and slateEnabled === "false" -%}
 #### Examples
 
 {{ examplesMessageTemplate(message.examples()) -}}

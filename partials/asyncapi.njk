@@ -33,7 +33,7 @@
 {% elif section === "messages" and asyncapi.allMessages() | length -%}
 # Messages
 
-{{ messagesTemplate(asyncapi.allMessages(), asyncapi.defaultContentType(), params) -}}
+{{ messagesTemplate(asyncapi.allMessages(), asyncapi.defaultContentType(), params["slate.enabled"]) -}}
 {% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
 # Security
 
