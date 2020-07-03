@@ -25,23 +25,23 @@ Check the [AsyncAPI Generator Documentation](https://github.com/asyncapi/generat
 # Examples
 
 AsyncAPI specification of fictional API service:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/asyncapi.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/asyncapi.md)
+- [AsyncAPI YAML document](examples/asyncapi.yml)
+- [Markdown document](examples/asyncapi.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/asyncapi.html)
 
 Server, channel, operation and message bindings for all the supported protocols:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/bindings.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/bindings.md)
+- [AsyncAPI YAML document](examples/bindings.yml)
+- [Markdown document](examples/bindings.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/bindings.html)
 
 Security schemes for all the supported protocols:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/security.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/security.md)
+- [AsyncAPI YAML document](examples/security.yml)
+- [Markdown document](examples/security.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/security.html)
 
 Simple and complex schemas:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/schema.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/schema.md)
+- [AsyncAPI YAML document](examples/schema.yml)
+- [Markdown document](examples/schema.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/schema.html)
 
 # Parameters
