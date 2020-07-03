@@ -324,8 +324,11 @@ Last Will and Testament topic|{{ binding.lastWill.topic | code }}|The topic wher
 {% if binding.lastWill.qos | isDefined -%}
 Last Will and Testament QoS|{{ binding.lastWill.qos | code }}|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
 {% endif -%}
+{% if binding.lastWill.message | isDefined -%}
+Last Will and Testament message|{{ binding.lastWill.message | code }}|Last will and Testament message.
+{% endif -%}
 {% if binding.lastWill.retain | isDefined -%}
-Retain Last Will and Testament messages|{{ binding.lastWill.retain | code }}|Whether the broker should retain the Last Will and Testament message or not.
+Retain Last Will and Testament message|{{ binding.lastWill.retain | code }}|Whether the broker should retain the Last Will and Testament message or not.
 {% endif -%}
 {% endif -%}
 {% if binding.keepAlive | isDefined -%}

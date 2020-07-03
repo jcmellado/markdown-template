@@ -19,7 +19,8 @@ Client Id|`guest`|The client identifier.
 Clean session|`true`|Whether to create a persistent connection or not.
 Last Will and Testament topic|`/last-wills`|The topic where the Last Will and Testament message will be sent.
 Last Will and Testament QoS|`2`|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
-Retain Last Will and Testament messages|`false`|Whether the broker should retain the Last Will and Testament message or not.
+Last Will and Testament message|`Guest gone offline.`|Last will and Testament message.
+Retain Last Will and Testament message|`false`|Whether the broker should retain the Last Will and Testament message or not.
 Keep-Alive|`60`|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
 Binding Version|`0.1.0`|The version of this binding.
 
