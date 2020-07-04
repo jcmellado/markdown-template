@@ -164,7 +164,7 @@ Name|Type|Format|Allowed|Default|Description
 {{ rootSchemaTemplate(path, schema.additionalItems()) -}}
 {% endif -%}
 {% if schema.contains() -%}
-{% set path -%} {{- root -}} [*] {%- endset -%}
+{% set path -%} {{- root -}} [?] {%- endset -%}
 {{ rootSchemaTemplate(path, schema.contains()) -}}
 {% endif -%}
 {% endmacro -%}

@@ -184,24 +184,24 @@ channels:
                   type: string
                 country:
                   type: string
-            if:
-              type: object
-              properties:
-                country:
-                  type: string
-                  const: USA
-            then:
-              type: object
-              properties:
-                postalCode:
-                  type: string
-                  pattern: ^[0-9]{5}(-[0-9]{4})?$
-            else:
-              type: object
-              properties:
-                postalCode:
-                  type: string
-                  pattern: ^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$
+              if:
+                type: object
+                properties:
+                  country:
+                    type: string
+                    const: USA
+              then:
+                type: object
+                properties:
+                  postalCode:
+                    type: string
+                    pattern: ^[0-9]{5}(-[0-9]{4})?$
+              else:
+                type: object
+                properties:
+                  postalCode:
+                    type: string
+                    pattern: ^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$
           required:
             - port
             - url

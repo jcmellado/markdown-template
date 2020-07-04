@@ -96,7 +96,7 @@ Name|Type|Format|Allowed|Default|Description
 `extra`[]|`string`||||
 `extra`[...]|`integer`||||
 `contains`|`array`||||Array with one or more elements matching some schema.
-`contains`[*]|`string`|`date`|||
+`contains`[?]|`string`|`date`|||
 
 ## 2.6. Properties
 

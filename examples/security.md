@@ -31,16 +31,16 @@ Protocol|`test`
 
 Scheme|Scopes
 ------|------
-[User/Password](#user/password)|
-[API Key](#api-key)|
-[X.509 Certificate](#x.509-certificate)|
-[Symmetric Encryption](#symmetric-encryption)|
-[Asymmetric Encryption](#asymmetric-encryption)|
-[HTTP API Key](#http-api-key)|
-[HTTP](#http)|
-[HTTP (Bearer)](#http-(bearer))|
-[OAuth 2.0](#oauth-2.0)|`read:user`<br />`write:user`
-[OpenID](#openid)|`read:user`<br />`write:user`
+`User/Password`|
+`API Key`|
+`X.509 Certificate`|
+`Symmetric Encryption`|
+`Asymmetric Encryption`|
+`HTTP API Key`|
+`HTTP`|
+`HTTP (Bearer)`|
+`OAuth 2.0`|`read:user`<br />`write:user`
+`OpenID`|`read:user`<br />`write:user`
 
 # 2. Channels
 
