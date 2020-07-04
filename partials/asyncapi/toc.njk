@@ -3,88 +3,89 @@
 
 {# Table of Contents #}
 
-{% macro tocTemplate(asyncapi, sections, tocHeadingLevel) -%}
-{% if tocHeadingLevel === "1" or tocHeadingLevel === "2" -%}
-{% for section in sections -%}
-{{ sectionTocTemplate(asyncapi, section, tocHeadingLevel) -}}
+{% macro tocTemplate(asyncapi, params) -%}
+{% if params["tocHeadingLevel"] === "1" or params["tocHeadingLevel"] === "2" -%}
+{% set toc = params | toc -%}
+{% for section in params["sections"] | chunks -%}
+{{ sectionTocTemplate(asyncapi, section, toc) -}}
 {% endfor %}
 {% endif -%}
 {% endmacro -%}
 
-{% macro sectionTocTemplate(asyncapi, section, tocHeadingLevel) -%}
+{% macro sectionTocTemplate(asyncapi, section, toc) -%}
 {% if section === "servers" and asyncapi.hasServers() -%}
-{{ serversTocTemplate(asyncapi.servers(), tocHeadingLevel) -}}
+{{ serversTocTemplate(toc, asyncapi.servers()) -}}
 {% elif section === "channels" and asyncapi.hasChannels() -%}
-{{ channelsTocTemplate(asyncapi.channels(), tocHeadingLevel) -}}
+{{ channelsTocTemplate(toc,asyncapi.channels()) -}}
 {% elif section === "messages" and asyncapi.allMessages() | length -%}
-{{ messagesTocTemplate(asyncapi.allMessages(), tocHeadingLevel) -}}
+{{ messagesTocTemplate(toc, asyncapi.allMessages()) -}}
 {% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
-{{ securityTocTemplate(asyncapi.components().securitySchemes(), tocHeadingLevel) -}}
+{{ securityTocTemplate(toc, asyncapi.components().securitySchemes()) -}}
 {% elif section === "tags" and asyncapi.hasTags() -%}
-{{ tagsTocTemplate(asyncapi.tags(), tocHeadingLevel) -}}
+{{ tagsTocTemplate(toc, asyncapi.tags()) -}}
 {% elif section === "license" and asyncapi.info().license() -%}
-{{ licenseTocTemplate() -}}
+{{ licenseTocTemplate(toc) -}}
 {% elif section === "termsOfService" and asyncapi.info().termsOfService() | isDefined -%}
-{{ termsOfServiceTocTemplate() -}}
+{{ termsOfServiceTocTemplate(toc) -}}
 {% elif section === "contact" and asyncapi.info().contact() -%}
-{{ contactTocTemplate() -}}
+{{ contactTocTemplate(toc) -}}
 {% endif -%}
 {% endmacro -%}
 
-{% macro serversTocTemplate(servers, tocHeadingLevel) -%}
-{{ "Servers" | reference | listItem(1) }}
-{% if tocHeadingLevel === "2" -%}
+{% macro serversTocTemplate(toc, servers) -%}
+{{ "Servers" | heading(toc, 1) | reference | listItem(1) }}
+{% if toc.headingLevel === 2 -%}
 {% for serverName, server in servers -%}
-{{ serverName | reference | listItem(2) }}
+{{ serverName | heading(toc, 2) | reference | listItem(2) }}
 {% endfor -%}
 {% endif -%}
 {% endmacro -%}
 
-{% macro channelsTocTemplate(channels, tocHeadingLevel) -%}
-{{ "Channels" | reference | listItem(1) }}
-{% if tocHeadingLevel === "2" -%}
+{% macro channelsTocTemplate(toc, channels) -%}
+{{ "Channels" | heading(toc, 1) | reference | listItem(1) }}
+{% if toc.headingLevel === 2 -%}
 {% for channelName, channel in channels -%}
-{{ channelName | reference | listItem(2) }}
+{{ channelName | heading(toc, 2) | reference | listItem(2) }}
 {% endfor -%}
 {% endif -%}
 {% endmacro -%}
 
-{% macro messagesTocTemplate(messages, tocHeadingLevel) -%}
-{{ "Messages" | reference | listItem(1) }}
-{% if tocHeadingLevel === "2" -%}
+{% macro messagesTocTemplate(toc, messages) -%}
+{{ "Messages" | heading(toc, 1) | reference | listItem(1) }}
+{% if toc.headingLevel === 2 -%}
 {% for messageName, message in messages -%}
 {% set computedName -%} {{- message.name() if message.name() | isDefined else message.uid() -}} {% endset -%}
-{{ computedName | reference | listItem(2) }}
+{{ computedName | heading(toc, 2) | reference | listItem(2) }}
 {% endfor -%}
 {% endif -%}
 {% endmacro -%}
 
-{% macro securityTocTemplate(schemes,tocHeadingLevel) -%}
-{{ "Security" | reference | listItem(1) }}
-{% if tocHeadingLevel === "2" -%}
+{% macro securityTocTemplate(toc, schemes) -%}
+{{ "Security" | heading(toc, 1) | reference | listItem(1) }}
+{% if toc.headingLevel === 2 -%}
 {% for schemeName, scheme in schemes -%}
-{{ schemeName | reference | listItem(2) }}
+{{ schemeName | heading(toc, 2) | reference | listItem(2) }}
 {% endfor -%}
 {% endif -%}
 {% endmacro -%}
 
-{% macro tagsTocTemplate(tags, tocHeadingLevel) -%}
-{{ "Tags" | reference | listItem(1) }}
-{% if tocHeadingLevel === "2" -%}
+{% macro tagsTocTemplate(toc, tags) -%}
+{{ "Tags" | heading(toc, 1) | reference | listItem(1) }}
+{% if toc.headingLevel === 2 -%}
 {% for tag in tags -%}
-{{ tag.name() | reference | listItem(2) }}
+{{ tag.name() | heading(toc, 2) | reference | listItem(2) }}
 {% endfor -%}
 {% endif -%}
 {% endmacro -%}
 
-{% macro licenseTocTemplate() -%}
-{{ "License" | reference | listItem(1) }}
+{% macro licenseTocTemplate(toc) -%}
+{{ "License" | heading(toc, 1) | reference | listItem(1) }}
 {% endmacro -%}
 
-{% macro termsOfServiceTocTemplate() -%}
-{{ "Terms Of Service" | reference | listItem(1) }}
+{% macro termsOfServiceTocTemplate(toc) -%}
+{{ "Terms Of Service" | heading(toc, 1) | reference | listItem(1) }}
 {% endmacro -%}
 
-{% macro contactTocTemplate() -%}
-{{ "Contact" | reference | listItem(1) }}
+{% macro contactTocTemplate(toc) -%}
+{{ "Contact" | heading(toc, 1) | reference | listItem(1) }}
 {% endmacro -%}

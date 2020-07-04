@@ -8,39 +8,41 @@
 
 {# Channel #}
 
-{% macro channelsTemplate(channels, subsections) -%}
+{% macro channelsTemplate(channels, subsections, toc) -%}
 {% for channelName, channel in channels -%}
-{{ channelTemplate(channelName, channel, subsections) -}}
+{{ channelTemplate(channelName, channel, subsections, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro channelTemplate(channelName, channel, subsections) -%}
-## {{ channelName }}
+{% macro channelTemplate(channelName, channel, subsections, toc) -%}
+## {{ channelName | heading(toc, 2) }}
 
 {% if channel.description() | isDefined -%}
 {{ channel.description() | safe }}
 
 {% endif -%}
 {% if channel.hasParameters() -%}
+### {{ "Parameters" | heading(toc, 3) }}
+
 {{ parametersChannelTemplate(channel.parameters()) -}}
 {% endif -%}
 {% for subsection in subsections | chunks -%}
 {% if subsection === "bindings" and channel.bindings() -%}
-### Channel Bindings
+### {{ "Bindings" | heading(toc, 3) }}
 
 {{ channelBindingsTemplate(channel.bindings()) -}}
 {% elif subsection === "messages" and ((channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages())) -%}
-### Channel Messages
+### {{ "Messages" | heading(toc, 3) }}
 
 {{ messagesChannelTemplate(channel) -}}
-{% elif subsection === "publisher" and channel.hasPublish() -%}
-### As Publisher
+{% elif subsection === "publish" and channel.hasPublish() -%}
+### {{ "As Publisher" | heading(toc, 3) }}
 
-{{ operationTemplate(channel.publish(), subsections) -}}
-{% elif subsection === "subscriber" and channel.hasSubscribe() -%}
-### As Subscriber
+{{ operationTemplate(channel.publish(), subsections, toc) -}}
+{% elif subsection === "subscribe" and channel.hasSubscribe() -%}
+### {{ "As Subscriber" | heading(toc, 3) }}
 
-{{ operationTemplate(channel.subscribe(), subsections) -}}
+{{ operationTemplate(channel.subscribe(), subsections, toc) -}}
 {% endif -%}
 {% endfor -%}
 {% endmacro -%}
@@ -73,8 +75,8 @@ Parameter|Location|Description
 {# Messages #}
 
 {% macro messagesChannelTemplate(channel) -%}
-Operation|Name|Description
----------|----|-----------
+Operation|Message|Description
+---------|-------|-----------
 {% if channel.hasSubscribe() and channel.subscribe().messages() -%}
 {{ messageChannelTemplate(channel.subscribe()) -}}
 {% endif -%}
@@ -86,14 +88,14 @@ Operation|Name|Description
 {% macro messageChannelTemplate(operation) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
-|{% if message.name() | isDefined -%} {{ message.name() | reference }} {%- else -%} {{ message.uid() | reference }} {%- endif -%}
+|{% if message.name() | isDefined -%} {{ message.name() | code }} {%- else -%} {{ message.uid() | code }} {%- endif -%}
 |{{ message.title() }}
 {% endfor -%}
 {% endmacro -%}
 
 {# Operation #}
 
-{% macro operationTemplate(operation, subsections) -%}
+{% macro operationTemplate(operation, subsections, toc) -%}
 {% if operation.summary() | isDefined -%}
 {{ operation.summary() }}
 
@@ -111,14 +113,14 @@ Operation|Name|Description
 {% endif -%}
 {% for subsection in subsections | chunks -%}
 {% if subsection === "operation.bindings" and operation.bindings() -%}
-#### Operation Bindings
+#### {{ "Bindings" | heading(toc, 4) }}
 
 {{ operationBindingsTemplate(operation.bindings()) -}}
 {% elif subsection === "operation.tags" and operation.hasTags() -%}
-#### Operation Tags
+#### {{ "Tags" | heading(toc, 4) }}
 
 {% for tag in operation.tags() -%}
-##### {{ tag.name() }}
+##### {{ tag.name() | heading(toc, 5) }}
 
 {{ tagTemplate(tag) -}}
 {% endfor -%}

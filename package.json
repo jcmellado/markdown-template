@@ -50,7 +50,7 @@
       },
       "sections.channels": {
         "description": "Comma-separated list of subsections to be included in the channels section.",
-        "default": "bindings,messages,publisher,subscriber,operation.bindings,operation.tags",
+        "default": "bindings,messages,publish,subscribe,operation.bindings,operation.tags",
         "required": false
       },
       "sections.messages": {

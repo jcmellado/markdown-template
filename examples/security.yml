@@ -6,9 +6,9 @@ info:
 
 servers:
 
-  dummy:
-    url: dummy
-    protocol: dummy
+  test:
+    url: test
+    protocol: test
     security:
       - "User/Password": []
       - "API Key": []

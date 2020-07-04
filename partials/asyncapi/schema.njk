@@ -151,7 +151,7 @@ Name|Type|Format|Allowed|Default|Description
 {% if schema.items() -%}
 {% if schema.items() | isArray -%}
 {% for item in schema.items() -%}
-{% set path -%} {{- root -}} [ {{- loop.index - 1 -}} ] {%- endset -%}
+{% set path -%} {{- root -}} [ {{- loop.index0 -}} ] {%- endset -%}
 {{ rootSchemaTemplate(path, item) -}}
 {% endfor -%}
 {% else -%}
@@ -164,7 +164,7 @@ Name|Type|Format|Allowed|Default|Description
 {{ rootSchemaTemplate(path, schema.additionalItems()) -}}
 {% endif -%}
 {% if schema.contains() -%}
-{% set path -%} {{- root -}} [*] {%- endset -%}
+{% set path -%} {{- root -}} [?] {%- endset -%}
 {{ rootSchemaTemplate(path, schema.contains()) -}}
 {% endif -%}
 {% endmacro -%}
