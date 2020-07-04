@@ -2,32 +2,32 @@
 
 ## Table of Contents
 
-* [Servers](#servers)
-    * [MQTT-Server](#mqtt-server)
-* [Channels](#channels)
-    * [WebSockets-Channel](#websockets-channel)
-    * [AMQP-Channel-RoutingKey](#amqp-channel-routingkey)
-    * [AMQP-Channel-Queue](#amqp-channel-queue)
-    * [HTTP-Channel-Operation](#http-channel-operation)
-    * [Kafka-Channel-Operation](#kafka-channel-operation)
-    * [AMQP-Channel-Operation](#amqp-channel-operation)
-    * [MQTT-Channel-Operation](#mqtt-channel-operation)
-* [Messages](#messages)
-    * [HTTP-Message](#http-message)
-    * [Kafka-Message](#kafka-message)
-    * [AMQP-Message](#amqp-message)
-    * [MQTT-Message](#mqtt-message)
+* [1. Servers](#1.-servers)
+    * [1.1. MQTT-Server](#1.1.-mqtt-server)
+* [2. Channels](#2.-channels)
+    * [2.1. WebSockets-Channel](#2.1.-websockets-channel)
+    * [2.2. AMQP-Channel-RoutingKey](#2.2.-amqp-channel-routingkey)
+    * [2.3. AMQP-Channel-Queue](#2.3.-amqp-channel-queue)
+    * [2.4. HTTP-Channel-Operation](#2.4.-http-channel-operation)
+    * [2.5. Kafka-Channel-Operation](#2.5.-kafka-channel-operation)
+    * [2.6. AMQP-Channel-Operation](#2.6.-amqp-channel-operation)
+    * [2.7. MQTT-Channel-Operation](#2.7.-mqtt-channel-operation)
+* [3. Messages](#3.-messages)
+    * [3.1. HTTP-Message](#3.1.-http-message)
+    * [3.2. Kafka-Message](#3.2.-kafka-message)
+    * [3.3. AMQP-Message](#3.3.-amqp-message)
+    * [3.4. MQTT-Message](#3.4.-mqtt-message)
 
-# Servers
+# 1. Servers
 
-## MQTT-Server
+## 1.1. MQTT-Server
 
 Parameter|Value
 ---------|------
 URL|[dummy](dummy)
 Protocol|`MQTT` 
 
-### Server Bindings
+### 1.1.1. Bindings
 
 MQTT
 
@@ -42,11 +42,11 @@ Retain Last Will and Testament message|`false`|Whether the broker should retain 
 Keep-Alive|`60`|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
 Binding Version|`0.1.0`|The version of this binding.
 
-# Channels
+# 2. Channels
 
-## WebSockets-Channel
+## 2.1. WebSockets-Channel
 
-### Channel Bindings
+### 2.1.1. Bindings
 
 WebSockets
 
@@ -67,9 +67,9 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 `x-apikey`|`string`||||API Key
 
-## AMQP-Channel-RoutingKey
+## 2.2. AMQP-Channel-RoutingKey
 
-### Channel Bindings
+### 2.2.1. Bindings
 
 AMQP
 
@@ -84,9 +84,9 @@ AutoDelete|`false`|Whether the exchange should be deleted when the last queue is
 Virtual Host|`/`|The virtual host of the exchange.
 Binding Version|`0.1.0`|The version of this binding.
 
-## AMQP-Channel-Queue
+## 2.3. AMQP-Channel-Queue
 
-### Channel Bindings
+### 2.3.1. Bindings
 
 AMQP
 
@@ -101,17 +101,17 @@ AutoDelete|`false`|Whether the queue should be deleted when the last consumer un
 Virtual Host|`/`|The virtual host of the queue.
 Binding Version|`0.1.0`|The version of this binding.
 
-## HTTP-Channel-Operation
+## 2.4. HTTP-Channel-Operation
 
-### Channel Messages
+### 2.4.1. Messages
 
-Operation|Name|Description
----------|----|-----------
-*subscribe*|[HTTP-Message](#http-message)|
+Operation|Message|Description
+---------|-------|-----------
+*subscribe*|`HTTP-Message`|
 
-### As Subscriber
+### 2.4.2. As Subscriber
 
-#### Operation Bindings
+#### 2.4.2.1. Bindings
 
 HTTP
 
@@ -127,17 +127,17 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 `userId`|`string`||||User Id
 
-## Kafka-Channel-Operation
+## 2.5. Kafka-Channel-Operation
 
-### Channel Messages
+### 2.5.1. Messages
 
-Operation|Name|Description
----------|----|-----------
-*subscribe*|[Kafka-Message](#kafka-message)|
+Operation|Message|Description
+---------|-------|-----------
+*subscribe*|`Kafka-Message`|
 
-### As Subscriber
+### 2.5.2. As Subscriber
 
-#### Operation Bindings
+#### 2.5.2.1. Bindings
 
 Kafka
 
@@ -157,17 +157,17 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 *-*|`string`||`guest`||
 
-## AMQP-Channel-Operation
+## 2.6. AMQP-Channel-Operation
 
-### Channel Messages
+### 2.6.1. Messages
 
-Operation|Name|Description
----------|----|-----------
-*subscribe*|[AMQP-Message](#amqp-message)|
+Operation|Message|Description
+---------|-------|-----------
+*subscribe*|`AMQP-Message`|
 
-### As Subscriber
+### 2.6.2. As Subscriber
 
-#### Operation Bindings
+#### 2.6.2.1. Bindings
 
 AMQP
 
@@ -185,17 +185,17 @@ Timestamp|`true`|Whether the message should include a timestamp or not.
 ACK|`true`|Whether the consumer should ack the message or not.
 Binding Version|`0.1.0`|The version of this binding.
 
-## MQTT-Channel-Operation
+## 2.7. MQTT-Channel-Operation
 
-### Channel Messages
+### 2.7.1. Messages
 
-Operation|Name|Description
----------|----|-----------
-*subscribe*|[MQTT-Message](#mqtt-message)|
+Operation|Message|Description
+---------|-------|-----------
+*subscribe*|`MQTT-Message`|
 
-### As Subscriber
+### 2.7.2. As Subscriber
 
-#### Operation Bindings
+#### 2.7.2.1. Bindings
 
 MQTT
 
@@ -205,11 +205,11 @@ QoS|`1`|Defines how hard the broker/client will try to ensure that a message is 
 Retain|`true`|Whether the broker should retain the message or not.
 Binding Version|`0.1.0`|The version of this binding.
 
-# Messages
+# 3. Messages
 
-## HTTP-Message
+## 3.1. HTTP-Message
 
-### Message Bindings
+### 3.1.1. Bindings
 
 HTTP
 
@@ -223,9 +223,9 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 `x-apikey`|`string`||||API Key
 
-## Kafka-Message
+## 3.2. Kafka-Message
 
-### Message Bindings
+### 3.2.1. Bindings
 
 Kafka
 
@@ -239,9 +239,9 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 *-*|`string`||`key`||
 
-## AMQP-Message
+## 3.3. AMQP-Message
 
-### Message Bindings
+### 3.3.1. Bindings
 
 AMQP
 
@@ -251,9 +251,9 @@ Content Encoding|`gzip`|A MIME encoding for the message content.
 Message Type|`user.register`|Application-specific message type.
 Binding Version|`0.1.0`|The version of this binding.
 
-## MQTT-Message
+## 3.4. MQTT-Message
 
-### Message Bindings
+### 3.4.1. Bindings
 
 MQTT
 

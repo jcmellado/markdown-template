@@ -8,14 +8,14 @@
 
 {# Message #}
 
-{% macro messagesTemplate(messages, subsections, defaultContentType, slateEnabled) -%}
+{% macro messagesTemplate(messages, subsections, toc, defaultContentType, slateEnabled) -%}
 {% for messageName, message in messages -%}
-{{ messageTemplate(message, subsections, defaultContentType, slateEnabled) -}}
+{{ messageTemplate(message, subsections, toc, defaultContentType, slateEnabled) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro messageTemplate(message, subsections, defaultContentType, slateEnabled) -%}
-## {{ message.name() if message.name() | isDefined else message.uid() }}
+{% macro messageTemplate(message, subsections, toc, defaultContentType, slateEnabled) -%}
+## {{ (message.name() if message.name() | isDefined else message.uid()) | heading(toc, 2) }}
 
 {% if message.title() | isDefined -%}
 {{ message.title() }}
@@ -34,26 +34,26 @@
 {% endif -%}
 {% for subsection in subsections | chunks -%}
 {% if subsection === "payload" and message.payload() -%}
-### Payload
+### {{ "Payload" | heading(toc, 3) }}
 
 {{ payloadMessageTemplate(message, defaultContentType, slateEnabled) -}}
 {% elif subsection === "headers" and message.headers() -%}
-### Headers
+### {{ "Headers" | heading(toc, 3) }}
 
 {{ schemaTemplate(message.headers()) -}}
 {% elif subsection === "correlationId" and message.correlationId() -%}
-### Correlation ID
+### {{ "Correlation ID" | heading(toc, 3) }}
 
 {{ correlationIdMessageTemplate(message.correlationId()) -}}
 {% elif subsection === "bindings" and message.bindings() -%}
-### Message Bindings
+### {{ "Bindings" | heading(toc, 3) }}
 
 {{ messageBindingsTemplate(message.bindings()) -}}
 {% elif subsection === "tags" and message.hasTags() -%}
-### Message Tags
+### {{ "Tags" | heading(toc, 3) }}
 
 {% for tag in message.tags() -%}
-#### {{ tag.name() }}
+#### {{ tag.name() | heading(toc, 4) }}
 
 {{ tagTemplate(tag) -}}
 {% endfor -%}
@@ -72,11 +72,11 @@
 {{ "Schema Format:" }} {{ message.schemaFormat() | code }}
 
 {% endif -%}
-{% if message.examples() and slateEnabled === "true" -%}
+{% if message.examples() and slateEnabled -%}
 {{ examplesMessageTemplate(message.examples()) -}}
 {% endif -%}
 {{ schemaTemplate(message.payload()) -}}
-{% if message.examples() and slateEnabled === "false" -%}
+{% if message.examples() and not slateEnabled -%}
 #### Examples
 
 {{ examplesMessageTemplate(message.examples()) -}}

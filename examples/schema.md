@@ -2,44 +2,44 @@
 
 ## Table of Contents
 
-* [Channels](#channels)
-    * [dummy](#dummy)
-* [Messages](#messages)
-    * [Numeric](#numeric)
-    * [String](#string)
-    * [Array](#array)
-    * [Object](#object)
-    * [Items](#items)
-    * [Properties](#properties)
-    * [Combinations](#combinations)
-    * [Conditionals](#conditionals)
+* [1. Channels](#1.-channels)
+    * [1.1. dummy](#1.1.-dummy)
+* [2. Messages](#2.-messages)
+    * [2.1. Numeric](#2.1.-numeric)
+    * [2.2. String](#2.2.-string)
+    * [2.3. Array](#2.3.-array)
+    * [2.4. Object](#2.4.-object)
+    * [2.5. Items](#2.5.-items)
+    * [2.6. Properties](#2.6.-properties)
+    * [2.7. Combinations](#2.7.-combinations)
+    * [2.8. Conditionals](#2.8.-conditionals)
 
-# Channels
+# 1. Channels
 
-## dummy
+## 1.1. dummy
 
-### Channel Messages
+### 1.1.1. Messages
 
-Operation|Name|Description
----------|----|-----------
-*subscribe*|[Numeric](#numeric)|
-*subscribe*|[String](#string)|
-*subscribe*|[Array](#array)|
-*subscribe*|[Object](#object)|
-*subscribe*|[Items](#items)|
-*subscribe*|[Properties](#properties)|
-*subscribe*|[Combinations](#combinations)|
-*subscribe*|[Conditionals](#conditionals)|
+Operation|Message|Description
+---------|-------|-----------
+*subscribe*|`Numeric`|
+*subscribe*|`String`|
+*subscribe*|`Array`|
+*subscribe*|`Object`|
+*subscribe*|`Items`|
+*subscribe*|`Properties`|
+*subscribe*|`Combinations`|
+*subscribe*|`Conditionals`|
 
-### As Subscriber
+### 1.1.2. As Subscriber
 
 dummy
 
-# Messages
+# 2. Messages
 
-## Numeric
+## 2.1. Numeric
 
-### Payload
+### 2.1.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -47,9 +47,9 @@ Name|Type|Format|Allowed|Default|Description
 `exclusive`|`integer`|`int32`|||Exclusive minimum: `50`<br />Exclusive maximum: `100`
 `multiple`|`number`|`double`|||Multiple of: `7`
 
-## String
+## 2.2. String
 
-### Payload
+### 2.2.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -57,17 +57,17 @@ Name|Type|Format|Allowed|Default|Description
 `format`|`string`|`date-time`|||
 `pattern`|`string`||||Pattern: `^[\w\d\-\_]+$`
 
-## Array
+## 2.3. Array
 
-### Payload
+### 2.3.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 *-*|`array`||||Minimum items: `1`<br />Maximum items: `5`<br />Unique items: `true`
 
-## Object
+## 2.4. Object
 
-### Payload
+### 2.4.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -80,9 +80,9 @@ Name|Type|Format|Allowed|Default|Description
 `user`.`token`|`string`||||Write only: `true`
 `region`|`string`||`EU`||Region.<br />Read only: `true`
 
-## Items
+## 2.5. Items
 
-### Payload
+### 2.5.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -98,9 +98,9 @@ Name|Type|Format|Allowed|Default|Description
 `contains`|`array`||||Array with one or more elements matching some schema.
 `contains`[*]|`string`|`date`|||
 
-## Properties
+## 2.6. Properties
 
-### Payload
+### 2.6.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -117,9 +117,9 @@ Name|Type|Format|Allowed|Default|Description
 `properties`.`^S+$`|`string`||||
 `properties`.`^I+$`|`integer`||||
 
-## Combinations
+## 2.7. Combinations
 
-### Payload
+### 2.7.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -137,9 +137,9 @@ Name|Type|Format|Allowed|Default|Description
 `not`|*Not*||||Doesn't match the given schema.
 *Not*|`string`||||
 
-## Conditionals
+## 2.8. Conditionals
 
-### Payload
+### 2.8.1. Payload
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
