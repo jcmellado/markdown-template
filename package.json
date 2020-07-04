@@ -1,6 +1,6 @@
 {
   "name": "@jcmellado/markdown-template",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Markdown template for the AsyncAPI Generator",
   "keywords": [
     "asyncapi",
@@ -27,15 +27,40 @@
   },
   "devDependencies": {
     "ava": "^3.9.0",
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "eslint-config-google": "^0.14.0"
   },
   "generator": {
     "generator": ">=0.53.1 <2.0.0",
     "parameters": {
+      "output": {
+        "description": "File name for the output file.",
+        "default": "asyncapi.md",
+        "required": false
+      },
       "sections": {
-        "description": "Comma-separated list of sections to include in the Markdown document.",
+        "description": "Comma-separated list of sections to be included in the Markdown document.",
         "default": "servers,channels,messages,security,tags,license,termsOfService,contact",
+        "required": false
+      },
+      "sections.servers": {
+        "description": "Comma-separated list of subsections to be included in the servers section.",
+        "default": "variables,security,bindings",
+        "required": false
+      },
+      "sections.channels": {
+        "description": "Comma-separated list of subsections to be included in the channels section.",
+        "default": "bindings,messages,publish,subscribe,operation.bindings,operation.tags",
+        "required": false
+      },
+      "sections.messages": {
+        "description": "Comma-separated list of subsections to be included in the messages section.",
+        "default": "payload,headers,correlationId,bindings,tags",
+        "required": false
+      },
+      "tocHeadingLevel": {
+        "description": "Number of heading levels to show in the table of contents.",
+        "default": "0",
         "required": false
       },
       "slate.enabled": {

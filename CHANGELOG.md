@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0] - 2020-07-04
+
+### Features
+- Added output parameter to specify output filename #3
+- Added description column on binding tables #6
+- Added code filter to improve styles #14
+- Added message parameter to MQTT binding #7
+- Added a Table of Contents section #4
+- Added subsections parameters #5
+- Improved layout numbering sections #16
+
+### Fixes
+- Fixed message table format #10
+
 ## [0.2.0] - 2020-06-26
 
 ### Changed

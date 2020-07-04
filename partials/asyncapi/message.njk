@@ -1,84 +1,82 @@
 {#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
     source is governed by a MIT-style license found in the LICENSE file. -#}
 
-{% from "./bindings.njk" import messageBindingsTemplate -%}
+{% from "./binding.njk" import messageBindingsTemplate -%}
 {% from "./external-docs.njk" import externalDocsTemplate -%}
 {% from "./schema.njk" import schemaTemplate -%}
 {% from "./tag.njk" import tagTemplate -%}
 
 {# Message #}
 
-{% macro messagesTemplate(messages, defaultContentType, params) -%}
+{% macro messagesTemplate(messages, subsections, toc, defaultContentType, slateEnabled) -%}
 {% for messageName, message in messages -%}
-{{ messageTemplate(message, defaultContentType, params) -}}
+{{ messageTemplate(message, subsections, toc, defaultContentType, slateEnabled) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro messageTemplate(message, defaultContentType, params) -%}
-## {% if message.name() -%} {{ message.name() }} {%- else -%} {{ message.uid() }} {%- endif %}
+{% macro messageTemplate(message, subsections, toc, defaultContentType, slateEnabled) -%}
+## {{ (message.name() if message.name() | isDefined else message.uid()) | heading(toc, 2) }}
 
-{% if message.title() -%}
+{% if message.title() | isDefined -%}
 {{ message.title() }}
 
 {% endif -%}
-{% if message.summary() -%}
+{% if message.summary() | isDefined -%}
 {{ message.summary() }}
 
 {% endif -%}
-{% if message.description() -%}
+{% if message.description() | isDefined -%}
 {{ message.description() | safe }}
 
 {% endif -%}
 {% if message.externalDocs() -%}
 {{ externalDocsTemplate(message.externalDocs()) -}}
 {% endif -%}
-{% if message.payload() -%}
-### Payload
+{% for subsection in subsections | chunks -%}
+{% if subsection === "payload" and message.payload() -%}
+### {{ "Payload" | heading(toc, 3) }}
 
-{{ payloadMessageTemplate(message, defaultContentType, params) -}}
-{% endif -%}
-{% if message.headers() -%}
-### Headers
+{{ payloadMessageTemplate(message, defaultContentType, slateEnabled) -}}
+{% elif subsection === "headers" and message.headers() -%}
+### {{ "Headers" | heading(toc, 3) }}
 
 {{ schemaTemplate(message.headers()) -}}
-{% endif -%}
-{% if message.correlationId() -%}
-### Correlation ID
+{% elif subsection === "correlationId" and message.correlationId() -%}
+### {{ "Correlation ID" | heading(toc, 3) }}
 
 {{ correlationIdMessageTemplate(message.correlationId()) -}}
-{% endif -%}
-{% if message.bindings() -%}
-### Message Bindings
+{% elif subsection === "bindings" and message.bindings() -%}
+### {{ "Bindings" | heading(toc, 3) }}
 
 {{ messageBindingsTemplate(message.bindings()) -}}
-{% endif -%}
-{% if message.hasTags() -%}
-### Message Tags
+{% elif subsection === "tags" and message.hasTags() -%}
+### {{ "Tags" | heading(toc, 3) }}
 
 {% for tag in message.tags() -%}
-#### {{ tag.name() }}
+#### {{ tag.name() | heading(toc, 4) }}
 
 {{ tagTemplate(tag) -}}
 {% endfor -%}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}
 
 {# Payload #}
 
-{% macro payloadMessageTemplate(message, defaultContentType, params) -%}
-{% if message.contentType() or defaultContentType -%}
-{{ "Content Type:" | bold }} {% if message.contentType() -%} {{ message.contentType() | italic }} {%- else -%} {{ defaultContentType | italic }} {% endif %}
+{% macro payloadMessageTemplate(message, defaultContentType, slateEnabled) -%}
+{% if message.contentType() | isDefined or defaultContentType | isDefined -%}
+{{ "Content Type:" }} {% if message.contentType() | isDefined -%} {{ message.contentType() | code }} {%- else -%} {{ defaultContentType | code }} {% endif %}
 
 {% endif -%}
-{% if message.schemaFormat() and message.schemaFormat() !== "application/schema+json;version=draft-07" -%}
-{{ "Schema Format:" | bold }} {{ message.schemaFormat() | italic }}
+{% if message.schemaFormat() | isDefined and message.schemaFormat() !== "application/schema+json;version=draft-07" -%}
+{{ "Schema Format:" }} {{ message.schemaFormat() | code }}
 
 {% endif -%}
-{% if message.examples() and params["slate.enabled"] === "true" -%}
+{% if message.examples() and slateEnabled -%}
 {{ examplesMessageTemplate(message.examples()) -}}
 {% endif -%}
 {{ schemaTemplate(message.payload()) -}}
-{% if message.examples() and params["slate.enabled"] === "false" -%}
+{% if message.examples() and not slateEnabled -%}
 #### Examples
 
 {{ examplesMessageTemplate(message.examples()) -}}
@@ -102,7 +100,7 @@
 {% macro correlationIdMessageTemplate(correlationId) -%}
 Location|Description
 --------|------------
-{{ correlationId.location() | italic -}}
-|{% if correlationId.description() -%} {{ correlationId.description() | safe }} {%- endif %}
+{{ correlationId.location() | code -}}
+|{% if correlationId.description() | isDefined -%} {{ correlationId.description() | safe }} {%- endif %}
 
 {% endmacro -%}

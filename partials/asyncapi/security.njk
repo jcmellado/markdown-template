@@ -3,76 +3,73 @@
 
 {# Security #}
 
-{% macro securitySchemesTemplate(schemes) -%}
+{% macro securitySchemesTemplate(schemes, toc) -%}
 {% for schemeName, scheme in schemes -%}
-{{ securitySchemeTemplate(schemeName, scheme) -}}
+{{ securitySchemeTemplate(schemeName, scheme, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro securitySchemeTemplate(schemeName, scheme) -%}
-## {{ schemeName }}
+{% macro securitySchemeTemplate(schemeName, scheme, toc) -%}
+## {{ schemeName | heading(toc, 2) }}
 
-{% if scheme.description() -%}
+{% if scheme.description() | isDefined -%}
 {{ scheme.description() | safe }}
 
 {% endif -%}
 Parameter|Value
 ---------|-----
-Security scheme|{{ schemeNameTemplate(scheme.type()) }}
-{% if scheme.in() -%}
-Location of the API key|{{ scheme.in() }}
+Security scheme|{{ schemeNameTemplate(scheme.type()) | code }}
+{% if scheme.in() | isDefined -%}
+Location of the API key|{{ scheme.in() | code }}
 {% endif -%}
-{% if scheme.name() -%}
-Header, query or cookie parameter name|{{ scheme.name() }}
+{% if scheme.name() | isDefined -%}
+Header, query or cookie parameter name|{{ scheme.name() | code }}
 {% endif -%}
-{% if scheme.scheme() -%}
-HTTP Authorization scheme|{{ scheme.scheme() }}
+{% if scheme.scheme() | isDefined -%}
+HTTP Authorization scheme|{{ scheme.scheme() | code }}
 {% endif -%}
-{% if scheme.bearerFormat() -%}
-Bearer token format|{{ scheme.bearerFormat() }}
+{% if scheme.bearerFormat() | isDefined -%}
+Bearer token format|{{ scheme.bearerFormat() | code }}
 {% endif -%}
-{% if scheme.openIdConnectUrl() -%}
+{% if scheme.openIdConnectUrl() | isDefined -%}
 OpenId Connect URL|{{ scheme.openIdConnectUrl() | link }}
 {% endif -%}
 {% if scheme.flows() -%}
-{{ oauthFlowsTemplate(scheme.flows()) -}}
+{{ oauthFlowsTemplate(scheme.flows(), toc) -}}
 {% endif %}
 {% endmacro -%}
 
 {# OAuth Flows #}
 
-{% macro oauthFlowsTemplate(flows) -%}
+{% macro oauthFlowsTemplate(flows, toc) -%}
 {% for flowName, flow in flows -%}
-{{ oauthFlowTemplate(flowName,flow) -}}
+{{ oauthFlowTemplate(flowName,flow, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro oauthFlowTemplate(flowName, flow) %}
+{% macro oauthFlowTemplate(flowName, flow, toc) %}
 {% if flowName === "implicit" -%}
-### OAuth Implicit Flow
+### {{ "OAuth Implicit Flow" | heading(toc, 3) }}
 
-{% endif -%}
-{% if flowName === "password" -%}
-### OAuth Resource Owner Protected Credentials Flow
+{% elif flowName === "password" -%}
+### {{ " OAuth Resource Owner Protected Credentials Flow" | heading(toc, 3) }}
 
-{% endif -%}
-{% if flowName === "clientCredentials" -%}
-### OAuth Client Credentials Flow
+{% elif flowName === "clientCredentials" -%}
+### {{ "OAuth Client Credentials Flow" | heading(toc, 3) }}
 
-{% endif -%}
-{% if flowName === "authorizationCode" -%}
-### OAuth Authorization Code Flow
+{% elif flowName === "authorizationCode" -%}
+### {{ "OAuth Authorization Code Flow" | heading(toc, 3) }}
 
 {% endif -%}
 Parameter|Value
 ---------|-----
-{% if flow.authorizationUrl() -%}
+{% if flow.authorizationUrl() | isDefined -%}
 Authorization URL|{{ flow.authorizationUrl() | link }}
 {% endif -%}
-{% if flow.tokenUrl() -%}
+{% if flow.tokenUrl() | isDefined -%}
 Token URL|{{ flow.tokenUrl() | link }}
 {% endif -%}
-{% if flow.refreshUrl() -%}
+{% if flow.refreshUrl() | isDefined -%}
 Refresh URL|{{ flow.refreshUrl() | link }}
 {% endif %}
 {{ oauthScopesTemplate(flow.scopes()) -}}
@@ -81,12 +78,12 @@ Refresh URL|{{ flow.refreshUrl() | link }}
 {# OAuth Scopes #}
 
 {% macro oauthScopesTemplate(scopes) -%}
-#### Scopes
+Scopes
 
 Scope|Description
 -----|-----------
 {% for scopeName, description in scopes -%}
-{{ scopeName }}|{{ description }}
+{{ scopeName | code }}|{{ description }}
 {% endfor -%}
 {% endmacro -%}
 
@@ -97,7 +94,7 @@ Scope|Description
 {% elif scheme === "apiKey" -%} {{- "API Key" -}}
 {% elif scheme === "X509" -%} {{- "X.509 Certificate" -}}
 {% elif scheme === "symmetricEncryption" -%} {{- "Symmetric Encryption" -}}
-{% elif scheme === "asymmetricEncryption" -%} {{- "Asymmetric Encryption	" -}}
+{% elif scheme === "asymmetricEncryption" -%} {{- "Asymmetric Encryption" -}}
 {% elif scheme === "httpApiKey" -%} {{- "HTTP API Key" -}}
 {% elif scheme === "http" -%} {{- "HTTP" -}}
 {% elif scheme === "oauth2" -%} {{- "OAuth 2.0" -}}

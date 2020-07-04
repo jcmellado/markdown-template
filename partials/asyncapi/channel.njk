@@ -1,49 +1,50 @@
 {#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
     source is governed by a MIT-style license found in the LICENSE file. -#}
 
-{% from "./bindings.njk" import channelBindingsTemplate, operationBindingsTemplate -%}
+{% from "./binding.njk" import channelBindingsTemplate, operationBindingsTemplate -%}
 {% from "./external-docs.njk" import externalDocsTemplate -%}
 {% from "./schema.njk" import schemaTemplate -%}
 {% from "./tag.njk" import tagTemplate -%}
 
 {# Channel #}
 
-{% macro channelsTemplate(channels) -%}
+{% macro channelsTemplate(channels, subsections, toc) -%}
 {% for channelName, channel in channels -%}
-{{ channelTemplate(channelName, channel) -}}
+{{ channelTemplate(channelName, channel, subsections, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro channelTemplate(channelName, channel) -%}
-## {{ channelName }}
+{% macro channelTemplate(channelName, channel, subsections, toc) -%}
+## {{ channelName | heading(toc, 2) }}
 
-{% if channel.description() -%}
+{% if channel.description() | isDefined -%}
 {{ channel.description() | safe }}
 
 {% endif -%}
 {% if channel.hasParameters() -%}
+### {{ "Parameters" | heading(toc, 3) }}
+
 {{ parametersChannelTemplate(channel.parameters()) -}}
 {% endif -%}
-{% if channel.bindings() -%}
-### Channel Bindings
+{% for subsection in subsections | chunks -%}
+{% if subsection === "bindings" and channel.bindings() -%}
+### {{ "Bindings" | heading(toc, 3) }}
 
 {{ channelBindingsTemplate(channel.bindings()) -}}
-{% endif -%}
-{% if (channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages()) -%}
-### Messages
+{% elif subsection === "messages" and ((channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages())) -%}
+### {{ "Messages" | heading(toc, 3) }}
 
 {{ messagesChannelTemplate(channel) -}}
-{% endif -%}
-{% if channel.hasPublish() -%}
-### As Publisher
+{% elif subsection === "publish" and channel.hasPublish() -%}
+### {{ "As Publisher" | heading(toc, 3) }}
 
-{{ operationTemplate(channel.publish()) -}}
-{% endif -%}
-{% if channel.hasSubscribe() -%}
-### As Subscriber
+{{ operationTemplate(channel.publish(), subsections, toc) -}}
+{% elif subsection === "subscribe" and channel.hasSubscribe() -%}
+### {{ "As Subscriber" | heading(toc, 3) }}
 
-{{ operationTemplate(channel.subscribe()) -}}
+{{ operationTemplate(channel.subscribe(), subsections, toc) -}}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}
 
 {# Parameters #}
@@ -53,9 +54,9 @@
 Parameter|Location|Description
 ---------|--------|-----------
 {% for parameterName, parameter in parameters -%}
-{{ parameterName -}}
-|{% if parameter.location() -%} {{ parameter.location() | italic }} {%- endif -%}
-|{% if parameter.description() -%} {{ parameter.description() | safe }} {%- endif %}
+{{ parameterName | code -}}
+|{% if parameter.location() | isDefined -%} {{ parameter.location() | code }} {%- endif -%}
+|{% if parameter.description() | isDefined -%} {{ parameter.description() | safe }} {%- endif %}
 {% if parameter.schema() -%}
 {% set hasSchemas = true -%}
 {% endif -%}
@@ -74,54 +75,55 @@ Parameter|Location|Description
 {# Messages #}
 
 {% macro messagesChannelTemplate(channel) -%}
-Operation|Name|Description
----------|----|-----------
+Operation|Message|Description
+---------|-------|-----------
 {% if channel.hasSubscribe() and channel.subscribe().messages() -%}
 {{ messageChannelTemplate(channel.subscribe()) -}}
 {% endif -%}
 {% if channel.hasPublish() and channel.publish().messages() -%}
 {{ messageChannelTemplate(channel.publish()) -}}
-{% endif -%}
+{% endif %}
 {% endmacro -%}
 
 {% macro messageChannelTemplate(operation) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
-|{% if message.name() -%} {{ message.name() | reference }} {%- else -%} {{ message.uid() | reference }} {%- endif -%}
-|{{ message.title()}}
-{% endfor %}
+|{% if message.name() | isDefined -%} {{ message.name() | code }} {%- else -%} {{ message.uid() | code }} {%- endif -%}
+|{{ message.title() }}
+{% endfor -%}
 {% endmacro -%}
 
 {# Operation #}
 
-{% macro operationTemplate(operation) -%}
-{% if operation.summary() -%}
+{% macro operationTemplate(operation, subsections, toc) -%}
+{% if operation.summary() | isDefined -%}
 {{ operation.summary() }}
 
 {% endif -%}
-{% if operation.description() -%}
+{% if operation.description() | isDefined -%}
 {{ operation.description() | safe }}
 
 {% endif -%}
 {% if operation.externalDocs() -%}
 {{ externalDocsTemplate(operation.externalDocs()) -}}
 {% endif -%}
-{% if operation.id() -%}
+{% if operation.id() | isDefined -%}
 {{ "Operation Id:" | bold }} {{ operation.id() }}
 
 {% endif -%}
-{% if operation.bindings() -%}
-#### Operation Bindings
+{% for subsection in subsections | chunks -%}
+{% if subsection === "operation.bindings" and operation.bindings() -%}
+#### {{ "Bindings" | heading(toc, 4) }}
 
 {{ operationBindingsTemplate(operation.bindings()) -}}
-{% endif -%}
-{% if operation.hasTags() -%}
-#### Operation Tags
+{% elif subsection === "operation.tags" and operation.hasTags() -%}
+#### {{ "Tags" | heading(toc, 4) }}
 
 {% for tag in operation.tags() -%}
-##### {{ tag.name() }}
+##### {{ tag.name() | heading(toc, 5) }}
 
 {{ tagTemplate(tag) -}}
 {% endfor -%}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}

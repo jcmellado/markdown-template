@@ -1,61 +1,61 @@
 {#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
     source is governed by a MIT-style license found in the LICENSE file. -#}
 
-{% from "./bindings.njk" import protocolNameTemplate, serverBindingsTemplate -%}
+{% from "./binding.njk" import protocolNameTemplate, serverBindingsTemplate -%}
 {% from "./commons.njk" import multilineTemplate -%}
 {% from "./external-docs.njk" import externalDocsTemplate -%}
 
 {# Server #}
 
-{% macro serversTemplate(servers) -%}
+{% macro serversTemplate(servers, subsections, toc) -%}
 {% for serverName, server in servers -%}
-{{ serverTemplate(serverName, server) -}}
+{{ serverTemplate(serverName, server, subsections, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro serverTemplate(serverName, server) -%}
-## {{ serverName }}
+{% macro serverTemplate(serverName, server, subsections, toc) -%}
+## {{ serverName | heading(toc, 2) }}
 
-{% if server.description() -%}
+{% if server.description() | isDefined -%}
 {{ server.description() | safe }}
 
 {% endif -%}
 Parameter|Value
 ---------|------
 URL|{{ server.url() | link }}
-Protocol|{{ protocolNameTemplate(server.protocol()) }} {% if server.protocolVersion() -%} {{ server.protocolVersion() }} {%- endif %}
+Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
 
-{% if server.hasVariables() -%}
-### Variables
+{% for subsection in subsections | chunks -%}
+{% if subsection === "variables" and server.hasVariables() -%}
+### {{ "Server URL Variables" | heading(toc, 3) }}
 
-{{ variablesTemplate(server.variables()) -}}
-{% endif -%}
-{% if server.security() -%}
-### Security
+{{ variablesServerTemplate(server.variables()) -}}
+{% elif subsection === "security" and server.security() -%}
+### {{ "Security" | heading(toc, 3) }}
 
-{{ securityTemplate(server.security()) -}}
-{% endif -%}
-{% if server.bindings() -%}
-### Server Bindings
+{{ securityServerTemplate(server.security()) -}}
+{% elif subsection === "bindings" and server.bindings() -%}
+### {{ "Bindings" | heading(toc, 3) }}
 
 {{ serverBindingsTemplate(server.bindings()) -}}
 {% endif -%}
+{% endfor -%}
 {% endmacro -%}
 
 {# Variables #}
 
-{% macro variablesTemplate(variables) -%}
+{% macro variablesServerTemplate(variables) -%}
 Variable|Allowed|Default|Description
 --------|-------|-------|-----------
 {% for variableName, variable in variables -%}
-{{ variableName -}}
+{{ variableName | code -}}
 |{% if variable.hasAllowedValues() -%} {{ multilineTemplate(variable.allowedValues()) }} {%- endif -%}
-|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() }} {%- endif -%}
-|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesTemplate(variable.examples()) }} {%- endif %}
+|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() | code }} {%- endif -%}
+|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesServerTemplate(variable.examples()) }} {%- endif %}
 {% endfor %}
 {% endmacro -%}
 
-{% macro examplesTemplate(examples) -%}
+{% macro examplesServerTemplate(examples) -%}
 {{- "" | br | safe -}} Examples: {{- "" | br | safe -}}
 {% set linefeed = joiner("" | br | safe) -%}
 {% for example in examples -%}
@@ -65,12 +65,12 @@ Variable|Allowed|Default|Description
 
 {# Security #}
 
-{% macro securityTemplate(security) -%}
+{% macro securityServerTemplate(security) -%}
 Scheme|Scopes
 ------|------
 {% for scheme in security -%}
 {% set schemeName = scheme.json() | keys | first -%}
 {% set scopes = scheme.json()[schemeName] -%}
-{{ schemeName | reference }}|{% if scopes -%} {{ multilineTemplate(scopes) }} {%- endif %}
+{{ schemeName | code }}|{% if scopes -%} {{ multilineTemplate(scopes) }} {%- endif %}
 {% endfor %}
 {% endmacro -%}

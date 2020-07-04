@@ -1,0 +1,367 @@
+{#- Copyright (c) 2020, Juan Mellado. All rights reserved. Use of this
+    source is governed by a MIT-style license found in the LICENSE file. -#}
+
+{% from "./schema.njk" import schemaTemplate -%}
+
+{# Server Bindings #}
+
+{% macro serverBindingsTemplate(bindings) -%}
+{% for protocol, binding in bindings -%}
+{% if protocol === "mqtt" -%}
+{{ mqttServerBindingTemplate(binding) -}}
+{% else -%}
+{{ protocolBindingsTemplate(protocol) -}}
+{% endif -%}
+{% endfor -%}
+{% endmacro -%}
+
+{# Channel Bindings #}
+
+{% macro channelBindingsTemplate(bindings) -%}
+{% for protocol, binding in bindings -%}
+{% if protocol === "ws" -%}
+{{ wsChannelBindingTemplate(binding) -}}
+{% elif protocol === "amqp" -%}
+{{ amqpChannelBindingTemplate(binding) -}}
+{% else -%}
+{{ protocolBindingsTemplate(protocol) -}}
+{% endif -%}
+{% endfor -%}
+{% endmacro -%}
+
+{# Operation Bindings #}
+
+{% macro operationBindingsTemplate(bindings) -%}
+{% for protocol, binding in bindings -%}
+{% if protocol === "http" -%}
+{{ httpOperationBindingTemplate(binding) -}}
+{% elif protocol === "kafka" -%}
+{{ kafkaOperationBindingTemplate(binding) -}}
+{% elif protocol === "amqp" -%}
+{{ amqpOperationBindingTemplate(binding) -}}
+{% elif protocol === "mqtt" -%}
+{{ mqttOperationBindingTemplate(binding) -}}
+{% else -%}
+{{ protocolBindingsTemplate(protocol) -}}
+{% endif -%}
+{% endfor -%}
+{% endmacro -%}
+
+{# Message Bindings #}
+
+{% macro messageBindingsTemplate(bindings) -%}
+{% for protocol, binding in bindings -%}
+{% if protocol === "http" -%}
+{{ httpMessageBindingTemplate(binding) -}}
+{% elif protocol === "kafka" -%}
+{{ kafkaMessageBindingTemplate(binding) -}}
+{% elif protocol === "amqp" -%}
+{{ amqpMessageBindingTemplate(binding) -}}
+{% elif protocol === "mqtt" -%}
+{{ mqttMessageBindingTemplate(binding) -}}
+{% else -%}
+{{ protocolBindingsTemplate(protocol) -}}
+{% endif -%}
+{% endfor -%}
+{% endmacro -%}
+
+{# Protocol #}
+
+{% macro protocolBindingsTemplate(protocol) -%}
+{{ protocolNameTemplate(protocol) }}
+
+{% endmacro -%}
+
+{% macro protocolNameTemplate(protocol) -%}
+{% if protocol === "http" -%} {{- "HTTP" -}}
+{% elif protocol === "ws" -%} {{- "WebSockets" -}}
+{% elif protocol === "kafka" -%} {{- "Kafka" -}}
+{% elif protocol === "amqp" -%} {{- "AMQP" -}}
+{% elif protocol === "amqp1" -%} {{- "AMQP 1.0" -}}
+{% elif protocol === "mqtt" -%} {{- "MQTT" -}}
+{% elif protocol === "mqtt5" -%} {{- "MQTT 5" -}}
+{% elif protocol === "nats" -%} {{- "NATS" -}}
+{% elif protocol === "jms" -%} {{- "JMS" -}}
+{% elif protocol === "sns" -%} {{- "SNS" -}}
+{% elif protocol === "sqs" -%} {{- "SQS" -}}
+{% elif protocol === "stomp" -%} {{- "STOMP" -}}
+{% elif protocol === "redis" -%} {{- "Redis" -}}
+{% else -%}{{- protocol -}}
+{% endif -%}
+{% endmacro -%}
+
+{# HTTP #}
+
+{% macro httpOperationBindingTemplate(binding) -%}
+HTTP
+
+Parameter|Value|Description
+---------|-----|-----------
+Operation type|{{ binding.type | code }}|Type of operation.
+{% if binding.method | isDefined -%}
+HTTP method|{{ binding.method | code }}|HTTP method.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% if binding.query -%}
+HTTP Query Parameters
+
+{{ schemaTemplate(binding.query | proxy) -}}
+{% endif -%}
+{% endmacro -%}
+
+{% macro httpMessageBindingTemplate(binding) -%}
+HTTP
+
+{% if binding.bindingVersion | isDefined -%}
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+
+{% endif -%}
+{% if binding.headers -%}
+HTTP Headers
+
+{{ schemaTemplate(binding.headers | proxy) -}}
+{% endif -%}
+{% endmacro -%}
+
+{# WebSockets #}
+
+{% macro wsChannelBindingTemplate(binding) -%}
+WebSockets
+
+{% if binding.method | isDefined or binding.bindingVersion | isDefined -%}
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.method | isDefined -%}
+HTTP method|{{ binding.method | code }}|The HTTP method to use when establishing the connection.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endif -%}
+{% if binding.query -%}
+HTTP Query Parameters
+
+{{ schemaTemplate(binding.query | proxy) -}}
+{% endif -%}
+{% if binding.headers -%}
+HTTP Headers
+
+{{ schemaTemplate(binding.headers | proxy) -}}
+{% endif -%}
+{% endmacro -%}
+
+{# Kafka #}
+
+{% macro kafkaOperationBindingTemplate(binding) -%}
+Kafka
+
+{% if binding.bindingVersion | isDefined -%}
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+
+{% endif -%}
+{% if binding.groupId -%}
+Consumer Group  Id
+
+{{ schemaTemplate(binding.groupId | proxy) -}}
+{% endif -%}
+{% if binding.clientId -%}
+Consumer Id
+
+{{ schemaTemplate(binding.clientId | proxy) -}}
+{% endif -%}
+{% endmacro -%}
+
+{% macro kafkaMessageBindingTemplate(binding) -%}
+Kafka
+
+{% if binding.bindingVersion | isDefined -%}
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+
+{% endif -%}
+{% if binding.key -%}
+Message Key
+
+{{ schemaTemplate(binding.key | proxy) -}}
+{% endif -%}
+{% endmacro -%}
+
+{# AMQP #}
+
+{% macro amqpChannelBindingTemplate(binding) -%}
+AMQP
+
+{% if binding.is === "routingKey" and binding.exchange -%}
+Exchange
+
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.exchange.name | isDefined -%}
+Name|{{ binding.exchange.name | code }}|The name of the exchange.
+{% endif -%}
+{% if binding.exchange.type | isDefined -%}
+Type|{{ binding.exchange.type | code }}|The type of the exchange.
+{% endif -%}
+{% if binding.exchange.durable | isDefined -%}
+Durable|{{ binding.exchange.durable | code }}|Whether the exchange should survive broker restarts or not.
+{% endif -%}
+{% if binding.exchange.autoDelete | isDefined -%}
+AutoDelete|{{ binding.exchange.autoDelete | code }}|Whether the exchange should be deleted when the last queue is unbound from it.
+{% endif -%}
+{% if binding.exchange.vhost | isDefined -%}
+Virtual Host|{{ binding.exchange.vhost | code }}|The virtual host of the exchange.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endif -%}
+{% if binding.is === "queue" and binding.queue -%}
+Queue
+
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.queue.name | isDefined -%}
+Name|{{ binding.queue.name | code }}|The name of the queue.
+{% endif -%}
+{% if binding.queue.durable | isDefined -%}
+Durable|{{ binding.queue.durable | code }}|Whether the queue should survive broker restarts or not.
+{% endif -%}
+{% if binding.queue.exclusive | isDefined -%}
+Exclusive|{{ binding.queue.exclusive | code }}|Whether the queue should be used only by one connection or not.
+{% endif -%}
+{% if binding.queue.autoDelete | isDefined -%}
+AutoDelete|{{ binding.queue.autoDelete | code }}|Whether the queue should be deleted when the last consumer unsubscribes.
+{% endif -%}
+{% if binding.queue.vhost | isDefined -%}
+Virtual Host|{{ binding.queue.vhost | code }}|The virtual host of the queue.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endif -%}
+{% endmacro -%}
+
+{% macro amqpOperationBindingTemplate(binding) -%}
+AMQP
+
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.expiration | isDefined -%}
+TTL|{{ binding.expiration | code }}|TTL (Time-To-Live) for the message.
+{% endif -%}
+{% if binding.userId | isDefined -%}
+User Id|{{ binding.userId | code }}|Identifies the user who has sent the message.
+{% endif -%}
+{% if binding.cc -%}
+CC|{{ binding.cc | code }}|The routing keys the message should be routed to at the time of publishing.
+{% endif -%}
+{% if binding.priority | isDefined -%}
+Priority|{{ binding.priority | code }}|A priority for the message.
+{% endif -%}
+{% if binding.deliveryMode | isDefined -%}
+Delivery mode|{{ binding.deliveryMode | code }}|Delivery mode of the message.
+{% endif -%}
+{% if binding.mandatory | isDefined -%}
+Mandatory|{{ binding.mandatory | code }}|Whether the message is mandatory or not.
+{% endif -%}
+{% if binding.bcc -%}
+BCC|{{ binding.bcc | code }}|Like CC but consumers will not receive this information.
+{% endif -%}
+{% if binding.replyTo | isDefined -%}
+Reply To|{{ binding.replyTo | code }}|Name of the queue where the consumer should send the response.
+{% endif -%}
+{% if binding.timestamp | isDefined -%}
+Timestamp|{{ binding.timestamp | code }}|Whether the message should include a timestamp or not.
+{% endif -%}
+{% if binding.ack | isDefined -%}
+ACK|{{ binding.ack | code }}|Whether the consumer should ack the message or not.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endmacro -%}
+
+{% macro amqpMessageBindingTemplate(binding) -%}
+AMQP
+
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.contentEncoding | isDefined -%}
+Content Encoding|{{ binding.contentEncoding | code }}|A MIME encoding for the message content.
+{% endif -%}
+{% if binding.messageType | isDefined -%}
+Message Type|{{ binding.messageType | code }}|Application-specific message type.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endmacro -%}
+
+{# MQTT #}
+
+{% macro mqttServerBindingTemplate(binding) -%}
+MQTT
+
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.clientId | isDefined -%}
+Client Id|{{ binding.clientId | code }}|The client identifier.
+{% endif -%}
+{% if binding.cleanSession | isDefined -%}
+Clean session|{{ binding.cleanSession | code }}|Whether to create a persistent connection or not.
+{% endif -%}
+{% if binding.lastWill -%}
+{% if binding.lastWill.topic | isDefined -%}
+Last Will and Testament topic|{{ binding.lastWill.topic | code }}|The topic where the Last Will and Testament message will be sent.
+{% endif -%}
+{% if binding.lastWill.qos | isDefined -%}
+Last Will and Testament QoS|{{ binding.lastWill.qos | code }}|Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received.
+{% endif -%}
+{% if binding.lastWill.message | isDefined -%}
+Last Will and Testament message|{{ binding.lastWill.message | code }}|Last will and Testament message.
+{% endif -%}
+{% if binding.lastWill.retain | isDefined -%}
+Retain Last Will and Testament message|{{ binding.lastWill.retain | code }}|Whether the broker should retain the Last Will and Testament message or not.
+{% endif -%}
+{% endif -%}
+{% if binding.keepAlive | isDefined -%}
+Keep-Alive|{{ binding.keepAlive | code }}|Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endmacro -%}
+
+{% macro mqttOperationBindingTemplate(binding) -%}
+MQTT
+
+Parameter|Value|Description
+---------|-----|-----------
+{% if binding.qos | isDefined -%}
+QoS|{{ binding.qos | code }}|Defines how hard the broker/client will try to ensure that a message is received.
+{% endif -%}
+{% if binding.retain | isDefined -%}
+Retain|{{ binding.retain | code }}|Whether the broker should retain the message or not.
+{% endif -%}
+{% if binding.bindingVersion | isDefined -%}
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+{% endif %}
+{% endmacro -%}
+
+{% macro mqttMessageBindingTemplate(binding) -%}
+MQTT
+
+{% if binding.bindingVersion | isDefined -%}
+Parameter|Value|Description
+---------|-----|-----------
+Binding Version|{{ binding.bindingVersion | code }}|The version of this binding.
+
+{% endif -%}
+{% endmacro -%}

@@ -7,51 +7,55 @@
 {% from "./asyncapi/security.njk" import securitySchemesTemplate -%}
 {% from "./asyncapi/server.njk" import serversTemplate -%}
 {% from "./asyncapi/tag.njk" import tagTemplate -%}
+{% from "./asyncapi/toc.njk" import tocTemplate -%}
 
 # {{ asyncapi.info().title() }} {{ asyncapi.info().version() }}
 
-{% if asyncapi.info().description() -%}
+{% if asyncapi.info().description() | isDefined -%}
 {{ asyncapi.info().description() | safe }}
 
 {% endif -%}
-{% set sections = params["sections"] | chunks -%}
-{% for section in sections -%}
-{% if section === "servers" and asyncapi.hasServers() -%}
-# Servers
+{% if params["tocHeadingLevel"] !== "0" -%}
+## Table of Contents
 
-{{ serversTemplate(asyncapi.servers()) -}}
-{% elif section === "channels" and asyncapi.hasChannels() -%}
-# Channels
-
-{{ channelsTemplate(asyncapi.channels()) -}}
-{% elif section === "messages" and asyncapi.allMessages() | length -%}
-# Messages
-
-{{ messagesTemplate(asyncapi.allMessages(), asyncapi.defaultContentType(), params) -}}
-{% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() -%}
-{% if asyncapi.components().securitySchemes() | length -%}
-# Security
-
-{{ securitySchemesTemplate(asyncapi.components().securitySchemes()) -}}
+{{ tocTemplate(asyncapi, params) -}}
 {% endif -%}
+{% set toc = params | toc -%}
+{% for section in params["sections"] | chunks -%}
+{% if section === "servers" and asyncapi.hasServers() -%}
+# {{ "Servers" | heading(toc, 1) }}
+
+{{ serversTemplate(asyncapi.servers(), params["sections.servers"], toc) -}}
+{% elif section === "channels" and asyncapi.hasChannels() -%}
+# {{ "Channels" | heading(toc, 1) }}
+
+{{ channelsTemplate(asyncapi.channels(), params["sections.channels"], toc) -}}
+{% elif section === "messages" and asyncapi.allMessages() | length -%}
+# {{ "Messages" | heading(toc, 1) }}
+
+{{ messagesTemplate(asyncapi.allMessages(), params["sections.messages"], toc, asyncapi.defaultContentType(), params["slate.enabled"] === "true") -}}
+{% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
+# {{ "Security" | heading(toc, 1) }}
+
+{{ securitySchemesTemplate(asyncapi.components().securitySchemes(), toc) -}}
 {% elif section === "tags" and asyncapi.hasTags() -%}
-# Tags
+# {{ "Tags" | heading(toc, 1) }}
 
 {% for tag in asyncapi.tags() -%}
-## {{ tag.name() }}
+## {{ tag.name() | heading(toc, 2) }}
 
 {{ tagTemplate(tag) -}}
 {% endfor -%}
 {% elif section === "license" and asyncapi.info().license() -%}
-# License
+# {{ "License" | heading(toc, 1) }}
 
 {{ licenseTemplate(asyncapi.info().license()) -}}
-{% elif section === "termsOfService" and asyncapi.info().termsOfService() -%}
-# Terms Of Service
+{% elif section === "termsOfService" and asyncapi.info().termsOfService() | isDefined -%}
+# {{ "Terms Of Service" | heading(toc, 1) }}
 
 {{ termsOfServiceTemplate(asyncapi.info().termsOfService()) -}}
 {% elif section === "contact" and asyncapi.info().contact() -%}
-# Contact
+# {{ "Contact" | heading(toc, 1) }}
 
 {{ contactTemplate(asyncapi.info().contact()) -}}
 {% endif -%}
@@ -59,8 +63,8 @@
 
 ---
 
-{% if asyncapi.id() -%}
-{{ "Schema Id:" | bold }} {{ asyncapi.id() | italic }}
+{% if asyncapi.id() | isDefined -%}
+{{ "Schema Id:" | bold }} {{ asyncapi.id() }}
 
 {% endif -%}
 {{ "AsyncAPI" | italic }} {{ asyncapi.version() | italic }}

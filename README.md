@@ -25,23 +25,23 @@ Check the [AsyncAPI Generator Documentation](https://github.com/asyncapi/generat
 # Examples
 
 AsyncAPI specification of fictional API service:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/asyncapi.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/asyncapi.md)
+- [AsyncAPI YAML document](examples/asyncapi.yml)
+- [Markdown document](examples/asyncapi.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/asyncapi.html)
 
 Server, channel, operation and message bindings for all the supported protocols:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/bindings.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/bindings.md)
+- [AsyncAPI YAML document](examples/bindings.yml)
+- [Markdown document](examples/bindings.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/bindings.html)
 
 Security schemes for all the supported protocols:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/security.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/security.md)
+- [AsyncAPI YAML document](examples/security.yml)
+- [Markdown document](examples/security.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/security.html)
 
 Simple and complex schemas:
-- [AsyncAPI YAML document](https://github.com/jcmellado/markdown-template/blob/master/examples/schema.yml)
-- [Markdown document](https://github.com/jcmellado/markdown-template/blob/master/examples/schema.md)
+- [AsyncAPI YAML document](examples/schema.yml)
+- [Markdown document](examples/schema.md)
 - [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/schema.html)
 
 # Parameters
@@ -54,13 +54,18 @@ Example:
 ag ./asyncapi.yml @jcmellado/markdown-template -o ./docs -p slate.enabled=true -p slate.languages="json: JSON,Rust"
 ```
 
-The following sections describe the available parameters.
+The following sections describe the available template parameters.
 
 ## Markdown
 
 Parameter | Description
 ----------|------------
-sections | comma-separated list of sections to include in the Markdown document.<br /><br />**Default**: `servers,channels,messages,security,tags,license,termsOfService,contact`<br /><br />Sections are included in the Markdown document in the same order that they appear in the list. Only the listed sections will be included.<br /><br />**Example:** ```-p sections=channels,messages,servers,license```
+output | File name for the output file.<br /><br />**Default**: `asyncapi.md`<br /><br />The `-o` parameter of the generator specifies the output directory, the `-p output` parameter of the template specifies the output filename.<br /><br />**Example:** `-o ./docs -p output=api-1.0.0.md`
+sections | Comma-separated list of sections to be included in the Markdown document.<br /><br />**Default**: `servers,channels,messages,security,tags,license,termsOfService,contact`<br /><br />Sections are included in the Markdown document in the same order that they appear in the list. Only the listed sections will be included.<br /><br />**Example:** `-p sections=channels,messages,servers,license`
+sections.server | Comma-separated list of subsections to be included in the servers section.<br /><br />**Default**: `variables,security,bindings`<br /><br />**Example:** `-p sections.server=variables`
+sections.channels | Comma-separated list of subsections to be included in the channels section.<br /><br />**Default**: `bindings,messages,publish,subscribe,operation.bindings,operation.tags`<br /><br />**Example:** `-p sections.channels=subscribe,publish,messages`
+sections.messages | Comma-separated list of subsections to be included in the messages section.<br /><br />**Default**: `payload,headers,correlationId,bindings,tags`<br /><br />**Example:** `-p sections.messages=headers,payload`
+tocHeadingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `0`<br /><br />Allowed values: `0`, `1`, or `2`.<br /><br />**Example:** `-o ./docs -p tocHeadingLevel=2`
 
 ## Slate/shins
 
@@ -71,5 +76,5 @@ slate.theme | Name of the syntax-highlighter theme to use.<br /><br />**Default*
 slate.searchEnabled | Enables the search option in the table of contents.<br /><br />**Default**: `true`<br /><br />**Example:** `-p slate.searchEnabled=false`
 slate.headingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `2`<br /><br />Currently only supported by shins.<br /><br />**Example:** `-p slate.headingLevel=3`
 slate.languages | Comma-separated list of languages to add as tabs.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.languages="json: JSON"`
-slate.includes | Comma-separated list of files to include at the bottom of the content.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.includes=./extra/info.html`
+slate.includes | Comma-separated list of files to include at the bottom of the content.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.includes=/extra/info`
 slate.footers | Comma-separated list of texts to add at the bottom of the table of contents.<br /><br />**Default**: `null`<br /><br />**Example:** `-p slate.footers="Copyright (c) 2020 www.example.com"`
