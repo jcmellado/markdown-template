@@ -8,33 +8,32 @@
 
 {# Channel #}
 
-{% macro channelsTemplate(channels, subsections, toc) -%}
+{% macro channelsTemplate(channels, subsections, toc, bookmarks) -%}
 {% for channelName, channel in channels -%}
-{{ channelTemplate(channelName, channel, subsections, toc) -}}
+{{ channelTemplate(channelName, channel, subsections, toc, bookmarks) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro channelTemplate(channelName, channel, subsections, toc) -%}
+{% macro channelTemplate(channelName, channel, subsections, toc, bookmarks) -%}
 ## {{ channelName | heading(toc, 2) }}
 
 {% if channel.description() | isDefined -%}
 {{ channel.description() | safe }}
 
 {% endif -%}
-{% if channel.hasParameters() -%}
+{% for subsection in subsections | chunks -%}
+{% if subsection === "parameters" and channel.hasParameters() -%}
 ### {{ "Parameters" | heading(toc, 3) }}
 
 {{ parametersChannelTemplate(channel.parameters()) -}}
-{% endif -%}
-{% for subsection in subsections | chunks -%}
-{% if subsection === "bindings" and channel.bindings() -%}
+{% elif subsection === "bindings" and channel.bindings() -%}
 ### {{ "Bindings" | heading(toc, 3) }}
 
 {{ channelBindingsTemplate(channel.bindings()) -}}
 {% elif subsection === "messages" and ((channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages())) -%}
 ### {{ "Messages" | heading(toc, 3) }}
 
-{{ messagesChannelTemplate(channel) -}}
+{{ messagesChannelTemplate(channel, bookmarks) -}}
 {% elif subsection === "publish" and channel.hasPublish() -%}
 ### {{ "As Publisher" | heading(toc, 3) }}
 
@@ -55,8 +54,8 @@ Parameter|Location|Description
 ---------|--------|-----------
 {% for parameterName, parameter in parameters -%}
 {{ parameterName | code -}}
-|{% if parameter.location() | isDefined -%} {{ parameter.location() | code }} {%- endif -%}
-|{% if parameter.description() | isDefined -%} {{ parameter.description() | safe }} {%- endif %}
+|{{ parameter.location() | code if parameter.location() | isDefined -}}
+|{{ parameter.description() | safe if parameter.description() | isDefined }}
 {% if parameter.schema() -%}
 {% set hasSchemas = true -%}
 {% endif -%}
@@ -74,21 +73,22 @@ Parameter|Location|Description
 
 {# Messages #}
 
-{% macro messagesChannelTemplate(channel) -%}
+{% macro messagesChannelTemplate(channel, bookmarks) -%}
 Operation|Message|Description
 ---------|-------|-----------
 {% if channel.hasSubscribe() and channel.subscribe().messages() -%}
-{{ messageChannelTemplate(channel.subscribe()) -}}
+{{ messageChannelTemplate(channel.subscribe(), bookmarks) -}}
 {% endif -%}
 {% if channel.hasPublish() and channel.publish().messages() -%}
-{{ messageChannelTemplate(channel.publish()) -}}
+{{ messageChannelTemplate(channel.publish(), bookmarks) -}}
 {% endif %}
 {% endmacro -%}
 
-{% macro messageChannelTemplate(operation) -%}
+{% macro messageChannelTemplate(operation, bookmarks) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
-|{% if message.name() | isDefined -%} {{ message.name() | code }} {%- else -%} {{ message.uid() | code }} {%- endif -%}
+|{% set computedName -%} {{- message.name() if message.name() | isDefined else message.uid() -}} {% endset -%}
+{{ computedName | bookmarked(bookmarks, "messages") | reference(computedName) -}}
 |{{ message.title() }}
 {% endfor -%}
 {% endmacro -%}

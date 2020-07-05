@@ -40,7 +40,7 @@ Protocol|`AMQP` `0-9-1`
 
 Scheme|Scopes
 ------|------
-`OAuth 2`|`read:user`<br />`write:user`
+[OAuth 2](#4.2.-oauth-2)|`read:user`<br />`write:user`
 
 ## 1.2. Staging
 
@@ -61,7 +61,7 @@ Variable|Allowed|Default|Description
 
 Scheme|Scopes
 ------|------
-`API Key`|
+[API Key](#4.1.-api-key)|
 
 ### 1.2.3. Bindings
 
@@ -99,8 +99,8 @@ Name|Type|Format|Allowed|Default|Description
 
 Operation|Message|Description
 ---------|-------|-----------
-*publish*|`createPrintJob`|Creates a print job.
-*publish*|`cancelPrintJob`|Cancels a print job.
+*publish*|[createPrintJob](#3.1.-createprintjob)|Creates a print job.
+*publish*|[cancelPrintJob](#3.2.-cancelprintjob)|Cancels a print job.
 
 ### 2.1.3. As Publisher
 
@@ -150,7 +150,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|`printJobEvent`|Print job event.
+*subscribe*|[printJobEvent](#3.3.-printjobevent)|Print job event.
 
 ### 2.2.4. As Subscriber
 
@@ -212,7 +212,7 @@ Print Jobs Documentation.
 
 ### 3.1.1. Payload
 
-Content Type: `application/json` 
+Content Type: `application/json`
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -251,7 +251,7 @@ Cancels a print job.
 
 ### 3.2.1. Payload
 
-Content Type: `application/json` 
+Content Type: `application/json`
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
@@ -303,7 +303,7 @@ Print job event.
 
 ### 3.3.1. Payload
 
-Content Type: `application/json` 
+Content Type: `application/json`
 
 Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------

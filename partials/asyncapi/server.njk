@@ -7,13 +7,13 @@
 
 {# Server #}
 
-{% macro serversTemplate(servers, subsections, toc) -%}
+{% macro serversTemplate(servers, subsections, toc, bookmarks) -%}
 {% for serverName, server in servers -%}
-{{ serverTemplate(serverName, server, subsections, toc) -}}
+{{ serverTemplate(serverName, server, subsections, toc, bookmarks) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro serverTemplate(serverName, server, subsections, toc) -%}
+{% macro serverTemplate(serverName, server, subsections, toc,bookmarks) -%}
 ## {{ serverName | heading(toc, 2) }}
 
 {% if server.description() | isDefined -%}
@@ -23,7 +23,7 @@
 Parameter|Value
 ---------|------
 URL|{{ server.url() | link }}
-Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
+Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {%- if server.protocolVersion() | isDefined %} {{ server.protocolVersion() | code }} {%- endif %}
 
 {% for subsection in subsections | chunks -%}
 {% if subsection === "variables" and server.hasVariables() -%}
@@ -33,7 +33,7 @@ Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.proto
 {% elif subsection === "security" and server.security() -%}
 ### {{ "Security" | heading(toc, 3) }}
 
-{{ securityServerTemplate(server.security()) -}}
+{{ securityServerTemplate(server.security(), bookmarks) -}}
 {% elif subsection === "bindings" and server.bindings() -%}
 ### {{ "Bindings" | heading(toc, 3) }}
 
@@ -49,9 +49,9 @@ Variable|Allowed|Default|Description
 --------|-------|-------|-----------
 {% for variableName, variable in variables -%}
 {{ variableName | code -}}
-|{% if variable.hasAllowedValues() -%} {{ multilineTemplate(variable.allowedValues()) }} {%- endif -%}
-|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() | code }} {%- endif -%}
-|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesServerTemplate(variable.examples()) }} {%- endif %}
+|{{ multilineTemplate(variable.allowedValues()) if variable.hasAllowedValues() -}}
+|{{ variable.defaultValue() | code if variable.hasDefaultValue() -}}
+|{{ variable.description() | safe }} {{- examplesServerTemplate(variable.examples()) if variable.examples() }}
 {% endfor %}
 {% endmacro -%}
 
@@ -65,12 +65,12 @@ Variable|Allowed|Default|Description
 
 {# Security #}
 
-{% macro securityServerTemplate(security) -%}
+{% macro securityServerTemplate(security, bookmarks) -%}
 Scheme|Scopes
 ------|------
 {% for scheme in security -%}
 {% set schemeName = scheme.json() | keys | first -%}
 {% set scopes = scheme.json()[schemeName] -%}
-{{ schemeName | code }}|{% if scopes -%} {{ multilineTemplate(scopes) }} {%- endif %}
+{{ schemeName | bookmarked(bookmarks, "security") | reference(schemeName) }}|{{ multilineTemplate(scopes) if scopes }}
 {% endfor %}
 {% endmacro -%}
