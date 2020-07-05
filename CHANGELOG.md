@@ -3,7 +3,7 @@
 ## [0.4.0] - 2020-07-05
 
 ### Features
-- Add links to messages and security sections [#3](https://github.com/jcmellado/markdown-template/issues/22)
+- Add links to messages and security sections [#22](https://github.com/jcmellado/markdown-template/issues/22)
 
 ## [0.3.0] - 2020-07-04
 
