@@ -4,7 +4,7 @@ Markdown template for the [AsyncAPI Generator](https://github.com/asyncapi/gener
 
 The template converts an [AsyncAPI](https://www.asyncapi.com/) document into a [Markdown](https://en.wikipedia.org/wiki/Markdown) document.
 
-The generated Markdown documents can be used to create static HTML documentation websites too with [Slate](https://github.com/slatedocs/slate) or [shins](https://github.com/Mermade/shins).
+The generated Markdown documents can be used to create static HTML documentation websites with [Slate](https://github.com/slatedocs/slate) or [shins](https://github.com/Mermade/shins).
 
 # Usage
 
@@ -54,7 +54,7 @@ Example:
 ag ./asyncapi.yml @jcmellado/markdown-template -o ./docs -p slate.enabled=true -p slate.languages="json: JSON,Rust"
 ```
 
-The following sections describe the available template parameters.
+The following sections describe the available parameters.
 
 ## Markdown
 
