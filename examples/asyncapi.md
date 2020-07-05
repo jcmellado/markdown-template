@@ -6,24 +6,24 @@ Allows you to interact with printers. Using it you can:
 
 ## Table of Contents
 
-* [1. Servers](#1.-servers)
-    * [1.1. Production](#1.1.-production)
-    * [1.2. Staging](#1.2.-staging)
-* [2. Channels](#2.-channels)
-    * [2.1. commands/{queueId}](#2.1.-commands/{queueid})
-    * [2.2. events/{jobId}](#2.2.-events/{jobid})
-* [3. Messages](#3.-messages)
-    * [3.1. createPrintJob](#3.1.-createprintjob)
-    * [3.2. cancelPrintJob](#3.2.-cancelprintjob)
-    * [3.3. printJobEvent](#3.3.-printjobevent)
-* [4. Security](#4.-security)
-    * [4.1. API Key](#4.1.-api-key)
-    * [4.2. OAuth 2](#4.2.-oauth-2)
-* [5. Tags](#5.-tags)
-    * [5.1. asyncapi](#5.1.-asyncapi)
-* [6. License](#6.-license)
-* [7. Terms Of Service](#7.-terms-of-service)
-* [8. Contact](#8.-contact)
+* [1. Servers](#1-servers)
+    * [1.1. Production](#11-production)
+    * [1.2. Staging](#12-staging)
+* [2. Channels](#2-channels)
+    * [2.1. commands/{queueId}](#21-commandsqueueid)
+    * [2.2. events/{jobId}](#22-eventsjobid)
+* [3. Messages](#3-messages)
+    * [3.1. createPrintJob](#31-createprintjob)
+    * [3.2. cancelPrintJob](#32-cancelprintjob)
+    * [3.3. printJobEvent](#33-printjobevent)
+* [4. Security](#4-security)
+    * [4.1. API Key](#41-api-key)
+    * [4.2. OAuth 2](#42-oauth-2)
+* [5. Tags](#5-tags)
+    * [5.1. asyncapi](#51-asyncapi)
+* [6. License](#6-license)
+* [7. Terms Of Service](#7-terms-of-service)
+* [8. Contact](#8-contact)
 
 # 1. Servers
 
@@ -40,7 +40,7 @@ Protocol|`AMQP` `0-9-1`
 
 Scheme|Scopes
 ------|------
-[OAuth 2](#4.2.-oauth-2)|`read:user`<br />`write:user`
+[OAuth 2](#42-oauth-2)|`read:user`<br />`write:user`
 
 ## 1.2. Staging
 
@@ -61,7 +61,7 @@ Variable|Allowed|Default|Description
 
 Scheme|Scopes
 ------|------
-[API Key](#4.1.-api-key)|
+[API Key](#41-api-key)|
 
 ### 1.2.3. Bindings
 
@@ -99,8 +99,8 @@ Name|Type|Format|Allowed|Default|Description
 
 Operation|Message|Description
 ---------|-------|-----------
-*publish*|[createPrintJob](#3.1.-createprintjob)|Creates a print job.
-*publish*|[cancelPrintJob](#3.2.-cancelprintjob)|Cancels a print job.
+*publish*|[createPrintJob](#31-createprintjob)|Creates a print job.
+*publish*|[cancelPrintJob](#32-cancelprintjob)|Cancels a print job.
 
 ### 2.1.3. As Publisher
 
@@ -150,7 +150,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|[printJobEvent](#3.3.-printjobevent)|Print job event.
+*subscribe*|[printJobEvent](#33-printjobevent)|Print job event.
 
 ### 2.2.4. As Subscriber
 

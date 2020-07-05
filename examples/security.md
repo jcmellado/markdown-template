@@ -2,21 +2,21 @@
 
 ## Table of Contents
 
-* [1. Servers](#1.-servers)
-    * [1.1. test](#1.1.-test)
-* [2. Channels](#2.-channels)
-    * [2.1. dummy](#2.1.-dummy)
-* [3. Security](#3.-security)
-    * [3.1. User/Password](#3.1.-user/password)
-    * [3.2. API Key](#3.2.-api-key)
-    * [3.3. X.509 Certificate](#3.3.-x.509-certificate)
-    * [3.4. Symmetric Encryption](#3.4.-symmetric-encryption)
-    * [3.5. Asymmetric Encryption](#3.5.-asymmetric-encryption)
-    * [3.6. HTTP API Key](#3.6.-http-api-key)
-    * [3.7. HTTP](#3.7.-http)
-    * [3.8. HTTP (Bearer)](#3.8.-http-(bearer))
-    * [3.9. OAuth 2.0](#3.9.-oauth-2.0)
-    * [3.10. OpenID](#3.10.-openid)
+* [1. Servers](#1-servers)
+    * [1.1. test](#11-test)
+* [2. Channels](#2-channels)
+    * [2.1. dummy](#21-dummy)
+* [3. Security](#3-security)
+    * [3.1. User/Password](#31-userpassword)
+    * [3.2. API Key](#32-api-key)
+    * [3.3. X.509 Certificate](#33-x509-certificate)
+    * [3.4. Symmetric Encryption](#34-symmetric-encryption)
+    * [3.5. Asymmetric Encryption](#35-asymmetric-encryption)
+    * [3.6. HTTP API Key](#36-http-api-key)
+    * [3.7. HTTP](#37-http)
+    * [3.8. HTTP (Bearer)](#38-http-bearer)
+    * [3.9. OAuth 2.0](#39-oauth-20)
+    * [3.10. OpenID](#310-openid)
 
 # 1. Servers
 
@@ -31,16 +31,16 @@ Protocol|`test`
 
 Scheme|Scopes
 ------|------
-[User/Password](#3.1.-user/password)|
-[API Key](#3.2.-api-key)|
-[X.509 Certificate](#3.3.-x.509-certificate)|
-[Symmetric Encryption](#3.4.-symmetric-encryption)|
-[Asymmetric Encryption](#3.5.-asymmetric-encryption)|
-[HTTP API Key](#3.6.-http-api-key)|
-[HTTP](#3.7.-http)|
-[HTTP (Bearer)](#3.8.-http-(bearer))|
-[OAuth 2.0](#3.9.-oauth-2.0)|`read:user`<br />`write:user`
-[OpenID](#3.10.-openid)|`read:user`<br />`write:user`
+[User/Password](#31-userpassword)|
+[API Key](#32-api-key)|
+[X.509 Certificate](#33-x509-certificate)|
+[Symmetric Encryption](#34-symmetric-encryption)|
+[Asymmetric Encryption](#35-asymmetric-encryption)|
+[HTTP API Key](#36-http-api-key)|
+[HTTP](#37-http)|
+[HTTP (Bearer)](#38-http-bearer)|
+[OAuth 2.0](#39-oauth-20)|`read:user`<br />`write:user`
+[OpenID](#310-openid)|`read:user`<br />`write:user`
 
 # 2. Channels
 

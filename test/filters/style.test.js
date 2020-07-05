@@ -22,6 +22,7 @@ test('reference', t => {
   t.is(filters.reference('foo'), '[foo](#foo)');
   t.is(filters.reference('foo', 'bar'), '[bar](#foo)');
   t.is(filters.reference('a b c'), '[a b c](#a-b-c)');
+  t.is(filters.reference('a.b c.d'), '[a.b c.d](#ab-cd)');
   t.is(filters.reference('a X c Y'), '[a X c Y](#a-x-c-y)');
 });
 

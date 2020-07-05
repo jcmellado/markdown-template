@@ -12,8 +12,11 @@ filters.italic = (text) =>
 filters.link = (url, text = url) =>
   `[${text}](${url})`;
 
-filters.reference = (title, text = title) =>
-  `[${text}](#${title.toLowerCase().replace(/\s/g, '-')})`;
+filters.reference = (title, text = title) => {
+  const sanitized = title.replace(/[^\w\- ]/g, '').replace(/\s/g, '-');
+
+  return `[${text}](#${sanitized.toLowerCase()})`;
+};
 
 filters.email = (url, text = url) =>
   `[${text}](mailto:${url})`;

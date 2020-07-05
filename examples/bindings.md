@@ -2,21 +2,21 @@
 
 ## Table of Contents
 
-* [1. Servers](#1.-servers)
-    * [1.1. MQTT-Server](#1.1.-mqtt-server)
-* [2. Channels](#2.-channels)
-    * [2.1. WebSockets-Channel](#2.1.-websockets-channel)
-    * [2.2. AMQP-Channel-RoutingKey](#2.2.-amqp-channel-routingkey)
-    * [2.3. AMQP-Channel-Queue](#2.3.-amqp-channel-queue)
-    * [2.4. HTTP-Channel-Operation](#2.4.-http-channel-operation)
-    * [2.5. Kafka-Channel-Operation](#2.5.-kafka-channel-operation)
-    * [2.6. AMQP-Channel-Operation](#2.6.-amqp-channel-operation)
-    * [2.7. MQTT-Channel-Operation](#2.7.-mqtt-channel-operation)
-* [3. Messages](#3.-messages)
-    * [3.1. HTTP-Message](#3.1.-http-message)
-    * [3.2. Kafka-Message](#3.2.-kafka-message)
-    * [3.3. AMQP-Message](#3.3.-amqp-message)
-    * [3.4. MQTT-Message](#3.4.-mqtt-message)
+* [1. Servers](#1-servers)
+    * [1.1. MQTT-Server](#11-mqtt-server)
+* [2. Channels](#2-channels)
+    * [2.1. WebSockets-Channel](#21-websockets-channel)
+    * [2.2. AMQP-Channel-RoutingKey](#22-amqp-channel-routingkey)
+    * [2.3. AMQP-Channel-Queue](#23-amqp-channel-queue)
+    * [2.4. HTTP-Channel-Operation](#24-http-channel-operation)
+    * [2.5. Kafka-Channel-Operation](#25-kafka-channel-operation)
+    * [2.6. AMQP-Channel-Operation](#26-amqp-channel-operation)
+    * [2.7. MQTT-Channel-Operation](#27-mqtt-channel-operation)
+* [3. Messages](#3-messages)
+    * [3.1. HTTP-Message](#31-http-message)
+    * [3.2. Kafka-Message](#32-kafka-message)
+    * [3.3. AMQP-Message](#33-amqp-message)
+    * [3.4. MQTT-Message](#34-mqtt-message)
 
 # 1. Servers
 
@@ -107,7 +107,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|[HTTP-Message](#3.1.-http-message)|
+*subscribe*|[HTTP-Message](#31-http-message)|
 
 ### 2.4.2. As Subscriber
 
@@ -133,7 +133,7 @@ Name|Type|Format|Allowed|Default|Description
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|[Kafka-Message](#3.2.-kafka-message)|
+*subscribe*|[Kafka-Message](#32-kafka-message)|
 
 ### 2.5.2. As Subscriber
 
@@ -163,7 +163,7 @@ Name|Type|Format|Allowed|Default|Description
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|[AMQP-Message](#3.3.-amqp-message)|
+*subscribe*|[AMQP-Message](#33-amqp-message)|
 
 ### 2.6.2. As Subscriber
 
@@ -191,7 +191,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|[MQTT-Message](#3.4.-mqtt-message)|
+*subscribe*|[MQTT-Message](#34-mqtt-message)|
 
 ### 2.7.2. As Subscriber
 
