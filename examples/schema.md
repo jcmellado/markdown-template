@@ -2,17 +2,17 @@
 
 ## Table of Contents
 
-* [1. Channels](#1.-channels)
-    * [1.1. dummy](#1.1.-dummy)
-* [2. Messages](#2.-messages)
-    * [2.1. Numeric](#2.1.-numeric)
-    * [2.2. String](#2.2.-string)
-    * [2.3. Array](#2.3.-array)
-    * [2.4. Object](#2.4.-object)
-    * [2.5. Items](#2.5.-items)
-    * [2.6. Properties](#2.6.-properties)
-    * [2.7. Combinations](#2.7.-combinations)
-    * [2.8. Conditionals](#2.8.-conditionals)
+* [1. Channels](#1-channels)
+    * [1.1. dummy](#11-dummy)
+* [2. Messages](#2-messages)
+    * [2.1. Numeric](#21-numeric)
+    * [2.2. String](#22-string)
+    * [2.3. Array](#23-array)
+    * [2.4. Object](#24-object)
+    * [2.5. Items](#25-items)
+    * [2.6. Properties](#26-properties)
+    * [2.7. Combinations](#27-combinations)
+    * [2.8. Conditionals](#28-conditionals)
 
 # 1. Channels
 
@@ -22,14 +22,14 @@
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|[Numeric](#2.1.-numeric)|
-*subscribe*|[String](#2.2.-string)|
-*subscribe*|[Array](#2.3.-array)|
-*subscribe*|[Object](#2.4.-object)|
-*subscribe*|[Items](#2.5.-items)|
-*subscribe*|[Properties](#2.6.-properties)|
-*subscribe*|[Combinations](#2.7.-combinations)|
-*subscribe*|[Conditionals](#2.8.-conditionals)|
+*subscribe*|[Numeric](#21-numeric)|
+*subscribe*|[String](#22-string)|
+*subscribe*|[Array](#23-array)|
+*subscribe*|[Object](#24-object)|
+*subscribe*|[Items](#25-items)|
+*subscribe*|[Properties](#26-properties)|
+*subscribe*|[Combinations](#27-combinations)|
+*subscribe*|[Conditionals](#28-conditionals)|
 
 ### 1.1.2. As Subscriber
 
