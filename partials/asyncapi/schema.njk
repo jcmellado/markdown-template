@@ -74,14 +74,14 @@ Name|Type|Format|Allowed|Default|Description
 {% endmacro -%}
 
 {% macro nameFieldSchemaTemplate(fieldName) -%}
-{% if fieldName -%} {{ fieldName }} {%- else -%} {{ "-" | italic }} {%- endif -%}
+{{ fieldName if fieldName else "-" | italic -}}
 {% endmacro -%}
 
 {% macro typeFieldSchemaTemplate(field) -%}
 {% set linefeed = joiner("" | br | safe) -%}
 {% set types -%}
 {%- if field.type() -%}
-{% if field.type() | isArray -%} {{ multilineTemplate(field.type()) }} {%- else -%} {{ field.type() | code }} {%- endif -%}
+{{ multilineTemplate(field.type()) if field.type() | isArray else field.type() | code -}}
 {% endif -%}
 {% endset -%}
 {% set schemas -%}
@@ -99,7 +99,7 @@ Name|Type|Format|Allowed|Default|Description
 {% endmacro -%}
 
 {% macro formatFieldSchemaTemplate(field) -%}
-{% if field.format() | isDefined -%} {{ field.format() | code }} {%- endif -%}
+{{ field.format() | code if field.format() | isDefined -}}
 {% endmacro -%}
 
 {% macro allowedFieldSchemaTemplate(field) -%}
@@ -107,7 +107,7 @@ Name|Type|Format|Allowed|Default|Description
 {% endmacro -%}
 
 {% macro defaultFieldSchemaTemplate(field) -%}
-{% if field.default() | isDefined -%} {{ field.default() | code }} {%- endif -%}
+{{ field.default() | code if field.default() | isDefined -}}
 {% endmacro -%}
 
 {% macro descriptionFieldSchemaTemplate(field, required) -%}

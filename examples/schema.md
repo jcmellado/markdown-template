@@ -22,14 +22,14 @@
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|`Numeric`|
-*subscribe*|`String`|
-*subscribe*|`Array`|
-*subscribe*|`Object`|
-*subscribe*|`Items`|
-*subscribe*|`Properties`|
-*subscribe*|`Combinations`|
-*subscribe*|`Conditionals`|
+*subscribe*|[Numeric](#2.1.-numeric)|
+*subscribe*|[String](#2.2.-string)|
+*subscribe*|[Array](#2.3.-array)|
+*subscribe*|[Object](#2.4.-object)|
+*subscribe*|[Items](#2.5.-items)|
+*subscribe*|[Properties](#2.6.-properties)|
+*subscribe*|[Combinations](#2.7.-combinations)|
+*subscribe*|[Conditionals](#2.8.-conditionals)|
 
 ### 1.1.2. As Subscriber
 

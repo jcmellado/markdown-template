@@ -25,7 +25,7 @@
 Parameter|Value
 ---------|------
 URL|[dummy](dummy)
-Protocol|`MQTT` 
+Protocol|`MQTT`
 
 ### 1.1.1. Bindings
 
@@ -107,7 +107,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|`HTTP-Message`|
+*subscribe*|[HTTP-Message](#3.1.-http-message)|
 
 ### 2.4.2. As Subscriber
 
@@ -133,7 +133,7 @@ Name|Type|Format|Allowed|Default|Description
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|`Kafka-Message`|
+*subscribe*|[Kafka-Message](#3.2.-kafka-message)|
 
 ### 2.5.2. As Subscriber
 
@@ -163,7 +163,7 @@ Name|Type|Format|Allowed|Default|Description
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|`AMQP-Message`|
+*subscribe*|[AMQP-Message](#3.3.-amqp-message)|
 
 ### 2.6.2. As Subscriber
 
@@ -191,7 +191,7 @@ Binding Version|`0.1.0`|The version of this binding.
 
 Operation|Message|Description
 ---------|-------|-----------
-*subscribe*|`MQTT-Message`|
+*subscribe*|[MQTT-Message](#3.4.-mqtt-message)|
 
 ### 2.7.2. As Subscriber
 
