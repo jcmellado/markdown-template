@@ -3,17 +3,11 @@
 
 const filters = module.exports;
 
-filters.toc = (params) => {
-  const slateEnabled = params['slate.enabled'] === 'true';
-  const headingLevel = parseInt(params['tocHeadingLevel'], 10);
-  const levels = [];
-
-  return {
-    slateEnabled: slateEnabled,
-    headingLevel: headingLevel,
-    levels: levels,
-  };
-};
+filters.toc = (params) => ({
+  slateEnabled: params['slate.enabled'] === 'true',
+  headingLevel: parseInt(params['tocHeadingLevel'], 10),
+  levels: [],
+});
 
 filters.heading = (text, toc, level) => {
   if (toc.slateEnabled) {

@@ -8,13 +8,13 @@
 
 {# Channel #}
 
-{% macro channelsTemplate(channels, subsections, toc) -%}
+{% macro channelsTemplate(channels, subsections, toc, bookmarks) -%}
 {% for channelName, channel in channels -%}
-{{ channelTemplate(channelName, channel, subsections, toc) -}}
+{{ channelTemplate(channelName, channel, subsections, toc, bookmarks) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro channelTemplate(channelName, channel, subsections, toc) -%}
+{% macro channelTemplate(channelName, channel, subsections, toc, bookmarks) -%}
 ## {{ channelName | heading(toc, 2) }}
 
 {% if channel.description() | isDefined -%}
@@ -33,7 +33,7 @@
 {% elif subsection === "messages" and ((channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages())) -%}
 ### {{ "Messages" | heading(toc, 3) }}
 
-{{ messagesChannelTemplate(channel) -}}
+{{ messagesChannelTemplate(channel, bookmarks) -}}
 {% elif subsection === "publish" and channel.hasPublish() -%}
 ### {{ "As Publisher" | heading(toc, 3) }}
 
@@ -73,21 +73,22 @@ Parameter|Location|Description
 
 {# Messages #}
 
-{% macro messagesChannelTemplate(channel) -%}
+{% macro messagesChannelTemplate(channel, bookmarks) -%}
 Operation|Message|Description
 ---------|-------|-----------
 {% if channel.hasSubscribe() and channel.subscribe().messages() -%}
-{{ messageChannelTemplate(channel.subscribe()) -}}
+{{ messageChannelTemplate(channel.subscribe(), bookmarks) -}}
 {% endif -%}
 {% if channel.hasPublish() and channel.publish().messages() -%}
-{{ messageChannelTemplate(channel.publish()) -}}
+{{ messageChannelTemplate(channel.publish(), bookmarks) -}}
 {% endif %}
 {% endmacro -%}
 
-{% macro messageChannelTemplate(operation) -%}
+{% macro messageChannelTemplate(operation, bookmarks) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
-|{{ message.name() | code if message.name() | isDefined else message.uid() | code -}}
+|{% set computedName -%} {{- message.name() if message.name() | isDefined else message.uid() -}} {% endset -%}
+{{ computedName | bookmarked(bookmarks, "messages") | reference(computedName) -}}
 |{{ message.title() }}
 {% endfor -%}
 {% endmacro -%}
