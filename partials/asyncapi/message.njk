@@ -65,7 +65,7 @@
 
 {% macro payloadMessageTemplate(message, defaultContentType, slateEnabled) -%}
 {% if message.contentType() | isDefined or defaultContentType | isDefined -%}
-{{ "Content Type:" }} {% if message.contentType() | isDefined -%} {{ message.contentType() | code }} {%- else -%} {{ defaultContentType | code }} {% endif %}
+{{ "Content Type:" }} {{ message.contentType() | code if message.contentType() | isDefined else defaultContentType | code }}
 
 {% endif -%}
 {% if message.schemaFormat() | isDefined and message.schemaFormat() !== "application/schema+json;version=draft-07" -%}
@@ -101,6 +101,6 @@
 Location|Description
 --------|------------
 {{ correlationId.location() | code -}}
-|{% if correlationId.description() | isDefined -%} {{ correlationId.description() | safe }} {%- endif %}
+|{{ correlationId.description() | safe if correlationId.description() }}
 
 {% endmacro -%}

@@ -23,7 +23,7 @@
 Parameter|Value
 ---------|------
 URL|{{ server.url() | link }}
-Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {% if server.protocolVersion() | isDefined -%} {{ server.protocolVersion() | code }} {%- endif %}
+Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {%- if server.protocolVersion() | isDefined %} {{ server.protocolVersion() | code }} {%- endif %}
 
 {% for subsection in subsections | chunks -%}
 {% if subsection === "variables" and server.hasVariables() -%}
@@ -49,9 +49,9 @@ Variable|Allowed|Default|Description
 --------|-------|-------|-----------
 {% for variableName, variable in variables -%}
 {{ variableName | code -}}
-|{% if variable.hasAllowedValues() -%} {{ multilineTemplate(variable.allowedValues()) }} {%- endif -%}
-|{% if variable.hasDefaultValue() -%} {{ variable.defaultValue() | code }} {%- endif -%}
-|{{ variable.description() | safe }} {%- if variable.examples() -%} {{ examplesServerTemplate(variable.examples()) }} {%- endif %}
+|{{ multilineTemplate(variable.allowedValues()) if variable.hasAllowedValues() -}}
+|{{ variable.defaultValue() | code if variable.hasDefaultValue() -}}
+|{{ variable.description() | safe }} {{- examplesServerTemplate(variable.examples()) if variable.examples() }}
 {% endfor %}
 {% endmacro -%}
 
@@ -71,6 +71,6 @@ Scheme|Scopes
 {% for scheme in security -%}
 {% set schemeName = scheme.json() | keys | first -%}
 {% set scopes = scheme.json()[schemeName] -%}
-{{ schemeName | code }}|{% if scopes -%} {{ multilineTemplate(scopes) }} {%- endif %}
+{{ schemeName | code }}|{{ multilineTemplate(scopes) if scopes }}
 {% endfor %}
 {% endmacro -%}
