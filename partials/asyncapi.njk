@@ -15,8 +15,7 @@
 {{ asyncapi.info().description() | safe }}
 
 {% endif -%}
-{% set bookmarks = params | bookmarks -%}
-{% set tableOfContents = tocTemplate(asyncapi, params, bookmarks) -%}
+{% set tableOfContents = tocTemplate(asyncapi, params) -%}
 {% if params["tocHeadingLevel"] === "1" or params["tocHeadingLevel"] === "2" -%}
 ## Table of Contents
 
@@ -27,11 +26,11 @@
 {% if section === "servers" and asyncapi.hasServers() -%}
 # {{ "Servers" | heading(toc, 1) }}
 
-{{ serversTemplate(asyncapi.servers(), params["sections.servers"], toc, bookmarks) -}}
+{{ serversTemplate(asyncapi.servers(), params["sections.servers"], toc) -}}
 {% elif section === "channels" and asyncapi.hasChannels() -%}
 # {{ "Channels" | heading(toc, 1) }}
 
-{{ channelsTemplate(asyncapi.channels(), params["sections.channels"], toc, bookmarks) -}}
+{{ channelsTemplate(asyncapi.channels(), params["sections.channels"], toc) -}}
 {% elif section === "messages" and asyncapi.allMessages() | length -%}
 # {{ "Messages" | heading(toc, 1) }}
 

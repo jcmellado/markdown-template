@@ -3,18 +3,23 @@
 
 const filters = module.exports;
 
-filters.bookmarks = () =>
-  new Map();
-
-filters.bookmark = (heading, bookmarks, section, subsection) => {
-  if (bookmarks.has(section)) {
-    bookmarks.get(section).set(subsection, heading);
-  } else {
-    bookmarks.set(section, new Map([[subsection, heading]]));
+filters.bookmarks = (heading, section, subsection) => {
+  if (this.folders === undefined) {
+    this.folders = new Map();
   }
+
+  let folder = this.folders.get(section);
+
+  if (folder === undefined) {
+    folder = new Map();
+    this.folders.set(section, folder);
+  }
+
+  if (folder.has(subsection)) {
+    return folder.get(subsection);
+  }
+
+  folder.set(subsection, heading);
 
   return heading;
 };
-
-filters.bookmarked = (subsection, bookmarks, section) =>
-  bookmarks.get(section).get(subsection);

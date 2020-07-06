@@ -7,13 +7,13 @@
 
 {# Server #}
 
-{% macro serversTemplate(servers, subsections, toc, bookmarks) -%}
+{% macro serversTemplate(servers, subsections, toc) -%}
 {% for serverName, server in servers -%}
-{{ serverTemplate(serverName, server, subsections, toc, bookmarks) -}}
+{{ serverTemplate(serverName, server, subsections, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro serverTemplate(serverName, server, subsections, toc,bookmarks) -%}
+{% macro serverTemplate(serverName, server, subsections, toc) -%}
 ## {{ serverName | heading(toc, 2) }}
 
 {% if server.description() | isDefined -%}
@@ -33,7 +33,7 @@ Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {%- if server.prot
 {% elif subsection === "security" and server.security() -%}
 ### {{ "Security" | heading(toc, 3) }}
 
-{{ securityServerTemplate(server.security(), bookmarks) -}}
+{{ securityServerTemplate(server.security()) -}}
 {% elif subsection === "bindings" and server.bindings() -%}
 ### {{ "Bindings" | heading(toc, 3) }}
 
@@ -65,12 +65,12 @@ Variable|Allowed|Default|Description
 
 {# Security #}
 
-{% macro securityServerTemplate(security, bookmarks) -%}
+{% macro securityServerTemplate(security) -%}
 Scheme|Scopes
 ------|------
 {% for scheme in security -%}
 {% set schemeName = scheme.json() | keys | first -%}
 {% set scopes = scheme.json()[schemeName] -%}
-{{ schemeName | bookmarked(bookmarks, "security") | reference(schemeName) }}|{{ multilineTemplate(scopes) if scopes }}
+{{ schemeName | bookmarks("security", schemeName) | reference(schemeName) }}|{{ multilineTemplate(scopes) if scopes }}
 {% endfor %}
 {% endmacro -%}

@@ -3,22 +3,22 @@
 
 {# Table of Contents #}
 
-{% macro tocTemplate(asyncapi, params, bookmarks) -%}
+{% macro tocTemplate(asyncapi, params) -%}
 {% set toc = params | toc -%}
 {% for section in params["sections"] | chunks -%}
-{{ sectionTocTemplate(asyncapi, toc, section, bookmarks) -}}
+{{ sectionTocTemplate(asyncapi, toc, section) -}}
 {% endfor %}
 {% endmacro -%}
 
-{% macro sectionTocTemplate(asyncapi, toc, section, bookmarks) -%}
+{% macro sectionTocTemplate(asyncapi, toc, section) -%}
 {% if section === "servers" and asyncapi.hasServers() -%}
 {{ serversTocTemplate(toc, asyncapi.servers()) -}}
 {% elif section === "channels" and asyncapi.hasChannels() -%}
 {{ channelsTocTemplate(toc, asyncapi.channels()) -}}
 {% elif section === "messages" and asyncapi.allMessages() | length -%}
-{{ messagesTocTemplate(toc, asyncapi.allMessages(), bookmarks) -}}
+{{ messagesTocTemplate(toc, asyncapi.allMessages()) -}}
 {% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
-{{ securityTocTemplate(toc, asyncapi.components().securitySchemes(), bookmarks) -}}
+{{ securityTocTemplate(toc, asyncapi.components().securitySchemes()) -}}
 {% elif section === "tags" and asyncapi.hasTags() -%}
 {{ tagsTocTemplate(toc, asyncapi.tags()) -}}
 {% elif section === "license" and asyncapi.info().license() -%}
@@ -48,21 +48,21 @@
 {% endif -%}
 {% endmacro -%}
 
-{% macro messagesTocTemplate(toc, messages, bookmarks) -%}
+{% macro messagesTocTemplate(toc, messages) -%}
 {{ "Messages" | heading(toc, 1) | reference | listItem(1) }}
 {% for messageName, message in messages -%}
 {% set computedName -%} {{- message.name() if message.name() | isDefined else message.uid() -}} {% endset -%}
-{% set subsection = computedName | heading(toc, 2) | bookmark(bookmarks, "messages", computedName) -%}
+{% set subsection = computedName | heading(toc, 2) | bookmarks("messages", computedName) -%}
 {% if toc.headingLevel === 2 -%}
 {{ subsection | reference | listItem(2) }}
 {% endif -%}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro securityTocTemplate(toc, schemes, bookmarks) -%}
+{% macro securityTocTemplate(toc, schemes) -%}
 {{ "Security" | heading(toc, 1) | reference | listItem(1) }}
 {% for schemeName, scheme in schemes -%}
-{% set subsection = schemeName | heading(toc, 2) | bookmark(bookmarks, "security", schemeName) -%}
+{% set subsection = schemeName | heading(toc, 2) | bookmarks("security", schemeName) -%}
 {% if toc.headingLevel === 2 -%}
 {{ subsection | reference | listItem(2) }}
 {% endif -%}
