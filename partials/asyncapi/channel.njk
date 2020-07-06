@@ -8,13 +8,13 @@
 
 {# Channel #}
 
-{% macro channelsTemplate(channels, subsections, toc, bookmarks) -%}
+{% macro channelsTemplate(channels, subsections, toc) -%}
 {% for channelName, channel in channels -%}
-{{ channelTemplate(channelName, channel, subsections, toc, bookmarks) -}}
+{{ channelTemplate(channelName, channel, subsections, toc) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro channelTemplate(channelName, channel, subsections, toc, bookmarks) -%}
+{% macro channelTemplate(channelName, channel, subsections, toc) -%}
 ## {{ channelName | heading(toc, 2) }}
 
 {% if channel.description() | isDefined -%}
@@ -33,7 +33,7 @@
 {% elif subsection === "messages" and ((channel.hasSubscribe() and channel.subscribe().messages()) or (channel.hasPublish() and channel.publish().messages())) -%}
 ### {{ "Messages" | heading(toc, 3) }}
 
-{{ messagesChannelTemplate(channel, bookmarks) -}}
+{{ messagesChannelTemplate(channel) -}}
 {% elif subsection === "publish" and channel.hasPublish() -%}
 ### {{ "As Publisher" | heading(toc, 3) }}
 
@@ -73,22 +73,22 @@ Parameter|Location|Description
 
 {# Messages #}
 
-{% macro messagesChannelTemplate(channel, bookmarks) -%}
+{% macro messagesChannelTemplate(channel) -%}
 Operation|Message|Description
 ---------|-------|-----------
 {% if channel.hasSubscribe() and channel.subscribe().messages() -%}
-{{ messageChannelTemplate(channel.subscribe(), bookmarks) -}}
+{{ messageChannelTemplate(channel.subscribe()) -}}
 {% endif -%}
 {% if channel.hasPublish() and channel.publish().messages() -%}
-{{ messageChannelTemplate(channel.publish(), bookmarks) -}}
+{{ messageChannelTemplate(channel.publish()) -}}
 {% endif %}
 {% endmacro -%}
 
-{% macro messageChannelTemplate(operation, bookmarks) -%}
+{% macro messageChannelTemplate(operation) -%}
 {% for message in operation.messages() -%}
 {{ operation.kind() | italic -}}
 |{% set computedName -%} {{- message.name() if message.name() | isDefined else message.uid() -}} {% endset -%}
-{{ computedName | bookmarked(bookmarks, "messages") | reference(computedName) -}}
+{{ computedName | bookmarks("messages", computedName) | reference(computedName) -}}
 |{{ message.title() }}
 {% endfor -%}
 {% endmacro -%}
