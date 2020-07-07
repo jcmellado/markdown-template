@@ -26,9 +26,9 @@ test('headings', t => {
 });
 
 test('bookmarks', t => {
-  t.is(filters.bookmarks('xxx', 'foo', 'bar'), 'xxx');
+  t.is(filters.bookmarks('baz', 'foo', 'bar'), 'baz');
   t.is(filters.bookmarks('jane', 'john', 'doe'), 'jane');
 
-  t.is(filters.bookmarks(null, 'foo', 'bar'), 'xxx');
+  t.is(filters.bookmarks(null, 'foo', 'bar'), 'baz');
   t.is(filters.bookmarks(null, 'john', 'doe'), 'jane');
 });
