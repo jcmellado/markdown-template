@@ -58,7 +58,7 @@
         "default": "payload,headers,correlationId,bindings,tags",
         "required": false
       },
-      "tocHeadingLevel": {
+      "toc.headingLevel": {
         "description": "Number of heading levels to show in the table of contents.",
         "default": "0",
         "required": false

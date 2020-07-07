@@ -7,14 +7,14 @@
 
 {# Server #}
 
-{% macro serversTemplate(servers, subsections, toc) -%}
+{% macro serversTemplate(servers, subsections) -%}
 {% for serverName, server in servers -%}
-{{ serverTemplate(serverName, server, subsections, toc) -}}
+{{ serverTemplate(serverName, server, subsections) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro serverTemplate(serverName, server, subsections, toc) -%}
-## {{ serverName | heading(toc, 2) }}
+{% macro serverTemplate(serverName, server, subsections) -%}
+## {{ serverName | headings(2) }}
 
 {% if server.description() | isDefined -%}
 {{ server.description() | safe }}
@@ -27,15 +27,15 @@ Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {%- if server.prot
 
 {% for subsection in subsections | chunks -%}
 {% if subsection === "variables" and server.hasVariables() -%}
-### {{ "Server URL Variables" | heading(toc, 3) }}
+### {{ "Server URL Variables" | headings(3) }}
 
 {{ variablesServerTemplate(server.variables()) -}}
 {% elif subsection === "security" and server.security() -%}
-### {{ "Security" | heading(toc, 3) }}
+### {{ "Security" | headings(3) }}
 
 {{ securityServerTemplate(server.security()) -}}
 {% elif subsection === "bindings" and server.bindings() -%}
-### {{ "Bindings" | heading(toc, 3) }}
+### {{ "Bindings" | headings(3) }}
 
 {{ serverBindingsTemplate(server.bindings()) -}}
 {% endif -%}

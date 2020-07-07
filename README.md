@@ -65,7 +65,7 @@ sections | Comma-separated list of sections to be included in the Markdown docum
 sections.server | Comma-separated list of subsections to be included in the servers section.<br /><br />**Default**: `variables,security,bindings`<br /><br />**Example:** `-p sections.server=variables`
 sections.channels | Comma-separated list of subsections to be included in the channels section.<br /><br />**Default**: `parameters,bindings,messages,publish,subscribe,operation.bindings,operation.tags`<br /><br />**Example:** `-p sections.channels=parameters,subscribe,publish,messages`
 sections.messages | Comma-separated list of subsections to be included in the messages section.<br /><br />**Default**: `payload,headers,correlationId,bindings,tags`<br /><br />**Example:** `-p sections.messages=headers,payload`
-tocHeadingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `0`<br /><br />Allowed values: `0`, `1`, or `2`.<br /><br />**Example:** `-o ./docs -p tocHeadingLevel=2`
+toc.headingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `0`<br /><br />Allowed values: `0`, `1`, or `2`.<br /><br />**Example:** `-o ./docs -p toc.headingLevel=2`
 
 ## Slate/shins
 
