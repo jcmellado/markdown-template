@@ -5,25 +5,30 @@ const test = require('ava');
 
 const filters = require('../../filters/toc');
 
-test('toc', t => {
-  const params = { 'slate.enabled': 'false', 'tocHeadingLevel': '2' };
-  const toc = { slateEnabled: false, headingLevel: 2, levels: [] };
+test('headings', t => {
+  const slateDisabled = { 'slate.enabled': 'false' };
 
-  t.deepEqual(filters.toc(params), toc);
+  t.is(filters.headings(slateDisabled), slateDisabled);
+  t.is(filters.headings('bar', 1), '1. bar');
+  t.is(filters.headings('bar', 1), '2. bar');
+  t.is(filters.headings('bar', 2), '2.1. bar');
+  t.is(filters.headings('bar', 2), '2.2. bar');
+  t.is(filters.headings('bar', 3), '2.2.1. bar');
+  t.is(filters.headings('bar', 3), '2.2.2. bar');
+  t.is(filters.headings('bar', 2), '2.3. bar');
+  t.is(filters.headings('bar', 1), '3. bar');
+  t.is(filters.headings('bar', 2), '3.1. bar');
+
+  const slateEnabled = { 'slate.enabled': 'true' };
+
+  t.is(filters.headings(slateEnabled), slateEnabled);
+  t.is(filters.headings('baz', 1), 'baz');
 });
 
-test('heading', t => {
-  const tocSlateEnabled = { slateEnabled: true, headingLevel: 2, levels: [] };
-  t.is(filters.heading('foo', tocSlateEnabled, 1), 'foo');
+test('bookmarks', t => {
+  t.is(filters.bookmarks('xxx', 'foo', 'bar'), 'xxx');
+  t.is(filters.bookmarks('jane', 'john', 'doe'), 'jane');
 
-  const toc = { slateEnabled: false, headingLevel: 2, levels: [] };
-  t.is(filters.heading('bar', toc, 1), '1. bar');
-  t.is(filters.heading('bar', toc, 1), '2. bar');
-  t.is(filters.heading('bar', toc, 2), '2.1. bar');
-  t.is(filters.heading('bar', toc, 2), '2.2. bar');
-  t.is(filters.heading('bar', toc, 3), '2.2.1. bar');
-  t.is(filters.heading('bar', toc, 3), '2.2.2. bar');
-  t.is(filters.heading('bar', toc, 2), '2.3. bar');
-  t.is(filters.heading('bar', toc, 1), '3. bar');
-  t.is(filters.heading('bar', toc, 2), '3.1. bar');
+  t.is(filters.bookmarks(null, 'foo', 'bar'), 'xxx');
+  t.is(filters.bookmarks(null, 'john', 'doe'), 'jane');
 });
