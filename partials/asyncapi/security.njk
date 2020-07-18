@@ -3,14 +3,14 @@
 
 {# Security #}
 
-{% macro securitySchemesTemplate(schemes, toc) -%}
+{% macro securitySchemesTemplate(schemes) -%}
 {% for schemeName, scheme in schemes -%}
-{{ securitySchemeTemplate(schemeName, scheme, toc) -}}
+{{ securitySchemeTemplate(schemeName, scheme) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro securitySchemeTemplate(schemeName, scheme, toc) -%}
-## {{ schemeName | heading(toc, 2) }}
+{% macro securitySchemeTemplate(schemeName, scheme) -%}
+## {{ schemeName | headings(2) }}
 
 {% if scheme.description() | isDefined -%}
 {{ scheme.description() | safe }}
@@ -35,30 +35,30 @@ Bearer token format|{{ scheme.bearerFormat() | code }}
 OpenId Connect URL|{{ scheme.openIdConnectUrl() | link }}
 {% endif -%}
 {% if scheme.flows() -%}
-{{ oauthFlowsTemplate(scheme.flows(), toc) -}}
+{{ oauthFlowsTemplate(scheme.flows()) -}}
 {% endif %}
 {% endmacro -%}
 
 {# OAuth Flows #}
 
-{% macro oauthFlowsTemplate(flows, toc) -%}
+{% macro oauthFlowsTemplate(flows) -%}
 {% for flowName, flow in flows -%}
-{{ oauthFlowTemplate(flowName,flow, toc) -}}
+{{ oauthFlowTemplate(flowName, flow) -}}
 {% endfor -%}
 {% endmacro -%}
 
-{% macro oauthFlowTemplate(flowName, flow, toc) %}
+{% macro oauthFlowTemplate(flowName, flow) %}
 {% if flowName === "implicit" -%}
-### {{ "OAuth Implicit Flow" | heading(toc, 3) }}
+### {{ "OAuth Implicit Flow" | headings(3) }}
 
 {% elif flowName === "password" -%}
-### {{ " OAuth Resource Owner Protected Credentials Flow" | heading(toc, 3) }}
+### {{ " OAuth Resource Owner Protected Credentials Flow" | headings(3) }}
 
 {% elif flowName === "clientCredentials" -%}
-### {{ "OAuth Client Credentials Flow" | heading(toc, 3) }}
+### {{ "OAuth Client Credentials Flow" | headings(3) }}
 
 {% elif flowName === "authorizationCode" -%}
-### {{ "OAuth Authorization Code Flow" | heading(toc, 3) }}
+### {{ "OAuth Authorization Code Flow" | headings(3) }}
 
 {% endif -%}
 Parameter|Value

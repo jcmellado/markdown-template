@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.0] - 2020-07-18
+
+### Features
+- Improved Table Of Contents filter [#28](https://github.com/jcmellado/markdown-template/issues/28)
+- Improved bookmarks filter [#26](https://github.com/jcmellado/markdown-template/issues/26)
+
 ## [0.4.0] - 2020-07-05
 
 ### Features

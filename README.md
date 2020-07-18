@@ -61,11 +61,21 @@ The following sections describe the available parameters.
 Parameter | Description
 ----------|------------
 output | File name for the output file.<br /><br />**Default**: `asyncapi.md`<br /><br />The `-o` parameter of the generator specifies the output directory, the `-p output` parameter of the template specifies the output filename.<br /><br />**Example:** `-o ./docs -p output=api-1.0.0.md`
+
+## Sections
+
+Parameter | Description
+----------|------------
 sections | Comma-separated list of sections to be included in the Markdown document.<br /><br />**Default**: `servers,channels,messages,security,tags,license,termsOfService,contact`<br /><br />Sections are included in the Markdown document in the same order that they appear in the list. Only the listed sections will be included.<br /><br />**Example:** `-p sections=channels,messages,servers,license`
 sections.server | Comma-separated list of subsections to be included in the servers section.<br /><br />**Default**: `variables,security,bindings`<br /><br />**Example:** `-p sections.server=variables`
 sections.channels | Comma-separated list of subsections to be included in the channels section.<br /><br />**Default**: `parameters,bindings,messages,publish,subscribe,operation.bindings,operation.tags`<br /><br />**Example:** `-p sections.channels=parameters,subscribe,publish,messages`
 sections.messages | Comma-separated list of subsections to be included in the messages section.<br /><br />**Default**: `payload,headers,correlationId,bindings,tags`<br /><br />**Example:** `-p sections.messages=headers,payload`
-tocHeadingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `0`<br /><br />Allowed values: `0`, `1`, or `2`.<br /><br />**Example:** `-o ./docs -p tocHeadingLevel=2`
+
+## Table of Contents
+
+Parameter | Description
+----------|------------
+toc.headingLevel | Number of heading levels to show in the table of contents.<br /><br />**Default**: `0`<br /><br />Allowed values: `0`, `1`, or `2`.<br /><br />**Example:** `-p toc.headingLevel=2`
 
 ## Slate/shins
 

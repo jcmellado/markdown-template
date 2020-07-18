@@ -15,49 +15,48 @@
 {{ asyncapi.info().description() | safe }}
 
 {% endif -%}
-{% set bookmarks = params | bookmarks -%}
-{% set tableOfContents = tocTemplate(asyncapi, params, bookmarks) -%}
-{% if params["tocHeadingLevel"] === "1" or params["tocHeadingLevel"] === "2" -%}
+{% set tableOfContents = tocTemplate(asyncapi, params) -%}
+{% if params["toc.headingLevel"] === "1" or params["toc.headingLevel"] === "2" -%}
 ## Table of Contents
 
 {{ tableOfContents -}}
 {% endif -%}
-{% set toc = params | toc -%}
+{% set toc = params | headings -%}
 {% for section in params["sections"] | chunks -%}
 {% if section === "servers" and asyncapi.hasServers() -%}
-# {{ "Servers" | heading(toc, 1) }}
+# {{ "Servers" | headings(1) }}
 
-{{ serversTemplate(asyncapi.servers(), params["sections.servers"], toc, bookmarks) -}}
+{{ serversTemplate(asyncapi.servers(), params["sections.servers"]) -}}
 {% elif section === "channels" and asyncapi.hasChannels() -%}
-# {{ "Channels" | heading(toc, 1) }}
+# {{ "Channels" | headings(1) }}
 
-{{ channelsTemplate(asyncapi.channels(), params["sections.channels"], toc, bookmarks) -}}
+{{ channelsTemplate(asyncapi.channels(), params["sections.channels"]) -}}
 {% elif section === "messages" and asyncapi.allMessages() | length -%}
-# {{ "Messages" | heading(toc, 1) }}
+# {{ "Messages" | headings(1) }}
 
-{{ messagesTemplate(asyncapi.allMessages(), params["sections.messages"], toc, asyncapi.defaultContentType(), params["slate.enabled"] === "true") -}}
+{{ messagesTemplate(asyncapi.allMessages(), params["sections.messages"], asyncapi.defaultContentType(), params["slate.enabled"] === "true") -}}
 {% elif section === "security" and asyncapi.hasComponents() and asyncapi.components().securitySchemes() and asyncapi.components().securitySchemes() | length -%}
-# {{ "Security" | heading(toc, 1) }}
+# {{ "Security" | headings(1) }}
 
-{{ securitySchemesTemplate(asyncapi.components().securitySchemes(), toc) -}}
+{{ securitySchemesTemplate(asyncapi.components().securitySchemes()) -}}
 {% elif section === "tags" and asyncapi.hasTags() -%}
-# {{ "Tags" | heading(toc, 1) }}
+# {{ "Tags" | headings(1) }}
 
 {% for tag in asyncapi.tags() -%}
-## {{ tag.name() | heading(toc, 2) }}
+## {{ tag.name() | headings(2) }}
 
 {{ tagTemplate(tag) -}}
 {% endfor -%}
 {% elif section === "license" and asyncapi.info().license() -%}
-# {{ "License" | heading(toc, 1) }}
+# {{ "License" | headings(1) }}
 
 {{ licenseTemplate(asyncapi.info().license()) -}}
 {% elif section === "termsOfService" and asyncapi.info().termsOfService() | isDefined -%}
-# {{ "Terms Of Service" | heading(toc, 1) }}
+# {{ "Terms Of Service" | headings(1) }}
 
 {{ termsOfServiceTemplate(asyncapi.info().termsOfService()) -}}
 {% elif section === "contact" and asyncapi.info().contact() -%}
-# {{ "Contact" | heading(toc, 1) }}
+# {{ "Contact" | headings(1) }}
 
 {{ contactTemplate(asyncapi.info().contact()) -}}
 {% endif -%}
