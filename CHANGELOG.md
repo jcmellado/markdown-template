@@ -1,10 +1,20 @@
 # Changelog
 
+## [0.6.0] - 2020-08-08
+
+### Dependency Upgrades
+- Upgrade to lodash 4.7.19 [#32](https://github.com/jcmellado/markdown-template/issues/32)
+- Upgrade to eslint 7.6.0 [#35](https://github.com/jcmellado/markdown-template/issues/35)
+- Upgrade to ava 3.11.1 [#36](https://github.com/jcmellado/markdown-template/issues/36)
+
 ## [0.5.0] - 2020-07-18
 
 ### Features
 - Improved Table Of Contents filter [#28](https://github.com/jcmellado/markdown-template/issues/28)
 - Improved bookmarks filter [#26](https://github.com/jcmellado/markdown-template/issues/26)
+
+### Breaking Changes
+- The parameter `tocHeadingLevel` now is `toc.headingLevel`
 
 ## [0.4.0] - 2020-07-05
 
