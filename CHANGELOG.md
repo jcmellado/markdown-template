@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0] - 2020-12-04
+
+### Features
+- Add external documentation field on schemas [#8](https://github.com/jcmellado/markdown-template/issues/8)
+
+### Fixes
+- Message traits are not applied when using oneOf on channels [#9](https://github.com/jcmellado/markdown-template/issues/9)
+
+### Dependency Upgrades
+- Upgrade to eslint 7.14.0 [#49](https://github.com/jcmellado/markdown-template/issues/49)
+- Upgrade to ava 3.13.0 [#43](https://github.com/jcmellado/markdown-template/issues/43)
+
 ## [0.6.0] - 2020-08-08
 
 ### Dependency Upgrades
