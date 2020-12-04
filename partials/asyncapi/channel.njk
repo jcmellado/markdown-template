@@ -26,7 +26,7 @@
 ### {{ "Parameters" | headings(3) }}
 
 {{ parametersChannelTemplate(channel.parameters()) -}}
-{% elif subsection === "bindings" and channel.bindings() -%}
+{% elif subsection === "bindings" and channel.bindings() | length -%}
 ### {{ "Bindings" | headings(3) }}
 
 {{ channelBindingsTemplate(channel.bindings()) -}}
@@ -112,7 +112,7 @@ Operation|Message|Description
 
 {% endif -%}
 {% for subsection in subsections | chunks -%}
-{% if subsection === "operation.bindings" and operation.bindings() -%}
+{% if subsection === "operation.bindings" and operation.bindings() | length -%}
 #### {{ "Bindings" | headings(4) }}
 
 {{ operationBindingsTemplate(operation.bindings()) -}}

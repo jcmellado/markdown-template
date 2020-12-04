@@ -136,6 +136,7 @@ Name|Type|Format|Allowed|Default|Description
 {% if field.writeOnly() === true -%} {{- linefeed() -}} Write only: {{ field.writeOnly() | code }} {%- endif -%}
 {% if required -%} {{- linefeed() -}} {{ "required" | bold }} {%- endif -%}
 {% if field.deprecated() -%} {{- linefeed() -}} {{ "deprecated" | bold }} {%- endif -%}
+{% if field.externalDocs() -%} {%- if field.externalDocs().description() | isDefined -%} {{- linefeed() -}} {{ field.externalDocs().description() | safe }} {%- endif -%} {% if field.externalDocs().url() | isDefined -%} {{- linefeed() -}} {{ field.externalDocs().url() | link }} {{- linefeed() -}} {%- endif -%} {%- endif -%}
 {% endmacro -%}
 
 {% macro examplesTemplate(examples) -%}
