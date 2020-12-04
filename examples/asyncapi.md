@@ -219,18 +219,7 @@ Name|Type|Format|Allowed|Default|Description
 `jobId`|`string`||||Job Id.
 `userId`|`string`||||User Id.
 `documentName`|`string`||||Document name.<br />**deprecated**
-`priority`|`string`||`low`<br />`medium`<br />`high`||Priority.
-
-#### Examples
-
-```json
-{
-  "jobId": "1",
-  "userId": "2",
-  "documentName": "Document",
-  "priority": "low"
-}
-```
+`priority`|`string`||`low`<br />`medium`<br />`high`||Priority.<br />Print Job Priority Documentation.<br />[https://www.example.com/docs/api/jobs/priority](https://www.example.com/docs/api/jobs/priority)<br />
 
 ### 3.1.2. Headers
 
@@ -257,15 +246,6 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 `jobId`|`string`||||Job Id.<br />**required**
 `force`|`boolean`|||`false`|Force cancellation.
-
-#### Examples
-
-```json
-{
-  "jobId": "1",
-  "force": true
-}
-```
 
 ### 3.2.2. Headers
 
@@ -309,15 +289,6 @@ Name|Type|Format|Allowed|Default|Description
 ----|----|------|-------|-------|-----------
 `jobId`|`string`||||Job Id.
 `status`|`string`||`created`<br />`started`<br />`finished`<br />`canceled`||Status.
-
-#### Examples
-
-```json
-{
-  "jobId": "1",
-  "status": "started"
-}
-```
 
 # 4. Security
 

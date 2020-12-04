@@ -179,14 +179,9 @@ components:
               - low
               - medium
               - high
-      examples:
-        - json: |-
-            {
-              "jobId": "1",
-              "userId": "2",
-              "documentName": "Document",
-              "priority": "low"
-            }
+            externalDocs:
+              description: Print Job Priority Documentation.
+              url: https://www.example.com/docs/api/jobs/priority
       headers:
         type: object
         properties:
@@ -216,12 +211,6 @@ components:
             default: false
         required:
           - jobId
-      examples:
-        - json: |-
-            {
-              "jobId": "1",
-              "force": true
-            }
       headers:
         type: object
         properties:
@@ -263,12 +252,6 @@ components:
               - started
               - finished
               - canceled
-      examples:
-        - json: |-
-            {
-              "jobId": "1",
-              "status": "started"
-            }
 
   securitySchemes:
 

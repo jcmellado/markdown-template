@@ -66,6 +66,7 @@ filters.proxy = (object) => {
       default: () => object.default,
       deprecated: () => object.deprecated,
       discriminator: () => object.discriminator,
+      externalDocs: () => object.externalDocs,
       readOnly: () => object.readOnly,
       writeOnly: () => object.writeOnly,
       examples: () => object.examples,

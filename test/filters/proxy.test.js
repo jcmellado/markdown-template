@@ -55,9 +55,10 @@ test('proxy object', t => {
     'title': '40',
     'default': '41',
     'deprecated': false,
+    'externalDocs': { 'description': '42', 'url': '43' },
     'readOnly': false,
     'writeOnly': true,
-    'examples': ['42'],
+    'examples': ['44'],
   };
 
   const schema = filters.proxy(object);
@@ -104,6 +105,7 @@ test('proxy object', t => {
   t.is(schema.default(), object.default);
   t.is(schema.deprecated(), object.deprecated);
   t.is(schema.discriminator(), object.discriminator);
+  t.is(schema.externalDocs(), object.externalDocs);
   t.is(schema.readOnly(), object.readOnly);
   t.is(schema.writeOnly(), object.writeOnly);
   t.is(schema.examples(), object.examples);
