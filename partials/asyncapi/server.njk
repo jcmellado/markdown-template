@@ -34,7 +34,7 @@ Protocol|{{ protocolNameTemplate(server.protocol()) | code }} {%- if server.prot
 ### {{ "Security" | headings(3) }}
 
 {{ securityServerTemplate(server.security()) -}}
-{% elif subsection === "bindings" and server.bindings() -%}
+{% elif subsection === "bindings" and server.bindings() | length -%}
 ### {{ "Bindings" | headings(3) }}
 
 {{ serverBindingsTemplate(server.bindings()) -}}

@@ -45,7 +45,7 @@
 ### {{ "Correlation ID" | headings(3) }}
 
 {{ correlationIdMessageTemplate(message.correlationId()) -}}
-{% elif subsection === "bindings" and message.bindings() -%}
+{% elif subsection === "bindings" and message.bindings() | length -%}
 ### {{ "Bindings" | headings(3) }}
 
 {{ messageBindingsTemplate(message.bindings()) -}}
