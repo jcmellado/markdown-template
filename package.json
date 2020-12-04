@@ -26,12 +26,12 @@
     "dev": "ag examples/asyncapi.yml ./ -o output --force-write --watch-template"
   },
   "devDependencies": {
-    "ava": "^3.10.1",
-    "eslint": "^7.4.0",
+    "ava": "^3.13.0",
+    "eslint": "^7.14.0",
     "eslint-config-google": "^0.14.0"
   },
   "generator": {
-    "generator": ">=0.53.1 <2.0.0",
+    "generator": ">=1.0.1 <2.0.0",
     "parameters": {
       "output": {
         "description": "File name for the output file.",
