@@ -1,6 +1,6 @@
 {
   "name": "@jcmellado/markdown-template",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Markdown template for the AsyncAPI Generator",
   "keywords": [
     "asyncapi",
@@ -26,9 +26,9 @@
     "dev": "ag examples/asyncapi.yml ./ -o output --force-write --watch-template"
   },
   "devDependencies": {
-    "ava": "^3.13.0",
-    "eslint": "^7.14.0",
-    "eslint-config-google": "^0.14.0"
+    "ava": "3.14.0",
+    "eslint": "7.16.0",
+    "eslint-config-google": "0.14.0"
   },
   "generator": {
     "generator": ">=1.0.1 <2.0.0",
