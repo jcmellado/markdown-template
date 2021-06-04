@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.9.0] - 2021-06-04
+- Upgrade to eslint 7.27.0
+- Upgrade to ava 3.15.0
+
 ## [0.8.0] - 2020-12-19
 - Upgrade to eslint 7.16.0
 - Upgrade to ava 3.14.0 [#53](https://github.com/jcmellado/markdown-template/issues/53)
