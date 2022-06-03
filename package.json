@@ -26,7 +26,7 @@
     "dev": "ag examples/asyncapi.yml ./ -o output --force-write --watch-template"
   },
   "devDependencies": {
-    "ava": "3.15.0",
+    "ava": "4.3.0",
     "eslint": "7.27.0",
     "eslint-config-google": "0.14.0"
   },
