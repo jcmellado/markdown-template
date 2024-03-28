@@ -27,22 +27,22 @@ Check the [AsyncAPI Generator Documentation](https://github.com/asyncapi/generat
 AsyncAPI specification of fictional API service:
 - [AsyncAPI YAML document](examples/asyncapi.yml)
 - [Markdown document](examples/asyncapi.md)
-- [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/asyncapi.html)
+- [Static HTML documentation](https://jcmellado.github.io/showcase/markdown/examples/asyncapi.html)
 
 Server, channel, operation and message bindings for all the supported protocols:
 - [AsyncAPI YAML document](examples/bindings.yml)
 - [Markdown document](examples/bindings.md)
-- [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/bindings.html)
+- [Static HTML documentation](https://jcmellado.github.io/showcase/markdown/examples/bindings.html)
 
 Security schemes for all the supported protocols:
 - [AsyncAPI YAML document](examples/security.yml)
 - [Markdown document](examples/security.md)
-- [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/security.html)
+- [Static HTML documentation](https://jcmellado.github.io/showcase/markdown/examples/security.html)
 
 Simple and complex schemas:
 - [AsyncAPI YAML document](examples/schema.yml)
 - [Markdown document](examples/schema.md)
-- [Static HTML documentation](https://jcmellado.github.io/markdown-template/examples/schema.html)
+- [Static HTML documentation](https://jcmellado.github.io/showcase/markdown/examples/schema.html)
 
 # Parameters
 
